@@ -6,5 +6,13 @@
     <color name="vit_on_secondary">#FFFFFF</color>
     <color name="vit_surface">#FFFFFF</color>
     <color name="vit_on_surface">#1A1C1E</color>
+    <color name="marks_page_background">#F6F7FB</color>
+    <color name="marks_card_stroke">#E5E8F0</color>
+    <color name="marks_metric_background">#F4F6FB</color>
+    <color name="marks_grade_excellent">#1B8E3E</color>
+    <color name="marks_grade_good">#2D9CDB</color>
+    <color name="marks_grade_average">#F2994A</color>
+    <color name="marks_grade_poor">#E24C4C</color>
+    <color name="marks_grade_neutral">#6C757D</color>
 </resources>
 

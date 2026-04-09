@@ -16,10 +16,10 @@
     <string name="marks_semester_apply_failed">Could not apply selected semester.</string>
     <string name="marks_summary_default">Marks summary will appear here.</string>
     <string name="marks_no_data">No marks data available for the selected semester.</string>
-    <string name="marks_meta_grade">Grade: %1$s</string>
-    <string name="marks_meta_credits">Credits: %1$s</string>
-    <string name="marks_meta_marks">Marks: %1$s</string>
-    <string name="marks_meta_unavailable">Marks details unavailable.</string>
+    <string name="marks_label_credits">Credits</string>
+    <string name="marks_label_marks">Marks</string>
+    <string name="marks_grade_badge">Grade %1$s</string>
+    <string name="marks_value_dash">--</string>
     <string name="marks_value_na">N/A</string>
     <string name="dashboard_attendance_title">Attendance</string>
     <string name="dashboard_attendance_desc">Check your attendance details quickly.</string>

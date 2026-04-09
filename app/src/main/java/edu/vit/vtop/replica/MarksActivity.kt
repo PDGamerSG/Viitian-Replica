@@ -1,6 +1,7 @@
 package edu.vit.vtop.replica
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -26,6 +27,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -806,6 +808,33 @@ class MarksActivity : AppCompatActivity() {
         }
     }
 
+    private fun formatValue(value: String): String {
+        return value.ifBlank { getString(R.string.marks_value_dash) }
+    }
+
+    private fun resolveGradeColorRes(grade: String): Int {
+        return when (grade.trim().uppercase()) {
+            "S", "O", "A+", "A" -> R.color.marks_grade_excellent
+            "B+", "B" -> R.color.marks_grade_good
+            "C+", "C", "D" -> R.color.marks_grade_average
+            "E", "P" -> R.color.marks_grade_neutral
+            "F", "N", "RA", "AB", "W", "U" -> R.color.marks_grade_poor
+            else -> R.color.marks_grade_neutral
+        }
+    }
+
+    private fun shouldShowExtraInfo(item: MarkEntry): Boolean {
+        if (item.extra.isBlank()) {
+            return false
+        }
+        val normalizedExtra = item.extra.lowercase()
+        val hasStructuredData = item.grade.isNotBlank() || item.credits.isNotBlank() || item.marks.isNotBlank()
+        val knownParts = listOf(item.courseCode, item.courseTitle, item.grade, item.credits, item.marks)
+            .filter { it.isNotBlank() }
+        val isLikelyDuplicate = knownParts.isNotEmpty() && knownParts.all { normalizedExtra.contains(it.lowercase()) }
+        return !hasStructuredData && !isLikelyDuplicate
+    }
+
     private inner class MarksAdapter : RecyclerView.Adapter<MarksViewHolder>() {
         private val items = mutableListOf<MarkEntry>()
 
@@ -830,36 +859,29 @@ class MarksActivity : AppCompatActivity() {
 
     private inner class MarksViewHolder(root: ViewGroup) : RecyclerView.ViewHolder(root) {
         private val codeText: TextView = root.findViewById(R.id.markCourseCodeText)
+        private val gradeBadgeText: TextView = root.findViewById(R.id.markGradeBadgeText)
         private val titleText: TextView = root.findViewById(R.id.markCourseTitleText)
-        private val metaText: TextView = root.findViewById(R.id.markMetaText)
+        private val creditsText: TextView = root.findViewById(R.id.markCreditsText)
+        private val marksText: TextView = root.findViewById(R.id.markMarksText)
         private val extraText: TextView = root.findViewById(R.id.markExtraText)
 
         fun bind(item: MarkEntry) {
-            codeText.text = item.courseCode.ifBlank { getString(R.string.marks_value_na) }
-            titleText.text = item.courseTitle.ifBlank { getString(R.string.marks_value_na) }
+            val courseCode = item.courseCode.trim()
+            val courseTitle = item.courseTitle.trim()
+            codeText.text = if (courseCode.isBlank()) getString(R.string.marks_value_na) else courseCode.uppercase()
+            titleText.text = if (courseTitle.isBlank()) getString(R.string.marks_value_na) else courseTitle
+            gradeBadgeText.text = getString(R.string.marks_grade_badge, formatValue(item.grade))
+            gradeBadgeText.backgroundTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(itemView.context, resolveGradeColorRes(item.grade)),
+            )
+            creditsText.text = formatValue(item.credits)
+            marksText.text = formatValue(item.marks)
 
-            val metaParts = buildList {
-                if (item.grade.isNotBlank()) {
-                    add(getString(R.string.marks_meta_grade, item.grade))
-                }
-                if (item.credits.isNotBlank()) {
-                    add(getString(R.string.marks_meta_credits, item.credits))
-                }
-                if (item.marks.isNotBlank()) {
-                    add(getString(R.string.marks_meta_marks, item.marks))
-                }
-            }
-            metaText.text = if (metaParts.isNotEmpty()) {
-                metaParts.joinToString(" | ")
-            } else {
-                getString(R.string.marks_meta_unavailable)
-            }
-
-            if (item.extra.isBlank()) {
-                extraText.isVisible = false
-            } else {
+            if (shouldShowExtraInfo(item)) {
                 extraText.isVisible = true
                 extraText.text = item.extra
+            } else {
+                extraText.isVisible = false
             }
         }
     }
