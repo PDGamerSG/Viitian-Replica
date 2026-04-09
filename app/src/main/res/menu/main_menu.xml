@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_home"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="@string/menu_home"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/ic_popup_sync"
+        android:title="@string/menu_refresh"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_open_external"
+        android:icon="@android:drawable/ic_menu_share"
+        android:title="@string/menu_open_external"
+        app:showAsAction="never" />
+
+</menu>
+

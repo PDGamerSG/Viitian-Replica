@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VITian</string>
+    <string name="login_title">VTOP Login</string>
+    <string name="portal_title">VTOP Portal</string>
+    <string name="dashboard_title">Student Dashboard</string>
+    <string name="dashboard_subtitle">Quick Access</string>
+    <string name="dashboard_subtitle_hint">Open key modules directly after login.</string>
+    <string name="dashboard_marks_title">Marks</string>
+    <string name="dashboard_marks_desc">View your marks and grade-related pages.</string>
+    <string name="marks_screen_title">Marks</string>
+    <string name="marks_semester_label">Semester</string>
+    <string name="marks_semester_loading">Loading marks semester options...</string>
+    <string name="marks_semester_ready">Select a semester to view marks.</string>
+    <string name="marks_semester_unavailable">Could not load semester list. Pull to refresh or open full portal.</string>
+    <string name="marks_semester_apply_failed">Could not apply selected semester.</string>
+    <string name="marks_summary_default">Marks summary will appear here.</string>
+    <string name="marks_no_data">No marks data available for the selected semester.</string>
+    <string name="marks_meta_grade">Grade: %1$s</string>
+    <string name="marks_meta_credits">Credits: %1$s</string>
+    <string name="marks_meta_marks">Marks: %1$s</string>
+    <string name="marks_meta_unavailable">Marks details unavailable.</string>
+    <string name="marks_value_na">N/A</string>
+    <string name="dashboard_attendance_title">Attendance</string>
+    <string name="dashboard_attendance_desc">Check your attendance details quickly.</string>
+    <string name="dashboard_da_upload_title">DA Upload</string>
+    <string name="dashboard_da_upload_desc">Open digital assignment upload workflows.</string>
+    <string name="dashboard_portal_home_title">Full Portal</string>
+    <string name="dashboard_portal_home_desc">Browse all sections available in VTOP.</string>
+    <string name="menu_home">Portal home</string>
+    <string name="menu_refresh">Refresh</string>
+    <string name="menu_open_external">Open in browser</string>
+    <string name="menu_logout">Logout</string>
+    <string name="download_started">Download started</string>
+    <string name="network_error_message">Unable to load page. Check your internet connection.</string>
+    <string name="login_required_message">Session expired. Please log in again.</string>
+    <string name="file_chooser_not_found">No app available to pick a file.</string>
+    <string name="unable_to_open_link">Unable to open this link.</string>
+    <string name="destination_not_found">Could not auto-open this section. Use full portal navigation.</string>
+</resources>
+

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.VITianReplica" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/vit_primary</item>
+        <item name="colorOnPrimary">@color/vit_on_primary</item>
+        <item name="colorSecondary">@color/vit_secondary</item>
+        <item name="colorOnSecondary">@color/vit_on_secondary</item>
+        <item name="colorSurface">@color/vit_surface</item>
+        <item name="colorOnSurface">@color/vit_on_surface</item>
+        <item name="android:statusBarColor">@color/vit_primary</item>
+    </style>
+
+</resources>
+
