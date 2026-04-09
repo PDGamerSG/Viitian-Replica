@@ -6,6 +6,15 @@
     <color name="vit_on_secondary">#FFFFFF</color>
     <color name="vit_surface">#FFFFFF</color>
     <color name="vit_on_surface">#1A1C1E</color>
+    <color name="marks_background">#090913</color>
+    <color name="marks_surface">#141420</color>
+    <color name="marks_surface_alt">#1B1A2A</color>
+    <color name="marks_surface_outline">#26233A</color>
+    <color name="marks_outline_soft">#B8B0DF</color>
+    <color name="marks_text_primary">#F3EEFF</color>
+    <color name="marks_text_secondary">#CBC5E3</color>
+    <color name="marks_divider">#645D86</color>
+    <color name="marks_indicator">#F5F4FF</color>
     <color name="marks_page_background">#F6F7FB</color>
     <color name="marks_card_stroke">#E5E8F0</color>
     <color name="marks_metric_background">#F4F6FB</color>

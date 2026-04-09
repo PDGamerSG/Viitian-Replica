@@ -8,7 +8,7 @@
     <string name="dashboard_subtitle_hint">Open key modules directly after login.</string>
     <string name="dashboard_marks_title">Marks</string>
     <string name="dashboard_marks_desc">View your marks and grade-related pages.</string>
-    <string name="marks_screen_title">Marks</string>
+    <string name="marks_screen_title">Mark View</string>
     <string name="marks_semester_label">Semester</string>
     <string name="marks_semester_loading">Loading marks semester options...</string>
     <string name="marks_semester_ready">Select a semester to view marks.</string>
@@ -21,6 +21,15 @@
     <string name="marks_grade_badge">Grade %1$s</string>
     <string name="marks_value_dash">--</string>
     <string name="marks_value_na">N/A</string>
+    <string name="marks_value_colon">:</string>
+    <string name="marks_assessment_default">Assessment - 1</string>
+    <string name="marks_assessment_indexed">Assessment - %1$d</string>
+    <string name="marks_toggle_details">Toggle subject details</string>
+    <string name="marks_row_max_mark">Max. Mark</string>
+    <string name="marks_row_weightage_percent">Weightage %</string>
+    <string name="marks_row_status">Status</string>
+    <string name="marks_row_scored_mark">Scored Mark</string>
+    <string name="marks_row_weightage_mark">Weightage Mark</string>
     <string name="dashboard_attendance_title">Attendance</string>
     <string name="dashboard_attendance_desc">Check your attendance details quickly.</string>
     <string name="dashboard_da_upload_title">DA Upload</string>

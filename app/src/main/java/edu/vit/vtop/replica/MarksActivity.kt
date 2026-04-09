@@ -1,16 +1,15 @@
 package edu.vit.vtop.replica
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.webkit.CookieManager
 import android.webkit.WebResourceError
@@ -21,13 +20,14 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,13 +77,15 @@ class MarksActivity : AppCompatActivity() {
         marksAdapter = MarksAdapter()
         marksList.layoutManager = LinearLayoutManager(this)
         marksList.adapter = marksAdapter
+        swipeRefreshLayout.setColorSchemeResources(R.color.marks_indicator)
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.marks_surface)
 
         semesterAdapter = ArrayAdapter(
             this,
-            android.R.layout.simple_spinner_item,
+            R.layout.item_semester_spinner,
             mutableListOf<String>(),
         ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.item_semester_spinner_dropdown)
         }
         semesterSpinner.adapter = semesterAdapter
         semesterSpinner.isEnabled = false
@@ -109,7 +111,7 @@ class MarksActivity : AppCompatActivity() {
 
         swipeRefreshLayout.setOnRefreshListener {
             marksNavigationAttempts = 0
-            semesterStatusText.text = getString(R.string.marks_semester_loading)
+            showSemesterStatus(R.string.marks_semester_loading)
             webView.reload()
         }
 
@@ -205,7 +207,7 @@ class MarksActivity : AppCompatActivity() {
         }
 
         if (savedInstanceState == null) {
-            semesterStatusText.text = getString(R.string.marks_semester_loading)
+            showSemesterStatus(R.string.marks_semester_loading)
             renderMarks(emptyList(), getString(R.string.marks_summary_default))
             webView.loadUrl(HOME_URL)
         } else {
@@ -222,31 +224,13 @@ class MarksActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
                 finish()
-                return true
-            }
-
-            R.id.action_home -> {
-                marksNavigationAttempts = 0
-                semesterStatusText.text = getString(R.string.marks_semester_loading)
-                webView.loadUrl(HOME_URL)
-                return true
-            }
-
-            R.id.action_refresh -> {
-                webView.reload()
-                return true
-            }
-
-            R.id.action_open_external -> {
-                openExternal(Uri.parse(webView.url ?: HOME_URL))
                 return true
             }
         }
@@ -288,7 +272,7 @@ class MarksActivity : AppCompatActivity() {
         }
         if (marksNavigationAttempts >= MAX_NAVIGATION_ATTEMPTS) {
             semesterSpinner.isEnabled = false
-            semesterStatusText.text = getString(R.string.marks_semester_unavailable)
+            showSemesterStatus(R.string.marks_semester_unavailable)
             Toast.makeText(this, R.string.destination_not_found, Toast.LENGTH_SHORT).show()
             return
         }
@@ -335,7 +319,7 @@ class MarksActivity : AppCompatActivity() {
                     val optionsArray = payload.optJSONArray("options")
                     if (optionsArray == null || optionsArray.length() == 0) {
                         semesterSpinner.isEnabled = false
-                        semesterStatusText.text = getString(R.string.marks_semester_unavailable)
+                        showSemesterStatus(R.string.marks_semester_unavailable)
                         return@evaluateJavascript
                     }
 
@@ -351,7 +335,7 @@ class MarksActivity : AppCompatActivity() {
                     }
                     if (options.isEmpty()) {
                         semesterSpinner.isEnabled = false
-                        semesterStatusText.text = getString(R.string.marks_semester_unavailable)
+                        showSemesterStatus(R.string.marks_semester_unavailable)
                         return@evaluateJavascript
                     }
 
@@ -363,7 +347,7 @@ class MarksActivity : AppCompatActivity() {
                 "prelogin" -> redirectToLogin()
                 else -> {
                     semesterSpinner.isEnabled = false
-                    semesterStatusText.text = getString(R.string.marks_semester_unavailable)
+                    showSemesterStatus(R.string.marks_semester_unavailable)
                     mainHandler.postDelayed({ ensureMarksPageReady() }, SEMESTER_RETRY_DELAY_MS)
                 }
             }
@@ -391,23 +375,31 @@ class MarksActivity : AppCompatActivity() {
             when (payload.optString("status")) {
                 "ok" -> {
                     val entriesArray = payload.optJSONArray("entries")
-                    val marks = buildList {
+                    val rows = buildList {
                         if (entriesArray != null) {
                             for (i in 0 until entriesArray.length()) {
                                 val row = entriesArray.optJSONObject(i) ?: continue
                                 add(
-                                    MarkEntry(
+                                    RawMarkRow(
                                         courseCode = row.optString("courseCode"),
                                         courseTitle = row.optString("courseTitle"),
+                                        courseType = row.optString("courseType"),
                                         grade = row.optString("grade"),
                                         credits = row.optString("credits"),
                                         marks = row.optString("marks"),
+                                        assessmentTitle = row.optString("assessmentTitle"),
+                                        maxMark = row.optString("maxMark"),
+                                        weightagePercent = row.optString("weightagePercent"),
+                                        status = row.optString("status"),
+                                        scoredMark = row.optString("scoredMark"),
+                                        weightageMark = row.optString("weightageMark"),
                                         extra = row.optString("extra"),
                                     ),
                                 )
                             }
                         }
                     }
+                    val marks = groupRowsIntoSubjects(rows)
                     val summary = payload.optString("summary").takeIf { it.isNotBlank() }
                         ?: getString(R.string.marks_summary_default)
                     renderMarks(marks, summary)
@@ -435,7 +427,7 @@ class MarksActivity : AppCompatActivity() {
         suppressSemesterSelection = false
 
         lastAppliedSemesterValue = options.getOrNull(preferredIndex)?.value
-        semesterStatusText.text = getString(R.string.marks_semester_ready)
+        showSemesterStatus(null)
     }
 
     private fun applySemesterSelection(option: SemesterOption) {
@@ -448,7 +440,7 @@ class MarksActivity : AppCompatActivity() {
                 -> {
                     lastAppliedSemesterValue = option.value
                     marksNavigationAttempts = 0
-                    semesterStatusText.text = getString(R.string.marks_semester_loading)
+                    showSemesterStatus(R.string.marks_semester_loading)
                     renderMarks(emptyList(), getString(R.string.marks_summary_default))
                     mainHandler.postDelayed({ fetchSemesterOptions() }, SEMESTER_RETRY_DELAY_MS)
                 }
@@ -459,8 +451,120 @@ class MarksActivity : AppCompatActivity() {
         }
     }
 
+    private fun groupRowsIntoSubjects(rows: List<RawMarkRow>): List<MarkEntry> {
+        if (rows.isEmpty()) {
+            return emptyList()
+        }
+        val normalizedRows = mutableListOf<RawMarkRow>()
+        var previousCourseCode = ""
+        var previousCourseTitle = ""
+        var previousCourseType = ""
+        rows.forEach { row ->
+            val resolvedCourseCode = row.courseCode.trim().ifBlank { previousCourseCode }
+            val resolvedCourseTitle = row.courseTitle.trim().ifBlank { previousCourseTitle }
+            val resolvedCourseType = row.courseType.trim().ifBlank { previousCourseType }
+            if (resolvedCourseCode.isNotBlank()) {
+                previousCourseCode = resolvedCourseCode
+            }
+            if (resolvedCourseTitle.isNotBlank()) {
+                previousCourseTitle = resolvedCourseTitle
+            }
+            if (resolvedCourseType.isNotBlank()) {
+                previousCourseType = resolvedCourseType
+            }
+            normalizedRows.add(
+                row.copy(
+                    courseCode = resolvedCourseCode,
+                    courseTitle = resolvedCourseTitle,
+                    courseType = resolvedCourseType,
+                ),
+            )
+        }
+
+        val grouped = linkedMapOf<String, MutableList<RawMarkRow>>()
+        normalizedRows.forEach { row ->
+            val key = buildString {
+                append(row.courseCode.trim().lowercase())
+                append("|")
+                append(row.courseTitle.trim().lowercase())
+                append("|")
+                append(row.courseType.trim().lowercase())
+            }
+            grouped.getOrPut(key) { mutableListOf() }.add(row)
+        }
+
+        return grouped.values.map { subjectRows ->
+            val assessments = subjectRows.mapIndexed { index, row ->
+                buildAssessmentRow(row, index, subjectRows.size)
+            }
+
+            MarkEntry(
+                courseCode = firstNonBlank(subjectRows) { it.courseCode },
+                courseTitle = firstNonBlank(subjectRows) { it.courseTitle },
+                courseType = firstNonBlank(subjectRows) { it.courseType },
+                grade = firstNonBlank(subjectRows) { it.grade },
+                credits = firstNonBlank(subjectRows) { it.credits },
+                marks = firstNonBlank(subjectRows) { it.marks },
+                extra = firstNonBlank(subjectRows) { it.extra },
+                assessments = assessments.ifEmpty {
+                    listOf(
+                        AssessmentRow(
+                            title = getString(R.string.marks_assessment_default),
+                            maxMark = "",
+                            weightagePercent = "",
+                            status = "",
+                            scoredMark = "",
+                            weightageMark = "",
+                        ),
+                    )
+                },
+            )
+        }
+    }
+
+    private fun buildAssessmentRow(row: RawMarkRow, index: Int, totalRows: Int): AssessmentRow {
+        val title = row.assessmentTitle.trim().ifBlank {
+            if (totalRows > 1) {
+                getString(R.string.marks_assessment_indexed, index + 1)
+            } else {
+                getString(R.string.marks_assessment_default)
+            }
+        }
+        return AssessmentRow(
+            title = title,
+            maxMark = row.maxMark.trim(),
+            weightagePercent = row.weightagePercent.trim(),
+            status = row.status.trim().ifBlank { row.grade.trim() },
+            scoredMark = row.scoredMark.trim().ifBlank { row.marks.trim() },
+            weightageMark = row.weightageMark.trim().ifBlank { row.marks.trim() },
+        )
+    }
+
+    private inline fun firstNonBlank(
+        rows: List<RawMarkRow>,
+        selector: (RawMarkRow) -> String,
+    ): String {
+        return rows
+            .asSequence()
+            .map(selector)
+            .map { it.trim() }
+            .firstOrNull { it.isNotBlank() }
+            .orEmpty()
+    }
+
+    private fun showSemesterStatus(messageResId: Int?) {
+        if (messageResId == null) {
+            semesterStatusText.isVisible = false
+            return
+        }
+        semesterStatusText.isVisible = true
+        semesterStatusText.text = getString(messageResId)
+    }
+
     private fun renderMarks(entries: List<MarkEntry>, summary: String) {
         marksSummaryText.text = summary
+        marksSummaryText.isVisible =
+            summary.isNotBlank() && summary != getString(R.string.marks_summary_default)
         marksAdapter.submit(entries)
         marksList.isVisible = entries.isNotEmpty()
         marksEmptyText.isVisible = entries.isEmpty()
@@ -473,7 +577,7 @@ class MarksActivity : AppCompatActivity() {
         marksNavigationInProgress = false
         if (marksNavigationAttempts >= MAX_NAVIGATION_ATTEMPTS) {
             semesterSpinner.isEnabled = false
-            semesterStatusText.text = getString(R.string.marks_semester_unavailable)
+            showSemesterStatus(R.string.marks_semester_unavailable)
             Toast.makeText(this, R.string.destination_not_found, Toast.LENGTH_SHORT).show()
             return
         }
@@ -800,45 +904,34 @@ class MarksActivity : AppCompatActivity() {
         """.trimIndent()
     }
 
-    private fun openExternal(uri: Uri) {
-        try {
-            startActivity(Intent(Intent.ACTION_VIEW, uri))
-        } catch (_: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.unable_to_open_link, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     private fun formatValue(value: String): String {
         return value.ifBlank { getString(R.string.marks_value_dash) }
     }
 
-    private fun resolveGradeColorRes(grade: String): Int {
-        return when (grade.trim().uppercase()) {
-            "S", "O", "A+", "A" -> R.color.marks_grade_excellent
-            "B+", "B" -> R.color.marks_grade_good
-            "C+", "C", "D" -> R.color.marks_grade_average
-            "E", "P" -> R.color.marks_grade_neutral
-            "F", "N", "RA", "AB", "W", "U" -> R.color.marks_grade_poor
-            else -> R.color.marks_grade_neutral
-        }
+    private fun subjectKey(item: MarkEntry): String {
+        return listOf(
+            item.courseCode.trim().lowercase(),
+            item.courseTitle.trim().lowercase(),
+            item.courseType.trim().lowercase(),
+        ).joinToString("|")
     }
 
-    private fun shouldShowExtraInfo(item: MarkEntry): Boolean {
-        if (item.extra.isBlank()) {
-            return false
+    private fun buildSubjectTitle(item: MarkEntry): String {
+        val parts = buildList {
+            item.courseCode.trim().takeIf { it.isNotBlank() }?.let { add(it.uppercase()) }
+            item.courseTitle.trim().takeIf { it.isNotBlank() }?.let { add(it) }
+            item.courseType.trim().takeIf { it.isNotBlank() }?.let { add(it.uppercase()) }
         }
-        val normalizedExtra = item.extra.lowercase()
-        val hasStructuredData = item.grade.isNotBlank() || item.credits.isNotBlank() || item.marks.isNotBlank()
-        val knownParts = listOf(item.courseCode, item.courseTitle, item.grade, item.credits, item.marks)
-            .filter { it.isNotBlank() }
-        val isLikelyDuplicate = knownParts.isNotEmpty() && knownParts.all { normalizedExtra.contains(it.lowercase()) }
-        return !hasStructuredData && !isLikelyDuplicate
+        return if (parts.isEmpty()) getString(R.string.marks_value_na) else parts.joinToString(" - ")
     }
 
     private inner class MarksAdapter : RecyclerView.Adapter<MarksViewHolder>() {
         private val items = mutableListOf<MarkEntry>()
+        private val expandedKeys = mutableSetOf<String>()
 
         fun submit(newItems: List<MarkEntry>) {
+            val incomingKeys = newItems.map { subjectKey(it) }.toSet()
+            expandedKeys.retainAll(incomingKeys)
             items.clear()
             items.addAll(newItems)
             notifyDataSetChanged()
@@ -851,37 +944,63 @@ class MarksActivity : AppCompatActivity() {
         }
 
         override fun onBindViewHolder(holder: MarksViewHolder, position: Int) {
-            holder.bind(items[position])
+            val item = items[position]
+            val key = subjectKey(item)
+            holder.bind(
+                item = item,
+                expanded = expandedKeys.contains(key),
+            ) {
+                if (expandedKeys.contains(key)) {
+                    expandedKeys.remove(key)
+                } else {
+                    expandedKeys.add(key)
+                }
+                notifyDataSetChanged()
+            }
         }
 
         override fun getItemCount(): Int = items.size
     }
 
     private inner class MarksViewHolder(root: ViewGroup) : RecyclerView.ViewHolder(root) {
-        private val codeText: TextView = root.findViewById(R.id.markCourseCodeText)
-        private val gradeBadgeText: TextView = root.findViewById(R.id.markGradeBadgeText)
-        private val titleText: TextView = root.findViewById(R.id.markCourseTitleText)
-        private val creditsText: TextView = root.findViewById(R.id.markCreditsText)
-        private val marksText: TextView = root.findViewById(R.id.markMarksText)
-        private val extraText: TextView = root.findViewById(R.id.markExtraText)
+        private val headerRow: View = root.findViewById(R.id.markHeaderRow)
+        private val subjectTitleText: TextView = root.findViewById(R.id.markSubjectTitleText)
+        private val expandIcon: ImageView = root.findViewById(R.id.markExpandIcon)
+        private val divider: View = root.findViewById(R.id.markDivider)
+        private val detailsContainer: LinearLayout = root.findViewById(R.id.markDetailsContainer)
 
-        fun bind(item: MarkEntry) {
-            val courseCode = item.courseCode.trim()
-            val courseTitle = item.courseTitle.trim()
-            codeText.text = if (courseCode.isBlank()) getString(R.string.marks_value_na) else courseCode.uppercase()
-            titleText.text = if (courseTitle.isBlank()) getString(R.string.marks_value_na) else courseTitle
-            gradeBadgeText.text = getString(R.string.marks_grade_badge, formatValue(item.grade))
-            gradeBadgeText.backgroundTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(itemView.context, resolveGradeColorRes(item.grade)),
+        fun bind(item: MarkEntry, expanded: Boolean, onToggle: () -> Unit) {
+            subjectTitleText.text = buildSubjectTitle(item)
+            expandIcon.setImageResource(
+                if (expanded) R.drawable.ic_mark_expand_less else R.drawable.ic_mark_expand_more,
             )
-            creditsText.text = formatValue(item.credits)
-            marksText.text = formatValue(item.marks)
+            divider.isVisible = expanded
+            detailsContainer.isVisible = expanded
 
-            if (shouldShowExtraInfo(item)) {
-                extraText.isVisible = true
-                extraText.text = item.extra
+            if (expanded) {
+                bindAssessmentCards(item.assessments)
             } else {
-                extraText.isVisible = false
+                detailsContainer.removeAllViews()
+            }
+
+            headerRow.setOnClickListener { onToggle() }
+        }
+
+        private fun bindAssessmentCards(assessments: List<AssessmentRow>) {
+            detailsContainer.removeAllViews()
+            val inflater = LayoutInflater.from(itemView.context)
+            assessments.forEach { assessment ->
+                val view = inflater.inflate(R.layout.item_mark_assessment, detailsContainer, false)
+                view.findViewById<TextView>(R.id.assessmentTitleText).text = assessment.title
+                view.findViewById<TextView>(R.id.assessmentMaxMarkValue).text = formatValue(assessment.maxMark)
+                view.findViewById<TextView>(R.id.assessmentWeightagePercentValue).text =
+                    formatValue(assessment.weightagePercent)
+                view.findViewById<TextView>(R.id.assessmentStatusValue).text = formatValue(assessment.status)
+                view.findViewById<TextView>(R.id.assessmentScoredMarkValue).text =
+                    formatValue(assessment.scoredMark)
+                view.findViewById<TextView>(R.id.assessmentWeightageMarkValue).text =
+                    formatValue(assessment.weightageMark)
+                detailsContainer.addView(view)
             }
         }
     }
@@ -894,9 +1013,36 @@ class MarksActivity : AppCompatActivity() {
     private data class MarkEntry(
         val courseCode: String,
         val courseTitle: String,
+        val courseType: String,
         val grade: String,
         val credits: String,
         val marks: String,
+        val extra: String,
+        val assessments: List<AssessmentRow>,
+    )
+
+    private data class AssessmentRow(
+        val title: String,
+        val maxMark: String,
+        val weightagePercent: String,
+        val status: String,
+        val scoredMark: String,
+        val weightageMark: String,
+    )
+
+    private data class RawMarkRow(
+        val courseCode: String,
+        val courseTitle: String,
+        val courseType: String,
+        val grade: String,
+        val credits: String,
+        val marks: String,
+        val assessmentTitle: String,
+        val maxMark: String,
+        val weightagePercent: String,
+        val status: String,
+        val scoredMark: String,
+        val weightageMark: String,
         val extra: String,
     )
 
@@ -1104,13 +1250,20 @@ class MarksActivity : AppCompatActivity() {
 
               const codeIndex = findHeaderIndex(['course code', 'coursecode', 'code']);
               const titleIndex = findHeaderIndex(['course title', 'course name', 'title', 'subject']);
+              const courseTypeIndex = findHeaderIndex(['course type', 'class type', 'type']);
+              const assessmentTitleIndex = findHeaderIndex(['assessment', 'component', 'test', 'exam', 'cat', 'quiz']);
+              const maxMarkIndex = findHeaderIndex(['max. mark', 'max mark', 'maximum mark']);
+              const weightagePercentIndex = findHeaderIndex(['weightage %', 'weightage%', 'weightage percentage']);
+              const statusIndex = findHeaderIndex(['status']);
+              const scoredMarkIndex = findHeaderIndex(['scored mark', 'mark scored', 'obtained mark', 'obtained', 'score']);
+              const weightageMarkIndex = findHeaderIndex(['weightage mark', 'weighted mark', 'weightage marks', 'weighted marks']);
               const gradeIndex = findHeaderIndex(['grade']);
               const creditsIndex = findHeaderIndex(['credit']);
               const marksIndex = findHeaderIndex(['mark', 'score']);
               const shouldSkipHeader = header.some(col => col.includes('course') || col.includes('grade') || col.includes('credit'));
 
               const entryRows = shouldSkipHeader ? rows.slice(1) : rows;
-              const entries = entryRows
+              const parsedEntries = entryRows
                 .map(cells => cells.map(cell => normalize(cell)))
                 .filter(cells => cells.some(cell => cell.length > 0))
                 .map(cells => {
@@ -1125,13 +1278,61 @@ class MarksActivity : AppCompatActivity() {
                   };
                   const courseCode = read(codeIndex, 0);
                   const courseTitle = read(titleIndex, 1);
+                  const courseType = read(courseTypeIndex, -1);
+                  const assessmentTitle = read(assessmentTitleIndex, -1);
+                  const maxMark = read(maxMarkIndex, -1);
+                  const weightagePercent = read(weightagePercentIndex, -1);
+                  const status = read(statusIndex, -1);
+                  const scoredMark = read(scoredMarkIndex, marksIndex);
+                  const weightageMark = read(weightageMarkIndex, -1);
                   const grade = read(gradeIndex, -1);
                   const credits = read(creditsIndex, -1);
                   const marks = read(marksIndex, -1);
                   const extra = cells.join(' | ');
-                  return { courseCode, courseTitle, grade, credits, marks, extra };
+                  return {
+                    courseCode,
+                    courseTitle,
+                    courseType,
+                    assessmentTitle,
+                    maxMark,
+                    weightagePercent,
+                    status,
+                    scoredMark,
+                    weightageMark,
+                    grade,
+                    credits,
+                    marks,
+                    extra
+                  };
                 })
-                .filter(row => row.courseCode || row.courseTitle || row.grade || row.marks);
+                .filter(row => row.courseCode || row.courseTitle || row.assessmentTitle || row.grade || row.marks);
+
+              const entries = [];
+              let previousCourseCode = '';
+              let previousCourseTitle = '';
+              let previousCourseType = '';
+              parsedEntries.forEach(row => {
+                const normalizedRow = { ...row };
+                if (!normalizedRow.courseCode && previousCourseCode) {
+                  normalizedRow.courseCode = previousCourseCode;
+                }
+                if (!normalizedRow.courseTitle && previousCourseTitle) {
+                  normalizedRow.courseTitle = previousCourseTitle;
+                }
+                if (!normalizedRow.courseType && previousCourseType) {
+                  normalizedRow.courseType = previousCourseType;
+                }
+                if (normalizedRow.courseCode) {
+                  previousCourseCode = normalizedRow.courseCode;
+                }
+                if (normalizedRow.courseTitle) {
+                  previousCourseTitle = normalizedRow.courseTitle;
+                }
+                if (normalizedRow.courseType) {
+                  previousCourseType = normalizedRow.courseType;
+                }
+                entries.push(normalizedRow);
+              });
 
               const pageText = docs
                 .map(doc => normalize(doc.body ? (doc.body.innerText || doc.body.textContent) : ''))
