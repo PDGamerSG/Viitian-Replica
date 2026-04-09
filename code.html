@@ -1,555 +1,137 @@
 <div class="card-body">
-						<div class="col-auto">
-						<button type="button" name="CoursePageArchive" id="CoursePageArchive" class="btn btn-sm download-btn d-flex align-items-center gap-2" style="background-color: rgb(60, 141, 188); color: white; border-color: rgb(60, 141, 188); --darkreader-inline-bgcolor: #40738f; --darkreader-inline-color: #e5e0d8; --darkreader-inline-border-top: #3c6a83; --darkreader-inline-border-right: #3c6a83; --darkreader-inline-border-bottom: #3c6a83; --darkreader-inline-border-left: #3c6a83;" title="Navigate to Course Material older than FALL SEMESTER 2025-26" aria-label="Download Course Material Archive" data-darkreader-inline-bgcolor="" data-darkreader-inline-color="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="">
-    <i class="bi bi-archive" aria-hidden="true"></i>
-    <span class="d-none d-md-inline">Archive (Navigate to Course Material older than FALL SEMESTER 2025-26)</span>
-</button>
 
+						<form class="row col-12 mx-auto" method="post" id="viewStudentAttendance" name="viewStudentAttendance" autocomplete="off">
 
+							<input type="hidden" name="_csrf" value="b4f8e283-35ea-4249-be37-cb095b70f6b3">
+							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
+
+							<div class="form-group col-sm-12 row">
+								<div class="form-group col-md-1">
+									<label class="control-label" style="text-align: left; float: right;
+										font-weight: bold;">Semester</label>
+								</div>
+								<div class="form-group col-md-4">
+									<select class="form-select" name="semesterSubId" id="semesterSubId" onchange="processStudentAttendance()">
+										<option value="" selected="selected">-- Choose Semester --</option>
+										<option value="VL20252605">Winter Semester 2025-26 - VLR</option>
+										<option value="VL20252601">Fall Semester 2025-26 - VLR</option>
+										<option value="VL20242505">Winter Semester 2024-25 - VLR</option>
+										<option value="VL20242501">Fall Semester 2024-25 - VLR</option>
+									</select>
+								</div>
 							</div>
-							<form role="form" id="coursePageView" name="coursePageView" method="post" autocomplete="off">
-								<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212"> <input type="hidden" name="_csrf" value="a70278eb-d918-44f6-8761-5fc233217760">
-								<!-- Course Selection -->
-								<div class="col-md-12">
-									<fieldset>
-										<legend>Select Registered Course</legend><div id="vit-ext-semester-filter" style="display: flex; align-items: center; gap: 6px; padding: 8px 12px; margin: 8px 0px 12px; border-radius: 8px; flex-wrap: wrap;"><span style="font-size: 13px; font-weight: 600; color: rgb(100, 116, 139); margin-right: 4px; --darkreader-inline-color: #9e9587;" data-darkreader-inline-color="">Filter:</span><button type="button" data-sem-key="all" style="padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; outline: none; border: 1px solid rgb(59, 130, 246); background-color: rgb(59, 130, 246); color: rgb(255, 255, 255); transition: 200ms; line-height: 1.4; letter-spacing: 0.01em; --darkreader-inline-outline: initial; --darkreader-inline-border-top: #1a4790; --darkreader-inline-border-right: #1a4790; --darkreader-inline-border-bottom: #1a4790; --darkreader-inline-border-left: #1a4790; --darkreader-inline-bgcolor: #1b4b99; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-outline="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgcolor="" data-darkreader-inline-color="">All</button><button type="button" data-sem-key="fall" style="padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; outline: none; border: 1px solid rgb(226, 232, 240); background-color: transparent; color: rgb(71, 85, 105); transition: 200ms; line-height: 1.4; letter-spacing: 0.01em; --darkreader-inline-outline: initial; --darkreader-inline-border-top: #333f4f; --darkreader-inline-border-right: #333f4f; --darkreader-inline-border-bottom: #333f4f; --darkreader-inline-border-left: #333f4f; --darkreader-inline-bgcolor: transparent; --darkreader-inline-color: #b0a99c;" data-darkreader-inline-outline="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgcolor="" data-darkreader-inline-color="">Fall · 11</button><button type="button" data-sem-key="winter" style="padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; outline: none; border: 1px solid rgb(226, 232, 240); background-color: transparent; color: rgb(71, 85, 105); transition: 200ms; line-height: 1.4; letter-spacing: 0.01em; --darkreader-inline-outline: initial; --darkreader-inline-border-top: #333f4f; --darkreader-inline-border-right: #333f4f; --darkreader-inline-border-bottom: #333f4f; --darkreader-inline-border-left: #333f4f; --darkreader-inline-bgcolor: transparent; --darkreader-inline-color: #b0a99c;" data-darkreader-inline-outline="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgcolor="" data-darkreader-inline-color="">Winter · 11</button><span style="margin-left: auto; font-size: 11px; color: rgb(148, 163, 184); font-weight: 500; --darkreader-inline-color: #b0a89c;" data-darkreader-inline-color="">22 courses</span><button type="button" id="vit-ext-hide-detail-btn" style="padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; outline: none; border: 1px solid rgb(226, 232, 240); background-color: transparent; color: rgb(71, 85, 105); transition: 200ms; line-height: 1.4; letter-spacing: 0.01em; margin-left: 6px; --darkreader-inline-outline: initial; --darkreader-inline-border-top: #333f4f; --darkreader-inline-border-right: #333f4f; --darkreader-inline-border-bottom: #333f4f; --darkreader-inline-border-left: #333f4f; --darkreader-inline-bgcolor: transparent; --darkreader-inline-color: #b0a99c;" data-darkreader-inline-outline="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgcolor="" data-darkreader-inline-color="">Show Detail ▼</button></div>
-										<div class="col-md-12">
-											<select class="form-select" name="courseId" id="courseId" onchange="getCourseDetail(this)" required="">
-												<option value="">-- Registered Courses --</option>
-												<option value="VL_ICSE103E_00100" data-courseid="VL_ICSE103E_00100" data-crstype="ETH" data-semestr="VL20252601">Fall Semester 2025-26 - ICSE103E - Computer Programming : Java - ETH - Embedded Theory - 3.0</option>
-												<option value="VL_ICSE103E_00100" data-courseid="VL_ICSE103E_00100" data-crstype="ELA" data-semestr="VL20252601">Fall Semester 2025-26 - ICSE103E - Computer Programming : Java - ELA - Embedded Lab - 3.0</option>
-												<option value="VL_IENG102P_00100" data-courseid="VL_IENG102P_00100" data-crstype="LO" data-semestr="VL20252601">Fall Semester 2025-26 - IENG102P - Technical Report Writing - LO - Lab Only - 1.0</option>
-												<option value="VL_IMAT201L_00100" data-courseid="VL_IMAT201L_00100" data-crstype="TH" data-semestr="VL20252601">Fall Semester 2025-26 - IMAT201L - Complex Variables and Linear Algebra - TH - Theory Only - 4.0</option>
-												<option value="VL_IMAT202L_00100" data-courseid="VL_IMAT202L_00100" data-crstype="TH" data-semestr="VL20252605">Winter Semester 2025-26 - IMAT202L - Probability and Statistics - TH - Theory Only - 3.0</option>
-												<option value="VL_IMAT202P_00100" data-courseid="VL_IMAT202P_00100" data-crstype="LO" data-semestr="VL20252605">Winter Semester 2025-26 - IMAT202P - Probability and Statistics Lab - LO - Lab Only - 1.0</option>
-												<option value="VL_ISTS101P_00100" data-courseid="VL_ISTS101P_00100" data-crstype="SS" data-semestr="VL20252601">Fall Semester 2025-26 - ISTS101P - Qualitative Skills Practice I - SS - Soft Skill - 1.5</option>
-												<option value="VL_ISTS102P_00100" data-courseid="VL_ISTS102P_00100" data-crstype="SS" data-semestr="VL20252605">Winter Semester 2025-26 - ISTS102P - Quantitative Skills Practice I - SS - Soft Skill - 1.5</option>
-												<option value="VL_ISWE102L_00100" data-courseid="VL_ISWE102L_00100" data-crstype="TH" data-semestr="VL20252601">Fall Semester 2025-26 - ISWE102L - Data Structures and Algorithms - TH - Theory Only - 3.0</option>
-												<option value="VL_ISWE102P_00100" data-courseid="VL_ISWE102P_00100" data-crstype="LO" data-semestr="VL20252601">Fall Semester 2025-26 - ISWE102P - Data Structures and Algorithms Lab - LO - Lab Only - 1.0</option>
-												<option value="VL_ISWE103L_00100" data-courseid="VL_ISWE103L_00100" data-crstype="TH" data-semestr="VL20252605" selected="selected">Winter Semester 2025-26 - ISWE103L - Database Systems - TH - Theory Only - 3.0</option>
-												<option value="VL_ISWE103P_00100" data-courseid="VL_ISWE103P_00100" data-crstype="LO" data-semestr="VL20252605">Winter Semester 2025-26 - ISWE103P - Database Systems Lab - LO - Lab Only - 1.0</option>
-												<option value="VL_ISWE203L_00100" data-courseid="VL_ISWE203L_00100" data-crstype="TH" data-semestr="VL20252605">Winter Semester 2025-26 - ISWE203L - Theory of Computation - TH - Theory Only - 4.0</option>
-												<option value="VL_ISWE204L_00100" data-courseid="VL_ISWE204L_00100" data-crstype="TH" data-semestr="VL20252601">Fall Semester 2025-26 - ISWE204L - Operating Systems - TH - Theory Only - 3.0</option>
-												<option value="VL_ISWE204P_00100" data-courseid="VL_ISWE204P_00100" data-crstype="LO" data-semestr="VL20252601">Fall Semester 2025-26 - ISWE204P - Operating Systems Lab - LO - Lab Only - 1.0</option>
-												<option value="VL_ISWE205L_00100" data-courseid="VL_ISWE205L_00100" data-crstype="TH" data-semestr="VL20252605">Winter Semester 2025-26 - ISWE205L - Computer Networks - TH - Theory Only - 3.0</option>
-												<option value="VL_ISWE205P_00100" data-courseid="VL_ISWE205P_00100" data-crstype="LO" data-semestr="VL20252605">Winter Semester 2025-26 - ISWE205P - Computer Networks Lab - LO - Lab Only - 1.0</option>
-												<option value="VL_ISWE207L_00100" data-courseid="VL_ISWE207L_00100" data-crstype="TH" data-semestr="VL20252605">Winter Semester 2025-26 - ISWE207L - Object Oriented Analysis and Design - TH - Theory Only - 3.0</option>
-												<option value="VL_ISWE207P_00100" data-courseid="VL_ISWE207P_00100" data-crstype="LO" data-semestr="VL20252605">Winter Semester 2025-26 - ISWE207P - Object Oriented Analysis and Design Lab - LO - Lab Only - 1.0</option>
-												<option value="VL_ISWE301L_00100" data-courseid="VL_ISWE301L_00100" data-crstype="TH" data-semestr="VL20252601">Fall Semester 2025-26 - ISWE301L - Computer Architecture and Organization - TH - Theory Only - 3.0</option>
-												<option value="VL_ISWE304L_00100" data-courseid="VL_ISWE304L_00100" data-crstype="TH" data-semestr="VL20252601">Fall Semester 2025-26 - ISWE304L - Software Architecture - TH - Theory Only - 3.0</option>
-												<option value="VL_ISWE306L_00100" data-courseid="VL_ISWE306L_00100" data-crstype="TH" data-semestr="VL20252605">Winter Semester 2025-26 - ISWE306L - Software Project Management - TH - Theory Only - 3.0</option>
-											</select>
-										</div>
-									</fieldset>
+						</form><br>
+
+						<div class="form-group" id="loadMyFragment"><div class="form-group" id="getStudentDetails">
+
+								<div class="form-group col-sm-12 row">
+
+									<h4 style="text-decoration: underline;"><b>Attendance Information:</b></h4>
+									<h5>
+										<span><span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">* Note:</span> As per norms, <b>Virtual Slots</b> &amp; <b>Medical Leave</b> are not included in attendance percentage calculation.</span>
+									</h5>
+
+									<div id="AttendanceDetailDataTable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div><p id="attendance" style="color: rgb(50, 117, 14); background: rgb(247, 247, 16); width: 950px; font-size: 1.25rem; --darkreader-inline-color: #ade585; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: #92901b;" data-darkreader-inline-color="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><b>*Note: This calculator doesn't calculate the attendance till the exam date, It only calculates the attendance to 74.01%</b></p></div><div class="row dt-row"><div class="col-sm-12"><table id="AttendanceDetailDataTable" class="table table-bordered table-hover responsive dataTable no-footer dtr-inline">
+
+										<thead>
+											<tr style="background-color: rgb(60, 141, 188); border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); --darkreader-inline-bgcolor: #40738f; --darkreader-inline-border-top: #3a3d3d; --darkreader-inline-border-right: #3a3d3d; --darkreader-inline-border-bottom: #3a3d3d; --darkreader-inline-border-left: #3a3d3d; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-color=""><td style="width: 3%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Sl.No.</b></td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Group</b></td><td style="width: 15%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Course Detail</b></td><td style="width: 15%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Detail</b></td><td style="width: 15%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Faculty Detail</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attended Classes/Days</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Total Classes</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Percentage</b></td><td style="width: 3%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">75% Attendance Alert</td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Debar Status</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Detail</b></td></tr>
+										</thead>
+
+										<tbody>
+
+
+
+
+
+
+
+
+
+
+
+										<tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>1</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>IMAT202L - Probability and Statistics - Theory Only</span>												</td>																								<td>													<span>VL2025260501792 - F1+TF1 - SJT109</span>												</td>																								<td>													<span>SIVAKUMAR M - SAS</span>												</td>																								<td style="text-align: center;">													<span>10</span>																									</td>																								<td style="text-align: center;">													<span>40</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">25%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">76 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_0" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_IMAT202L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>2</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>IMAT202P - Probability and Statistics Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260505287 - L51+L52 - PRP449</span>												</td>																								<td>													<span>SIVAKUMAR M - SAS</span>												</td>																								<td style="text-align: center;">													<span>12</span>																									</td>																								<td style="text-align: center;">													<span>28</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">43%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">17 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_1" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_IMAT202P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>3</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISTS102P - Quantitative Skills Practice I - Soft Skill</span>												</td>																								<td>													<span>VL2025260500178 - G1+TG1 - SJT802</span>												</td>																								<td>													<span>FACE (APT) - SSL</span>												</td>																								<td style="text-align: center;">													<span>7</span>																									</td>																								<td style="text-align: center;">													<span>40</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">18%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">87 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_2" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISTS102P_00100','SS');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>4</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE103L - Database Systems - Theory Only</span>												</td>																								<td>													<span>VL2025260502086 - E1+TE1 - SJT113</span>												</td>																								<td>													<span>MUTHAMIL SELVAN T - SCORE</span>												</td>																								<td style="text-align: center;">													<span>9</span>																									</td>																								<td style="text-align: center;">													<span>41</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">22%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">83 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_3" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE103L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>5</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE103P - Database Systems Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260502096 - L45+L46 - SJT219</span>												</td>																								<td>													<span>MUTHAMIL SELVAN T - SCORE</span>												</td>																								<td style="text-align: center;">													<span>16</span>																									</td>																								<td style="text-align: center;">													<span>28</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">58%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">10 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_4" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE103P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>6</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE203L - Theory of Computation - Theory Only</span>												</td>																								<td>													<span>VL2025260502148 - C1+TC1+TCC1 - SJT113</span>												</td>																								<td>													<span>SIVASHANKARI R - SCORE</span>												</td>																								<td style="text-align: center;">													<span>12</span>																									</td>																								<td style="text-align: center;">													<span>55</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">22%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">111 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_5" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE203L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>7</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE205L - Computer Networks - Theory Only</span>												</td>																								<td>													<span>VL2025260502157 - A1+TA1 - SJT109</span>												</td>																								<td>													<span>ASIS KUMAR TRIPATHY - SCORE</span>												</td>																								<td style="text-align: center;">													<span>8</span>																									</td>																								<td style="text-align: center;">													<span>40</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">20%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">84 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_6" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE205L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>8</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE205P - Computer Networks Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260502176 - L37+L38 - SJTG18</span>												</td>																								<td>													<span>ASIS KUMAR TRIPATHY - SCORE</span>												</td>																								<td style="text-align: center;">													<span>8</span>																									</td>																								<td style="text-align: center;">													<span>28</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">29%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">25 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_7" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE205P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>9</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE207L - Object Oriented Analysis and Design - Theory Only</span>												</td>																								<td>													<span>VL2025260502748 - D1+TD1 - SJTG04</span>												</td>																								<td>													<span>KAMALAKANNAN J - SCORE</span>												</td>																								<td style="text-align: center;">													<span>8</span>																									</td>																								<td style="text-align: center;">													<span>39</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">21%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">81 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_8" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE207L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>10</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE207P - Object Oriented Analysis and Design Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260502891 - L55+L56 - SJTG17</span>												</td>																								<td>													<span>KAMALAKANNAN J - SCORE</span>												</td>																								<td style="text-align: center;">													<span>6</span>																									</td>																								<td style="text-align: center;">													<span>26</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">24%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">26 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_9" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE207P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>11</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE306L - Software Project Management - Theory Only</span>												</td>																								<td>													<span>VL2025260502200 - B1+TB1 - SJT113</span>												</td>																								<td>													<span>JOTHISH KUMAR M - VITIST</span>												</td>																								<td style="text-align: center;">													<span>9</span>																									</td>																								<td style="text-align: center;">													<span>41</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">22%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">83 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_10" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE306L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr></tbody>
+									</table></div><div>
+		    <p style="color: rgb(34, 144, 62); --darkreader-inline-color: #7ed38e;" data-darkreader-inline-color="">*Attendance Greater than 75%</p>
+		    <p style="color: rgb(255, 171, 16); margin-top: -10px; --darkreader-inline-color: #f2b13a;" data-darkreader-inline-color="">*Be Cautious your Attendance is in between 74.01% to 74.99%</p>
+		    <p style="color: rgb(238, 75, 43); margin-top: -10px; --darkreader-inline-color: #de6347;" data-darkreader-inline-color="">*Attendance Less than 75%</p>
+		    </div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"></div></div></div>
+
 								</div>
-								<div class="col-md-12">
-									<!-- Course Book Detail -->
-									<fieldset style="display: none;">
-										<legend>Detail</legend>
-										<div class="container-fluid">
-											<div class="accordion" id="courseAccordion">
-
-												<!-- Course Outcome Accordion -->
-												<div class="accordion-item">
-													<h2 class="accordion-header" id="headingOutcome">
-														<button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOutcome" aria-expanded="false" aria-controls="collapseOutcome">Course Outcome</button>
-													</h2>
-													<div id="collapseOutcome" class="accordion-collapse collapse" aria-labelledby="headingOutcome" data-bs-parent="#courseAccordion">
-														<div class="accordion-body">
-															<div class="card-custom">
-																<table class="table table-bordered table-striped">
-																	<thead class="table-light">
-																		<tr>
-																			<th style="width: 10%;">Outcome No.</th>
-																			<th>Description</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td class="text-center">1</td>
-																			<td>Understand the basic concepts of database and various data models used in database design</td>
-																		</tr>
-																		<tr>
-																			<td class="text-center">2</td>
-																			<td>Design and Implement conceptual models and create database design using normalizaiton</td>
-																		</tr>
-																		<tr>
-																			<td class="text-center">3</td>
-																			<td>Applying Structured Query Language SQL and Procedural Language extension to Structured Query Language PL SQL for implementation of database design and embedding applications in database system</td>
-																		</tr>
-																		<tr>
-																			<td class="text-center">4</td>
-																			<td>Comprehend indexing techniques and query processing to optimize the database system performance</td>
-																		</tr>
-																		<tr>
-																			<td class="text-center">5</td>
-																			<td>Apply the concept of transaction processing and recovery</td>
-																		</tr>
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<!-- Course Syllabus Modules Accordion -->
-												<div class="accordion-item">
-													<h2 class="accordion-header" id="headingModules">
-														<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseModules" aria-expanded="false" aria-controls="collapseModules">Course Syllabus
-															Modules</button>
-													</h2>
-													<div id="collapseModules" class="accordion-collapse collapse" aria-labelledby="headingModules" data-bs-parent="#courseAccordion">
-														<div class="accordion-body">
-															<div class="card-custom">
-																<table class="table table-bordered table-striped table-hover table-responsive-sm">
-																	<thead class="thead-dark">
-																		<tr style="background-color: rgb(46, 134, 193); color: white; text-align: center; --darkreader-inline-bgcolor: #376e91; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-color="">
-																			<th style="width: 5%;">Module Detail</th>
-																			<th style="width: 20%;">Topics</th>
-																			<th style="width: 5%;">Bloom's Taxonomy ID</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-
-
-																				<tr>
-																					<td rowspan="4" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">1 - Introduction to Databases - <b>CO:</b> 1</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - Introduction to Database - Purpose and Applications</td>
-																					<td>
-																						<span>Understand</span>    </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Data Models - Data Abstraction - Instance and Schemas</td>
-																					<td>
-																						<span>Understand</span>    </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">3 - Database Languages - Database Users and User Interfaces</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">4 - Database Architecture - Classification.</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-
-
-
-																				<tr>
-																					<td rowspan="7" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">2 - Conceptual Data Modeling and Database Design - <b>CO:</b> 2</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - High-Level Conceptual Data Models for Database Design</td>
-																					<td>
-																						<span>Understand</span>    </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Entity-Relationship (ER) model - Entity Types - Entity Sets - Attributes and Keys - Relationship Types - Relationship Sets</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">3 - Roles and Structural Constraints</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">4 - Weak Entity Types - ER Diagrams - Naming Conventions and Design Issues</td>
-																					<td>
-																						    <span>Create</span></td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">5 - Relationship Types of Degree Higher than Two</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">6 - Enhanced ER (EER) model</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">7 - EER diagrams</td>
-																					<td>
-																						    <span>Create</span></td>
-																				</tr>
-
-
-
-																				<tr>
-																					<td rowspan="7" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">3 - The Relational Data Model - <b>CO:</b> 2</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - Relational Model Constraints</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Update Operations</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">3 - Dealing with Constraint Violations</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">4 - Relational Algebra  Unary and Binary Relational Operations</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">5 - Additional Relational Operations</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">6 - Database Design Using ER Relation Mapping</td>
-																					<td>
-																						   <span>Evaluate</span> </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">7 - EER to Relational Mapping</td>
-																					<td>
-																						   <span>Evaluate</span> </td>
-																				</tr>
-
-
-
-																				<tr>
-																					<td rowspan="4" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">4 - SQL and PL SQL - <b>CO:</b> 3</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - Data Definition and Data Types - Specifying Constraints in SQL</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Basic Retrieval Queries in SQL - INSERT, DELETE, and UPDATE Statements in SQL</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">3 - Virtual Tables - In-built functions - Complex Queries - Nested - Correlated</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">4 - PL SOL block  Cursor - Function - Procedure - Trigger</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-
-
-
-																				<tr>
-																					<td rowspan="7" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">5 - Database Design Theory and Normalization - <b>CO:</b> 2</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - Informal Design Guidelines for Relation Schemas</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Functional Dependencies - Inference Rule</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">3 - Equivalence and Minimal Cover  Properties of Relational Decompositions</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">4 - Algorithms for Relational Database Schema Design</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">5 - Normal Forms based on Primary Keys</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">6 - Boyce Codd Normal Form BCNF</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">7 - 4NF and 5NF</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-
-
-
-																				<tr>
-																					<td rowspan="7" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">6 - Indexing and Query Processing - <b>CO:</b> 4</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - Sparse and Dense Index</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Primary, Secondary and Clustered Index</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">3 - Introduction to B-Tree Index</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">4 - Query Execution plan</td>
-																					<td>
-																						   <span>Evaluate</span> </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">5 - Basic algorithms for query execution</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">6 - Heuristic Query Optimization Technique</td>
-																					<td>
-																						   <span>Evaluate</span> </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">7 - Query Tree Examples</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-
-
-
-																				<tr>
-																					<td rowspan="7" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">7 - Transaction Processing and Recovery - <b>CO:</b> 5</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - Introduction to Transaction Processing - Desirable Properties of Transactions</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Characterizing Schedules Based on Serializability</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">3 - Concurrency - Two-Phase Locking Techniques for Concurrency Control</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">4 - Multi-version Techniques</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">5 - Techniques  Recovery Concepts  NO-UNDO REDO Recovery Based on Deferred Update</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">6 - Recovery Techniques Based on Immediate Update</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">7 - Algorithm for Recovery and Isolation Exploiting Semantics</td>
-																					<td>
-																						 <span>Apply</span>   </td>
-																				</tr>
-
-
-
-																				<tr>
-																					<td rowspan="2" style="vertical-align: middle; font-weight: bold; background-color: rgb(244, 246, 247); --darkreader-inline-bgcolor: #262b2c;" data-darkreader-inline-bgcolor="">8 - Contemporary Issues - <b>CO:</b> 4</td>
-																					<td class="text-left" style="white-space: pre-line;">1 - Guest Lecture by Industry Experts R and D organizations</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-																				<tr>
-
-																					<td class="text-left" style="white-space: pre-line;">2 - Guest Lecture by Industry Experts R and D organizations</td>
-																					<td>
-																						  <span>Analyze</span>  </td>
-																				</tr>
-
-
-																	</tbody>
-																</table>
-															</div>
-														</div>
-													</div>
-												</div>
-
-												<!-- Course Book Accordion -->
-												<div class="accordion-item">
-													<h2 class="accordion-header" id="headingBooks">
-														<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseBooks" aria-expanded="false" aria-controls="collapseBooks">
-															Course Book</button>
-													</h2>
-													<div id="collapseBooks" class="accordion-collapse collapse" aria-labelledby="headingBooks" data-bs-parent="#courseAccordion">
-														<div class="accordion-body">
-															<div class="card-custom">
-																<table class="table table-striped table-bordered" id="Books">
-																	<thead>
-																		<tr align="center" style="background-color: rgb(36, 113, 163); color: white; --darkreader-inline-bgcolor: #2e5e7d; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-color="">
-																			<td style="width: 8%;"><b>Book Number</b></td>
-																			<td style="width: 8%;"><b>Book Type</b></td>
-																			<td style="width: 23%;"><b>Book Title</b></td>
-																			<td style="width: 18%;"><b>Authors</b></td>
-																			<td style="width: 10%;"><b>Publisher</b></td>
-																			<td style="width: 7%;"><b>Published Year</b></td>
-																			<td style="width: 8%;"><b>Edition</b></td>
-																			<td style="width: 8%;"><b>Volume</b></td>
-																			<td style="width: 8%;"><b>Series</b></td>
-																			<td style="width: 10%;"><b>ISBN</b></td>
-																		</tr>
-																	</thead>
-																	<tbody>
-																		<tr>
-																			<td><span>
-
-																					<span>R1</span>
-
-																			</span></td>
-																			<td><span>
-																					 <span>Reference Book</span>
-																			</span></td>
-																			<td>Database Systems: A Practical Approach to Design, Implementation, and Management</td>
-																			<td>Thomas Connolly, Carolyn Begg</td>
-																			<td>Pearson Education</td>
-																			<td align="center">2019</td>
-																			<td align="center">6</td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																		</tr>
-																		<tr>
-																			<td><span>
-
-																					<span>R2</span>
-
-																			</span></td>
-																			<td><span>
-																					 <span>Reference Book</span>
-																			</span></td>
-																			<td>Database System Concepts</td>
-																			<td>Abraham Silberschatz, Henry F. Korth and S. Sudarshan</td>
-																			<td>McGraw Hill</td>
-																			<td align="center">2021</td>
-																			<td align="center">7</td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																		</tr>
-																		<tr>
-																			<td><span>
-
-																					<span>R3</span>
-
-																			</span></td>
-																			<td><span>
-																					 <span>Reference Book</span>
-																			</span></td>
-																			<td>Database Management Systems</td>
-																			<td>Raghu Ramakrishnan and Johannes Gehrke</td>
-																			<td>McGraw Hill</td>
-																			<td align="center">2007</td>
-																			<td align="center">3</td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																		</tr>
-																		<tr>
-																			<td><span>
-																					<span>T1</span>
-
-
-																			</span></td>
-																			<td><span>
-																					<span>Text Book</span>
-																			</span></td>
-																			<td>Fundamentals of Database Systems</td>
-																			<td>RamezElmasri and Shamkant B. Navathe</td>
-																			<td>Pearson Education</td>
-																			<td align="center">2017</td>
-																			<td align="center">7</td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																			<td align="center"></td>
-																		</tr>
-																	</tbody>
-																</table>
-
-															</div>
-														</div>
-													</div>
-												</div>
-
-											</div>
+							</div></div>
+
+						<div class="form-group col-sm-12 row">
+						<div id="StudentAttendanceDetailFragment"><div id="StudentAttendanceDetailFragment">
+							<div class="modal" id="StudentAttendanceDetailModal" style="display: none;" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="width: 75%; max-width: 75%;">
+									<div class="modal-content">
+
+										<div class="modal-header">
+									    	<h4 class="modal-title" style="font-weight: bold; text-decoration:underline;">Attendance Detail</h4>
 										</div>
-									</fieldset>
-								</div>
 
-								<!-- End of Accordion -->
+									    <div class="modal-body">
 
-								<div class="col-md-12">
-									<!-- Course Book Detail -->
-									<fieldset>
-										<legend>Course Materials</legend>
-										<div class="container-fluid">
-											<div class="table-responsive">
+									       	<div id="StudentCourseDetailDataTable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row dt-row"><div class="col-sm-12"><table id="StudentCourseDetailDataTable" class="table table-bordered responsive dataTable no-footer dtr-inline">
 
-													<div class="card shadow-lg border-0 mb-5">
-														<div class="card-body bg-light">
-															<div class="table-responsive">
-																<div id="materialTable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div class="row"><div class="col-sm-12 col-md-6"><div class="dataTables_length" id="materialTable_length"><label>Show <select name="materialTable_length" aria-controls="materialTable" class="form-select form-select-sm"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> entries</label></div></div><div class="col-sm-12 col-md-6"><div id="materialTable_filter" class="dataTables_filter"><label>Search:<input type="search" class="form-control form-control-sm" placeholder="" aria-controls="materialTable"></label></div></div></div><div class="row dt-row"><div class="col-sm-12"><table id="materialTable" class="table table-bordered table-hover text-center align-middle dataTable no-footer">
-																	<thead class="table-primary text-dark">
-																		<tr><th style="width: 35.7778px;" class="sorting sorting_asc" tabindex="0" aria-controls="materialTable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="#: activate to sort column descending">#</th><th style="width: 307px;" class="sorting" tabindex="0" aria-controls="materialTable" rowspan="1" colspan="1" aria-label="Course Detail: activate to sort column ascending">Course Detail</th><th style="width: 643.139px;" class="sorting" tabindex="0" aria-controls="materialTable" rowspan="1" colspan="1" aria-label="Material Detail: activate to sort column ascending">Material Detail</th><th style="width: 243.875px;" class="sorting" tabindex="0" aria-controls="materialTable" rowspan="1" colspan="1" aria-label="Uploaded By: activate to sort column ascending">Uploaded By</th><th style="width: 66.5417px;" class="sorting" tabindex="0" aria-controls="materialTable" rowspan="1" colspan="1" aria-label="Download: activate to sort column ascending">Download</th></tr>
-																	</thead>
-																	<tbody>
+									       		<thead>
+													<tr style="background-color: rgb(60, 141, 188); border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); --darkreader-inline-bgcolor: #40738f; --darkreader-inline-border-top: #3a3d3d; --darkreader-inline-border-right: #3a3d3d; --darkreader-inline-border-bottom: #3a3d3d; --darkreader-inline-border-left: #3a3d3d; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-color=""><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Group</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Course Detail</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Detail</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Faculty Detail</b></td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Registered Date &amp; Time</b></td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Date / Type</b></td><td style="width: 13%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Status</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Debar Status</b></td></tr>
+												</thead>
 
+												<tbody>
 
+												<tr class="odd">
+														<td style="text-align: center;" class="dtr-control" tabindex="0">
+															<span>General (Semester)</span>
+														</td>
+														<td>
+															<span>IMAT202L - Probability and Statistics - Theory Only</span>
+														</td>
+														<td>
+															<span>VL2025260501792 - F1+TF1 - SJT109</span>
+														</td>
+														<td>
+															<span>SIVAKUMAR M - SAS</span>
+														</td>
+														<td style="text-align: center;">
+															<span>01-11-2025 18:00:41</span>
+														</td>
+														<td style="text-align: center;">
+															<span>02-11-2025</span>
+															<span>
 
+																<span> / Biometric</span>
+															</span>
+														</td>
+														<td>
+															<span>
+																  <span><b>Present :</b> 9</span><br>
+																  <span><b>Absent :</b> 30</span><br>
+																  <span><b>On Duty :</b> 1<br></span>
 
 
 
+																  <span><b>Attended :</b> 10</span><br>
+																  <span><b>Total Class :</b> 40</span><br>
+																  <span><b>Percentage : </b>
+																	  <span style="color: red; font-size: 25px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">25%</span>
 
+																  </span>
+															</span>
 
+														</td>
+														<td>
 
+															<span style="align: center; text-align: center;">-</span>
+														</td>
+													</tr></tbody>
 
+											</table></div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"></div></div></div>
 
+											<div id="StudentAttendanceDetailDataTable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row dt-row"><div class="col-sm-12"><table id="StudentAttendanceDetailDataTable" class="table table-bordered table-hover responsive dataTable no-footer dtr-inline">
+												<thead>
+													<tr style="background-color: rgb(36, 113, 163); color: white; text-align: center; --darkreader-inline-bgcolor: #2e5e7d; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-color=""><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 5%;">Sl.No.</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 8%;">Date</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Slot</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 20%;">Day / Time</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Status</td></tr>
+												</thead>
+												<tbody>
 
 
 
@@ -590,266 +172,980 @@
 
 
 
-																	<tr class="odd">
-																			<td style="width: 5px;" class="sorting_1">1</td>
-																			<td class="text-start px-3">
+												<tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>1</span>
+														</td>
+														<td align="center">
+															<span>08-04-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
 
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">database recovery</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">8</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Document)</span>
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
 
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">10905 - MUTHAMIL SELVAN T - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">09-04-2026</span>
-																				</div>
-																			</td><td>
-																					<button type="button" name="downloadmat" id="downloadmat" class="btn btn-sm btn-outline-primary download-btn" title="Download Material" data-fileid="2026016420">
-																						<i class="bi bi-download"></i>
-																					</button>
-																				</td>
-																		</tr><tr class="even">
-																			<td style="width: 5px;" class="sorting_1">2</td>
-																			<td class="text-start px-3">
 
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">Transaction processing</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">7</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Document)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">10905 - MUTHAMIL SELVAN T - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">06-04-2026</span>
-																				</div>
-																			</td><td>
-																					<button type="button" name="downloadmat" id="downloadmat" class="btn btn-sm btn-outline-primary download-btn" title="Download Material" data-fileid="2026015899">
-																						<i class="bi bi-download"></i>
-																					</button>
-																				</td>
-																		</tr><tr class="odd">
-																			<td style="width: 5px;" class="sorting_1">3</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">query processing</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">6</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Document)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">10905 - MUTHAMIL SELVAN T - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">01-04-2026</span>
-																				</div>
-																			</td><td>
-																					<button type="button" name="downloadmat" id="downloadmat" class="btn btn-sm btn-outline-primary download-btn" title="Download Material" data-fileid="2026015393">
-																						<i class="bi bi-download"></i>
-																					</button>
-																				</td>
-																		</tr><tr class="even">
-																			<td style="width: 5px;" class="sorting_1">4</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">indexing</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">6</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Document)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">10905 - MUTHAMIL SELVAN T - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">01-04-2026</span>
-																				</div>
-																			</td><td>
-																					<button type="button" name="downloadmat" id="downloadmat" class="btn btn-sm btn-outline-primary download-btn" title="Download Material" data-fileid="2026015392">
-																						<i class="bi bi-download"></i>
-																					</button>
-																				</td>
-																		</tr><tr class="odd">
-																			<td style="width: 5px;" class="sorting_1">5</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">Query Processing and Optimization</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">6</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Document)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">11581 - SENTHILKUMAR N - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">27-03-2026</span>
-																				</div>
-																			</td><td>
-																					<button type="button" name="downloadmat" id="downloadmat" class="btn btn-sm btn-outline-primary download-btn" title="Download Material" data-fileid="2026014929">
-																						<i class="bi bi-download"></i>
-																					</button>
-																				</td>
-																		</tr><tr class="even">
-																			<td style="width: 5px;" class="sorting_1">6</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">CAT-2 Key E2 slot</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">0</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Document)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">11581 - SENTHILKUMAR N - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">26-03-2026</span>
-																				</div>
-																			</td><td>
-																					<button type="button" name="downloadmat" id="downloadmat" class="btn btn-sm btn-outline-primary download-btn" title="Download Material" data-fileid="2026014725">
-																						<i class="bi bi-download"></i>
-																					</button>
-																				</td>
-																		</tr><tr class="odd">
-																			<td style="width: 5px;" class="sorting_1">7</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">Module 5</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">5</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Web Link)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">19570 - PARVATHI R - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">14-03-2026</span>
-																				</div>
-																			</td><td>
-																					<a href="https://drive.google.com/file/d/1LIU3DzL9vEd8KON78--vbmLTjN-CvtEd/view?usp=sharing" target="_blank" class="btn btn-sm btn-outline-primary download-btn" title="Open Material Link" data-fileid="2026013934"> <i class="bi bi-link-45deg"></i>
-																					</a>
-																				 </td>
-																		</tr><tr class="even">
-																			<td style="width: 5px;" class="sorting_1">8</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">Module 4</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">4</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Web Link)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">19570 - PARVATHI R - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">14-03-2026</span>
-																				</div>
-																			</td><td>
-																					<a href="https://docs.google.com/presentation/d/1r7TyRWjJFsZTyCXxnRR-M0UtWE_PZXAK/edit?usp=sharing&amp;ouid=110733497430242406202&amp;rtpof=true&amp;sd=true" target="_blank" class="btn btn-sm btn-outline-primary download-btn" title="Open Material Link" data-fileid="2026013933"> <i class="bi bi-link-45deg"></i>
-																					</a>
-																				 </td>
-																		</tr><tr class="odd">
-																			<td style="width: 5px;" class="sorting_1">9</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">Module 3</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">3</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Web Link)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">19570 - PARVATHI R - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">14-03-2026</span>
-																				</div>
-																			</td><td>
-																					<a href="https://drive.google.com/file/d/1V6cQAM68MaCCYOlXXPNKUhdeCV1JxC01/view?usp=drive_link" target="_blank" class="btn btn-sm btn-outline-primary download-btn" title="Open Material Link" data-fileid="2026013932"> <i class="bi bi-link-45deg"></i>
-																					</a>
-																				 </td>
-																		</tr><tr class="even">
-																			<td style="width: 5px;" class="sorting_1">10</td>
-																			<td class="text-start px-3">
-
-																				<div class="mt-1">
-																					<span>Winter Semester 2025-26</span><br>
-																					<span>ISWE103L - Database Systems - TH</span>
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(46, 134, 193); font-weight: 500; --darkreader-inline-color: #5f9dc5;" data-darkreader-inline-color="">SQL Constraint Violations</span>
-																					<br> <span style="color: rgb(40, 180, 99); font-style: italic; --darkreader-inline-color: #68d08e;" data-darkreader-inline-color="">4</span>&nbsp; <span style="color: rgb(175, 122, 197); font-weight: bold; --darkreader-inline-color: #b083bb;" data-darkreader-inline-color="">(Document)</span>
-
-																				</div>
-																			</td>
-																			<td class="text-start px-3">
-																				<div class="mt-1">
-																					<span style="color: rgb(202, 111, 30); font-size: 0.95rem; font-weight: bold; --darkreader-inline-color: #d89352;" data-darkreader-inline-color="">11581 - SENTHILKUMAR N - SCORE</span><br> <span style="color: rgb(86, 101, 115); font-size: 0.9rem; font-weight: bold; --darkreader-inline-color: #aaa194;" data-darkreader-inline-color="">13-03-2026</span>
-																				</div>
-																			</td><td>
-																					<button type="button" name="downloadmat" id="downloadmat" class="btn btn-sm btn-outline-primary download-btn" title="Download Material" data-fileid="2026013529">
-																						<i class="bi bi-download"></i>
-																					</button>
-																				</td>
-																		</tr></tbody>
-																</table><div style="width: 5%;"></div><div style="width: 25%;"></div><div style="width: 50%;"></div><div style="width: 75%;"></div><div style="width: 2%;"></div></div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"><div class="dataTables_paginate paging_simple_numbers" id="materialTable_paginate"><ul class="pagination"><li class="paginate_button page-item previous disabled" id="materialTable_previous"><a aria-controls="materialTable" aria-disabled="true" role="link" data-dt-idx="previous" tabindex="-1" class="page-link">Previous</a></li><li class="paginate_button page-item active"><a href="#" aria-controls="materialTable" role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li><li class="paginate_button page-item "><a href="#" aria-controls="materialTable" role="link" data-dt-idx="1" tabindex="0" class="page-link">2</a></li><li class="paginate_button page-item "><a href="#" aria-controls="materialTable" role="link" data-dt-idx="2" tabindex="0" class="page-link">3</a></li><li class="paginate_button page-item "><a href="#" aria-controls="materialTable" role="link" data-dt-idx="3" tabindex="0" class="page-link">4</a></li><li class="paginate_button page-item "><a href="#" aria-controls="materialTable" role="link" data-dt-idx="4" tabindex="0" class="page-link">5</a></li><li class="paginate_button page-item "><a href="#" aria-controls="materialTable" role="link" data-dt-idx="5" tabindex="0" class="page-link">6</a></li><li class="paginate_button page-item next" id="materialTable_next"><a href="#" aria-controls="materialTable" role="link" data-dt-idx="next" tabindex="0" class="page-link">Next</a></li></ul></div></div></div></div>
-															</div>
-														</div>
-
-													</div>
-
-											</div>
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>2</span>
+														</td>
+														<td align="center">
+															<span>06-04-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>3</span>
+														</td>
+														<td align="center">
+															<span>01-04-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>4</span>
+														</td>
+														<td align="center">
+															<span>30-03-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>5</span>
+														</td>
+														<td align="center">
+															<span>28-03-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>6</span>
+														</td>
+														<td align="center">
+															<span>27-03-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>7</span>
+														</td>
+														<td align="center">
+															<span>25-03-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>8</span>
+														</td>
+														<td align="center">
+															<span>13-03-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>9</span>
+														</td>
+														<td align="center">
+															<span>11-03-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>10</span>
+														</td>
+														<td align="center">
+															<span>09-03-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>11</span>
+														</td>
+														<td align="center">
+															<span>06-03-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>12</span>
+														</td>
+														<td align="center">
+															<span>25-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>13</span>
+														</td>
+														<td align="center">
+															<span>23-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>14</span>
+														</td>
+														<td align="center">
+															<span>20-02-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>15</span>
+														</td>
+														<td align="center">
+															<span>18-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>16</span>
+														</td>
+														<td align="center">
+															<span>16-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>17</span>
+														</td>
+														<td align="center">
+															<span>14-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>18</span>
+														</td>
+														<td align="center">
+															<span>13-02-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+
+
+																<span>On Duty</span>
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>19</span>
+														</td>
+														<td align="center">
+															<span>11-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>20</span>
+														</td>
+														<td align="center">
+															<span>09-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>21</span>
+														</td>
+														<td align="center">
+															<span>06-02-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>22</span>
+														</td>
+														<td align="center">
+															<span>04-02-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>23</span>
+														</td>
+														<td align="center">
+															<span>24-01-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>24</span>
+														</td>
+														<td align="center">
+															<span>23-01-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>25</span>
+														</td>
+														<td align="center">
+															<span>21-01-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>26</span>
+														</td>
+														<td align="center">
+															<span>19-01-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>27</span>
+														</td>
+														<td align="center">
+															<span>14-01-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>28</span>
+														</td>
+														<td align="center">
+															<span>12-01-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>29</span>
+														</td>
+														<td align="center">
+															<span>09-01-2026</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>30</span>
+														</td>
+														<td align="center">
+															<span>07-01-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>31</span>
+														</td>
+														<td align="center">
+															<span>05-01-2026</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>32</span>
+														</td>
+														<td align="center">
+															<span>20-12-2025</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>33</span>
+														</td>
+														<td align="center">
+															<span>19-12-2025</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>34</span>
+														</td>
+														<td align="center">
+															<span>17-12-2025</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>35</span>
+														</td>
+														<td align="center">
+															<span>15-12-2025</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>36</span>
+														</td>
+														<td align="center">
+															<span>12-12-2025</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>37</span>
+														</td>
+														<td align="center">
+															<span>10-12-2025</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>WED / 10:00-10:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>38</span>
+														</td>
+														<td align="center">
+															<span>08-12-2025</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="odd">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>39</span>
+														</td>
+														<td align="center">
+															<span>06-12-2025</span>
+														</td>
+														<td align="center">
+															<span>F1</span>
+														</td>
+														<td align="center">
+
+															<span>MON / 09:00-09:50</span>
+														</td>
+														<td align="center">
+															<span>
+
+																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
+
+
+
+
+															</span>
+														</td>
+													</tr><tr class="even">
+														<td align="center" class="dtr-control" tabindex="0">
+															<span>40</span>
+														</td>
+														<td align="center">
+															<span>05-12-2025</span>
+														</td>
+														<td align="center">
+															<span>TF1</span>
+														</td>
+														<td align="center">
+
+															<span>FRI / 11:00-11:50</span>
+														</td>
+														<td align="center">
+															<span>
+																<span>Present</span>
+
+
+
+
+
+															</span>
+														</td>
+													</tr></tbody>
+											</table></div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"></div></div></div>
+
+
 										</div>
-									</fieldset>
+
+										<div class="modal-footer">
+										    <button style="padding:3px 17px;font-size:13px;" class="btn btn-primary" type="button" name="studentAttendanceDetailCloseButton" id="studentAttendanceDetailCloseButton" data-bs-dismiss="modal">Close</button>
+										</div>
+
+									</div>
 								</div>
-							</form>
-							<form id="courseMaterialstudentfileDown" method="post" action="/vtop/downloadCourseMaterialFacultyPdf"><input type="hidden" name="_csrf" value="a70278eb-d918-44f6-8761-5fc233217760">
-								<input type="hidden" name="_csrf" value="a70278eb-d918-44f6-8761-5fc233217760"> <input type="hidden" name="authorizedID" id="authorizedID2" value="24MIS0212"> <input type="hidden" name="fileId" id="fileId">
-							</form>
+							</div>
+						</div></div>
 						</div>
+
+					</div>

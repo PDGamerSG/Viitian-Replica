@@ -30,6 +30,16 @@
     <string name="marks_row_status">Status</string>
     <string name="marks_row_scored_mark">Scored Mark</string>
     <string name="marks_row_weightage_mark">Weightage Mark</string>
+    <string name="attendance_screen_title">Attendance</string>
+    <string name="attendance_semester_loading">Loading semester options...</string>
+    <string name="attendance_semester_unavailable">Could not load semester list.</string>
+    <string name="attendance_semester_apply_failed">Could not apply selected semester.</string>
+    <string name="attendance_loading">Loading attendance...</string>
+    <string name="attendance_no_data">No attendance data available for the selected semester.</string>
+    <string name="attendance_average_default">Average Attendance - --%</string>
+    <string name="attendance_average_format">Average Attendance - %1$d%%</string>
+    <string name="attendance_counts_format">Total Class - %1$s | Attended Class - %2$s</string>
+    <string name="attendance_percent_format">%1$d%%</string>
     <string name="da_courses_title">Courses for Assignment</string>
     <string name="da_courses_loading">Loading assignment courses...</string>
     <string name="da_courses_unavailable">Could not load assignment courses. Pull to refresh.</string>

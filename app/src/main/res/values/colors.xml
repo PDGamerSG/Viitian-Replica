@@ -23,5 +23,7 @@
     <color name="marks_grade_average">#F2994A</color>
     <color name="marks_grade_poor">#E24C4C</color>
     <color name="marks_grade_neutral">#6C757D</color>
+    <color name="attendance_ring_progress">#FF4D4D</color>
+    <color name="attendance_ring_track">#B8B5C8</color>
 </resources>
 
