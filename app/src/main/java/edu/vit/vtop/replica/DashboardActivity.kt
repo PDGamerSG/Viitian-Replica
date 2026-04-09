@@ -24,6 +24,9 @@ class DashboardActivity : AppCompatActivity() {
         findViewById<View>(R.id.cardDaUpload).setOnClickListener {
             openDaUpload()
         }
+        findViewById<View>(R.id.cardCoursePage).setOnClickListener {
+            openCoursePage()
+        }
         findViewById<View>(R.id.cardPortalHome).setOnClickListener {
             openPortal(PortalActivity.ACTION_PORTAL_HOME)
         }
@@ -58,6 +61,10 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun openDaUpload() {
         startActivity(Intent(this, DaCoursesActivity::class.java))
+    }
+
+    private fun openCoursePage() {
+        startActivity(Intent(this, CoursePageCoursesActivity::class.java))
     }
 
     private fun logoutToLogin() {

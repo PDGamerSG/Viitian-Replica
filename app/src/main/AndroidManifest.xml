@@ -14,6 +14,16 @@
         android:theme="@style/Theme.VITianReplica"
         android:usesCleartextTraffic="false">
         <activity
+            android:name=".CoursePageMaterialsActivity"
+            android:enableOnBackInvokedCallback="true"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".CoursePageCoursesActivity"
+            android:enableOnBackInvokedCallback="true"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".DaAssessmentsActivity"
             android:enableOnBackInvokedCallback="true"
             android:exported="false"
