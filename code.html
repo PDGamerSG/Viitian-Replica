@@ -1,145 +1,4 @@
-this is the main page of the when the da upload opens
-<div class="card-body">
-						<form role="form" id="digitalAssignment" name="digitalAssignment" method="post" autocomplete="off">
-							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
-							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
-							<!-- th:object="${examSchedule}"> -->
-							<div class="col-md-16" style="margin-top: 20px; margin-left: 1px;">
-								<div>
-									<div class="col-md-12">
-                        			<div class="row mb-3 justify-content-center">
-												<label for="acadYear" class="col-md-2 form-label">Select
-													Semester</label>
-
-												<div class="col-md-4">
-													<select class="form-select" name="semesterSubId" id="semesterSubId" onchange="dAOnChange();">
-														<option value="" selected="selected">-- Choose
-															Semester --</option>
-														<option value="VL20252605" selected="selected">Winter Semester 2025-26</option>
-														<option value="VL20252601">Fall Semester 2025-26</option>
-														<option value="VL20242507">Summer Semester 2024-25</option>
-														<option value="VL20242505">Winter Semester 2024-25</option>
-														<option value="VL20242501">Fall Semester 2024-25</option>
-														<option value="VL20232407">Summer Semester 2023-24</option>
-														<option value="VL20232406">Tri Semester III &amp; VI 2023-24</option>
-														<option value="VL20232405">Winter Semester 2023-24</option>
-														<option value="VL20232403">Tri Semester II &amp; V 2023-24</option>
-														<option value="VL20232402">Tri Semester I &amp; IV 2023-24</option>
-														<option value="VL20222307">Summer Semester 2022-23</option>
-														<option value="VL20232401">Fall Semester 2023-24</option>
-														<option value="VL20222306">Tri Semester III &amp; VI 2022-23</option>
-														<option value="VL20222305">Winter Semester 2022-23</option>
-														<option value="VL20222303">Tri Semester II &amp; V 2022-23</option>
-														<option value="VL20222302">Tri Semester I &amp; IV 2022-23</option>
-														<option value="VL20222301">Fall Semester 2022-23</option>
-														<option value="VL20212207">Summer Semester Special 2021-22</option>
-														<option value="VL20212206">Tri Semester III &amp; VI 2021-22</option>
-														<option value="VL20212205">Winter Semester 2021-22</option>
-														<option value="VL20212203">Tri Semester II &amp; V 2021-22</option>
-														<option value="VL20212202">Tri Semester I &amp; IV 2021-22</option>
-														<option value="VL20212201">Fall Semester 2021-22</option>
-														<option value="VL20202107">Summer Semester Special 2020-21</option>
-														<option value="VL20202106">Tri Semester III and VI 2020-21</option>
-														<option value="VL20202105">Winter Semester 2020-21</option>
-														<option value="VL20202104">Inter Session Semester 2020-21</option>
-														<option value="VL20202110">Winter Inter Semester 2020-21</option>
-														<option value="VL20202103">Tri Semester II &amp; V 2020-21</option>
-														<option value="VL20202101">Fall Semester 2020-21</option>
-														<option value="VL20202102">Tri Semester I &amp; IV 2020-21</option>
-														<option value="VL2019207">Summer Semester Special 2019-20</option>
-														<option value="VL2019208">Summer Semester I 2019-20</option>
-														<option value="VL2019206">Tri Semester III &amp; VI 2019-20</option>
-														<option value="VL2019205">Winter Semester 2019-20</option>
-														<option value="VL2019204">Inter Session Semester 2019-20</option>
-														<option value="VL2019203">Tri Semester II &amp; V 2019-20</option>
-														<option value="VL2019202">Tri Semester I &amp; IV 2019-20</option>
-														<option value="VL2019201">Fall Semester 2019-20</option>
-														<option value="VL2018199">Summer Semester II 2018-19</option>
-														<option value="VL2018197">Summer Semester Special 2018-19</option>
-														<option value="VL2018198">Summer Semester I 2018-19</option>
-														<option value="VL2018196">Tri Semester III &amp; VI 2018-19</option>
-														<option value="VL2018195">Winter Semester 2018-19</option>
-														<option value="VL2018194">Inter Session Semester 2018-19</option>
-														<option value="VL2018193">Tri Semester II &amp; V 2018-19</option>
-														<option value="VL2018191">Fall Semester 2018-19</option>
-														<option value="VL2018192">Tri Semester I &amp; IV 2018-19</option>
-														<option value="VL2017189">Summer Semester II 2017-18</option>
-														<option value="VL2017188">Summer Semester I 2017-18</option>
-														<option value="VL2017186">Tri Semester III and VI 2017-18</option>
-														<option value="VL2017185">Winter Semester 2017-18</option>
-														<option value="VL2017184">Inter Session Semester 2017-18</option>
-														<option value="VL2017183">Tri Semester II &amp; V 2017-18</option>
-														<option value="VL2017182">Tri Semester I &amp; IV 2017-18</option>
-														<option value="VL2017181">Fall Semester 2017-18</option>
-													</select>
-
-												</div>
-											</div>
-
-									</div>
-
-									<div class="col-md-12" style="align-content: center; text-align: center;">
-										<br>
-									</div>
-
-									<div id="fixedTableContainer" class="fixedTableContainer" align="center">
-										<br>
-
-										<table class="customTable" style="width: 90%">
-											<tbody><tr class="tableHeader">												<td style="width: 5%;">Sl.No</td>												<td style="width: 10%;">Class Nbr</td>												<td style="width: 10%;">Course Code</td>												<td style="width: 32%;">Course Title</td><td style="width: 12%;">Upcoming Dues</td><td style="width: 13%;">Upload Status</td>												<td style="width: 5%;">Course Type</td>												<td style="width: 20%;">Faculty Name</td>												<td style="width: 5%;">Dashboard</td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">1</td>												<td style="width: 10%;">VL2025260505287</td>												<td style="width: 10%;">IMAT202P</td>												<td style="width: 45%;">Probability and Statistics Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>09 Apr 2026 07:29 PM</span><br><span style="font-weight:bold;">(Uploaded)</span></span><button class="btn btn-sm btn-link view-pdf-btn-main" style="color: rgb(14, 165, 233); text-decoration: none; font-weight: 600; display: block; margin: 0px auto; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""><i class="bi bi-eye-fill"></i> View</button></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">SIVAKUMAR M - SAS</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260505287');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">2</td>												<td style="width: 10%;">VL2025260502086</td>												<td style="width: 10%;">ISWE103L</td>												<td style="width: 45%;">Database Systems</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>09 Apr 2026 08:21 PM</span><br><span style="font-weight:bold;">(Uploaded)</span></span><button class="btn btn-sm btn-link view-pdf-btn-main" style="color: rgb(14, 165, 233); text-decoration: none; font-weight: 600; display: block; margin: 0px auto; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""><i class="bi bi-eye-fill"></i> View</button></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">MUTHAMIL SELVAN T - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502086');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">3</td>												<td style="width: 10%;">VL2025260502096</td>												<td style="width: 10%;">ISWE103P</td>												<td style="width: 45%;">Database Systems Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">MUTHAMIL SELVAN T - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502096');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">4</td>												<td style="width: 10%;">VL2025260502157</td>												<td style="width: 10%;">ISWE205L</td>												<td style="width: 45%;">Computer Networks</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">ASIS KUMAR TRIPATHY - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502157');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">5</td>												<td style="width: 10%;">VL2025260502176</td>												<td style="width: 10%;">ISWE205P</td>												<td style="width: 45%;">Computer Networks Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">ASIS KUMAR TRIPATHY - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502176');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">6</td>												<td style="width: 10%;">VL2025260502748</td>												<td style="width: 10%;">ISWE207L</td>												<td style="width: 45%;">Object Oriented Analysis and Design</td><td style="width: 12%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>17-Apr-2026<br>(8 days left)
-
-												</span></td><td style="width: 13%; background: rgba(238, 75, 43, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>17-Apr-2026</span><br><span style="font-weight:bold;">(Not Uploaded)</span></span></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">KAMALAKANNAN J - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502748');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">7</td>												<td style="width: 10%;">VL2025260502891</td>												<td style="width: 10%;">ISWE207P</td>												<td style="width: 45%;">Object Oriented Analysis and Design Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">KAMALAKANNAN J - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502891');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-											<tr class="tableContent">												<td style="width: 5%;">8</td>												<td style="width: 10%;">VL2025260502200</td>												<td style="width: 10%;">ISWE306L</td>												<td style="width: 45%;">Software Project Management</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>06 Apr 2026 03:15 AM</span><br><span style="font-weight:bold;">(Uploaded)</span></span><button class="btn btn-sm btn-link view-pdf-btn-main" style="color: rgb(14, 165, 233); text-decoration: none; font-weight: 600; display: block; margin: 0px auto; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""><i class="bi bi-eye-fill"></i> View</button></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">JOTHISH KUMAR M - VITIST</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502200');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
-										</tbody></table>
-									</div>
-
-
-									<input type="hidden" id="success" value=""> <input type="hidden" id="jsonBom" value="">
-									<script>
-										/*<![CDATA[*/
-
-										var message = document.getElementById("jsonBom").value;
-										var success = document.getElementById("success").value;
-
-										if (message != "")
-										{
-											showMessage(1, message);
-										}
-
-										if (success != "")
-										{
-											showMessage(2, success);
-										}
-										//}
-
-										/*]]>*/
-									</script>
-
-								</div>
-							</div>
-							<script>
-								$(document).ready(function() {
-									$('[data-toggle="tooltip"]').tooltip();
-								});
-							</script>
-						</form>
-
-					</div>
-
-and then this is inside the page when the da upload section opens for a specfic page
-<div class="card-body">
-						<form role="form" id="daUpload" name="daUpload" method="post" autocomplete="off">
-							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
-							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
-							<div class="col-md-16" style="margin-top: 20px; margin-left: 1px;">
-								<div>
+<div>
 
 									<div align="center">
 										<span style="color: green; font-size: 20px; font-weight: bold; --darkreader-inline-color: #81f179;" data-darkreader-inline-color=""></span> <span style="color: red; font-size: 20px; font-weight: bold; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color=""></span></div>
@@ -156,10 +15,10 @@ and then this is inside the page when the da upload section opens for a specfic 
 											</tr>
 											<tr class="fixedContent tableContent">
 												<td style="width: 20%;">Winter Semester 2025-26</td>
-												<td style="width: 10%;">IMAT202P</td>
-												<td style="width: 30%;">Probability and Statistics Lab</td>
-												<td style="width: 10%;">LO</td>
-												<td style="width: 10%;">VL2025260505287</td>
+												<td style="width: 10%;">ISWE306L</td>
+												<td style="width: 30%;">Software Project Management</td>
+												<td style="width: 10%;">TH</td>
+												<td style="width: 10%;">VL2025260502200</td>
 											</tr>
 											</tbody>
 										</table>
@@ -194,19 +53,18 @@ and then this is inside the page when the da upload section opens for a specfic 
 
 											<tbody><tr class="fixedContent tableContent">
 												<td style=" vertical-align: middle; text-align: center;">1</td>
-												<td>Assessment - 1</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td>Case Study - I</td>
+												<td style=" vertical-align: middle; text-align: center;">10</td>
+												<td style=" vertical-align: middle; text-align: center;">10</td>
 												<td style=" vertical-align: middle; text-align: center;">
-													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">08-Jan-2026</span>
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">03-Apr-2026</span>
 												</td>
 												<td>
-													    <span>
-														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST01" data-classid="VL2025260505287"></button></span>
+
 												</td>
 												<td style=" text-align: center;">
 
-													<span>08 Jan 2026 11:04 PM</span>
+													<span>12 Mar 2026 09:56 AM</span>
 													</td>
 												<td style=" text-align: center;">
 
@@ -220,7 +78,7 @@ and then this is inside the page when the da upload section opens for a specfic 
 												<td style=" text-align: center;">
 													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
 
-														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST01" data-classid="VL2025260505287">
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd; transform: scale(1);" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="CS1" data-classid="VL2025260502200">
 															<span></span>
 														</button>
 													</div>
@@ -229,134 +87,28 @@ and then this is inside the page when the da upload section opens for a specfic 
 
 											<tr class="fixedContent tableContent">
 												<td style=" vertical-align: middle; text-align: center;">2</td>
-												<td>Assessment - 2</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td>Case Study - II</td>
+												<td style=" vertical-align: middle; text-align: center;">10</td>
+												<td style=" vertical-align: middle; text-align: center;">10</td>
 												<td style=" vertical-align: middle; text-align: center;">
-													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">05-Feb-2026</span>
+													<span style="color: green; --darkreader-inline-color: #81f179;" data-darkreader-inline-color="">10-Apr-2026</span>
 												</td>
 												<td>
-													    <span>
-														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST02" data-classid="VL2025260505287"></button></span>
+
 												</td>
 												<td style=" text-align: center;">
 
-													<span>05 Feb 2026 09:49 PM</span>
+													<span>06 Apr 2026 03:15 AM</span>
 													</td>
 												<td style=" text-align: center;">
 
 													<br>
 													<!-- Submit / Cancel -->
 													<span>
-
-												</span>
-												</td>
-
-												<td style=" text-align: center;">
-													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
-
-														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST02" data-classid="VL2025260505287">
-															<span></span>
-														</button>
-													</div>
-												</td>
-											</tr>
-
-											<tr class="fixedContent tableContent">
-												<td style=" vertical-align: middle; text-align: center;">3</td>
-												<td>Assessment - 3</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">
-													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">25-Feb-2026</span>
-												</td>
-												<td>
-													    <span>
-														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST03" data-classid="VL2025260505287"></button></span>
-												</td>
-												<td style=" text-align: center;">
-
-													<span>25 Feb 2026 10:07 PM</span>
-													</td>
-												<td style=" text-align: center;">
-
-													<br>
-													<!-- Submit / Cancel -->
-													<span>
-
-												</span>
-												</td>
-
-												<td style=" text-align: center;">
-													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
-
-														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST03" data-classid="VL2025260505287">
-															<span></span>
-														</button>
-													</div>
-												</td>
-											</tr>
-
-											<tr class="fixedContent tableContent">
-												<td style=" vertical-align: middle; text-align: center;">4</td>
-												<td>Assessment - 4</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">
-													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">13-Mar-2026</span>
-												</td>
-												<td>
-													    <span>
-														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST04" data-classid="VL2025260505287"></button></span>
-												</td>
-												<td style=" text-align: center;">
-
-													<span>13 Mar 2026 02:30 AM</span>
-													</td>
-												<td style=" text-align: center;">
-
-													<br>
-													<!-- Submit / Cancel -->
-													<span>
-
-												</span>
-												</td>
-
-												<td style=" text-align: center;">
-													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
-
-														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST04" data-classid="VL2025260505287">
-															<span></span>
-														</button>
-													</div>
-												</td>
-											</tr>
-
-											<tr class="fixedContent tableContent">
-												<td style=" vertical-align: middle; text-align: center;">5</td>
-												<td>Assessment - 5</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">12</td>
-												<td style=" vertical-align: middle; text-align: center;">
-													<span style="color: green; --darkreader-inline-color: #81f179;" data-darkreader-inline-color="">09-Apr-2026</span>
-												</td>
-												<td>
-													    <span>
-														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST05" data-classid="VL2025260505287"></button></span>
-												</td>
-												<td style=" text-align: center;">
-
-													<span>09 Apr 2026 07:29 PM</span>
-													</td>
-												<td style=" text-align: center;">
-
-													<br>
-													<!-- Submit / Cancel -->
-													<span>
-														<span> <input type="hidden" name="code" value="AST05"> <input type="hidden" name="opt" value="Assessment - 5">
+														<span> <input type="hidden" name="code" value="CS2"> <input type="hidden" name="opt" value="Case Study - II">
 
 														<span>
-															<button type="button" class="icon-button" style="vertical-align: middle; text-align: center;" onclick="doDAssignmentProcess();" id="editAssignment" name="editAssignment" data-editclassid="VL2025260505287" data-editcode="AST05"><span class="bi bi-pencil-fill"></span>
+															<button type="button" class="icon-button" style="vertical-align: middle; text-align: center;" onclick="doDAssignmentProcess();" id="editAssignment" name="editAssignment" data-editclassid="VL2025260502200" data-editcode="CS2"><span class="bi bi-pencil-fill"></span>
 															</button>
 														</span>
 													</span>
@@ -366,7 +118,7 @@ and then this is inside the page when the da upload section opens for a specfic 
 												<td style=" text-align: center;">
 													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
 
-														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST05" data-classid="VL2025260505287">
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="CS2" data-classid="VL2025260502200">
 															<span></span>
 														</button>
 													</div>
@@ -422,26 +174,3 @@ and then this is inside the page when the da upload section opens for a specfic 
 									</script>
 
 								</div>
-							</div>
-							<script>
-								$(document).ready(function() {
-									$('[data-toggle="tooltip"]').tooltip();
-								});
-							</script>
-						</form>
-
-						<form id="downloadQuestionForm" method="post" action="examinations/doDownloadQuestion/"><input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
-							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
-							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
-							<input type="hidden" name="code" id="code">
-							<input type="hidden" name="classIdNumber" id="classIdNumber">
-						</form>
-
-						<form id="downloadStudentDAForm" method="post" action="examinations/downloadSTudentDA/"><input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
-							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
-							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
-							<input type="hidden" name="code1" id="code1">
-							<input type="hidden" name="classId1" id="classId1">
-						</form>
-
-					</div>
