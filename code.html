@@ -1,629 +1,447 @@
+this is the main page of the when the da upload opens
 <div class="card-body">
-						<form role="form" id="studentMarkView" name="studentMarkView" method="post" autocomplete="off">
+						<form role="form" id="digitalAssignment" name="digitalAssignment" method="post" autocomplete="off">
 							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
 							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
 							<!-- th:object="${examSchedule}"> -->
-							<div class="col-md-12" style="margin-top: 20px; margin-left: 2px;">
-								<div class="row p-2">
-									<div class="col-md-4" style="padding-right: 10px;">
-										<label for="acadYear" class="form-label fw-bold" style="float: right;  margin-right: 15px;">Select Semester</label>
+							<div class="col-md-16" style="margin-top: 20px; margin-left: 1px;">
+								<div>
+									<div class="col-md-12">
+                        			<div class="row mb-3 justify-content-center">
+												<label for="acadYear" class="col-md-2 form-label">Select
+													Semester</label>
+
+												<div class="col-md-4">
+													<select class="form-select" name="semesterSubId" id="semesterSubId" onchange="dAOnChange();">
+														<option value="" selected="selected">-- Choose
+															Semester --</option>
+														<option value="VL20252605" selected="selected">Winter Semester 2025-26</option>
+														<option value="VL20252601">Fall Semester 2025-26</option>
+														<option value="VL20242507">Summer Semester 2024-25</option>
+														<option value="VL20242505">Winter Semester 2024-25</option>
+														<option value="VL20242501">Fall Semester 2024-25</option>
+														<option value="VL20232407">Summer Semester 2023-24</option>
+														<option value="VL20232406">Tri Semester III &amp; VI 2023-24</option>
+														<option value="VL20232405">Winter Semester 2023-24</option>
+														<option value="VL20232403">Tri Semester II &amp; V 2023-24</option>
+														<option value="VL20232402">Tri Semester I &amp; IV 2023-24</option>
+														<option value="VL20222307">Summer Semester 2022-23</option>
+														<option value="VL20232401">Fall Semester 2023-24</option>
+														<option value="VL20222306">Tri Semester III &amp; VI 2022-23</option>
+														<option value="VL20222305">Winter Semester 2022-23</option>
+														<option value="VL20222303">Tri Semester II &amp; V 2022-23</option>
+														<option value="VL20222302">Tri Semester I &amp; IV 2022-23</option>
+														<option value="VL20222301">Fall Semester 2022-23</option>
+														<option value="VL20212207">Summer Semester Special 2021-22</option>
+														<option value="VL20212206">Tri Semester III &amp; VI 2021-22</option>
+														<option value="VL20212205">Winter Semester 2021-22</option>
+														<option value="VL20212203">Tri Semester II &amp; V 2021-22</option>
+														<option value="VL20212202">Tri Semester I &amp; IV 2021-22</option>
+														<option value="VL20212201">Fall Semester 2021-22</option>
+														<option value="VL20202107">Summer Semester Special 2020-21</option>
+														<option value="VL20202106">Tri Semester III and VI 2020-21</option>
+														<option value="VL20202105">Winter Semester 2020-21</option>
+														<option value="VL20202104">Inter Session Semester 2020-21</option>
+														<option value="VL20202110">Winter Inter Semester 2020-21</option>
+														<option value="VL20202103">Tri Semester II &amp; V 2020-21</option>
+														<option value="VL20202101">Fall Semester 2020-21</option>
+														<option value="VL20202102">Tri Semester I &amp; IV 2020-21</option>
+														<option value="VL2019207">Summer Semester Special 2019-20</option>
+														<option value="VL2019208">Summer Semester I 2019-20</option>
+														<option value="VL2019206">Tri Semester III &amp; VI 2019-20</option>
+														<option value="VL2019205">Winter Semester 2019-20</option>
+														<option value="VL2019204">Inter Session Semester 2019-20</option>
+														<option value="VL2019203">Tri Semester II &amp; V 2019-20</option>
+														<option value="VL2019202">Tri Semester I &amp; IV 2019-20</option>
+														<option value="VL2019201">Fall Semester 2019-20</option>
+														<option value="VL2018199">Summer Semester II 2018-19</option>
+														<option value="VL2018197">Summer Semester Special 2018-19</option>
+														<option value="VL2018198">Summer Semester I 2018-19</option>
+														<option value="VL2018196">Tri Semester III &amp; VI 2018-19</option>
+														<option value="VL2018195">Winter Semester 2018-19</option>
+														<option value="VL2018194">Inter Session Semester 2018-19</option>
+														<option value="VL2018193">Tri Semester II &amp; V 2018-19</option>
+														<option value="VL2018191">Fall Semester 2018-19</option>
+														<option value="VL2018192">Tri Semester I &amp; IV 2018-19</option>
+														<option value="VL2017189">Summer Semester II 2017-18</option>
+														<option value="VL2017188">Summer Semester I 2017-18</option>
+														<option value="VL2017186">Tri Semester III and VI 2017-18</option>
+														<option value="VL2017185">Winter Semester 2017-18</option>
+														<option value="VL2017184">Inter Session Semester 2017-18</option>
+														<option value="VL2017183">Tri Semester II &amp; V 2017-18</option>
+														<option value="VL2017182">Tri Semester I &amp; IV 2017-18</option>
+														<option value="VL2017181">Fall Semester 2017-18</option>
+													</select>
+
+												</div>
+											</div>
+
 									</div>
-										<div class="col-md-7">
-											<select class="form-select" name="semesterSubId" id="semesterSubId" onchange="doViewExamMark();" style="margin-left: 100px; width: 500px;">
-												<option value="" selected="selected">-- Choose Semester --</option>
-												<option value="VL20252605" selected="selected">Winter Semester 2025-26</option>
-												<option value="VL20252601">Fall Semester 2025-26</option>
-												<option value="VL20242507">Summer Semester 2024-25</option>
-												<option value="VL20242505">Winter Semester 2024-25</option>
-												<option value="VL20242501">Fall Semester 2024-25</option>
-												<option value="VL20232407">Summer Semester 2023-24</option>
-												<option value="VL20232406">Tri Semester III &amp; VI 2023-24</option>
-												<option value="VL20232405">Winter Semester 2023-24</option>
-												<option value="VL20232403">Tri Semester II &amp; V 2023-24</option>
-												<option value="VL20232402">Tri Semester I &amp; IV 2023-24</option>
-												<option value="VL20222307">Summer Semester 2022-23</option>
-												<option value="VL20232401">Fall Semester 2023-24</option>
-												<option value="VL20222306">Tri Semester III &amp; VI 2022-23</option>
-												<option value="VL20222305">Winter Semester 2022-23</option>
-												<option value="VL20222303">Tri Semester II &amp; V 2022-23</option>
-												<option value="VL20222302">Tri Semester I &amp; IV 2022-23</option>
-												<option value="VL20222301">Fall Semester 2022-23</option>
-												<option value="VL20212207">Summer Semester Special 2021-22</option>
-												<option value="VL20212206">Tri Semester III &amp; VI 2021-22</option>
-												<option value="VL20212205">Winter Semester 2021-22</option>
-												<option value="VL20212203">Tri Semester II &amp; V 2021-22</option>
-												<option value="VL20212202">Tri Semester I &amp; IV 2021-22</option>
-												<option value="VL20212201">Fall Semester 2021-22</option>
-												<option value="VL20202107">Summer Semester Special 2020-21</option>
-												<option value="VL20202106">Tri Semester III and VI 2020-21</option>
-												<option value="VL20202105">Winter Semester 2020-21</option>
-												<option value="VL20202104">Inter Session Semester 2020-21</option>
-												<option value="VL20202110">Winter Inter Semester 2020-21</option>
-												<option value="VL20202103">Tri Semester II &amp; V 2020-21</option>
-												<option value="VL20202101">Fall Semester 2020-21</option>
-												<option value="VL20202102">Tri Semester I &amp; IV 2020-21</option>
-												<option value="VL2019207">Summer Semester Special 2019-20</option>
-												<option value="VL2019208">Summer Semester I 2019-20</option>
-												<option value="VL2019206">Tri Semester III &amp; VI 2019-20</option>
-												<option value="VL2019205">Winter Semester 2019-20</option>
-												<option value="VL2019204">Inter Session Semester 2019-20</option>
-												<option value="VL2019203">Tri Semester II &amp; V 2019-20</option>
-												<option value="VL2019202">Tri Semester I &amp; IV 2019-20</option>
-												<option value="VL2019201">Fall Semester 2019-20</option>
-												<option value="VL2018199">Summer Semester II 2018-19</option>
-												<option value="VL2018197">Summer Semester Special 2018-19</option>
-												<option value="VL2018198">Summer Semester I 2018-19</option>
-												<option value="VL2018196">Tri Semester III &amp; VI 2018-19</option>
-												<option value="VL2018195">Winter Semester 2018-19</option>
-												<option value="VL2018194">Inter Session Semester 2018-19</option>
-												<option value="VL2018193">Tri Semester II &amp; V 2018-19</option>
-												<option value="VL2018191">Fall Semester 2018-19</option>
-												<option value="VL2018192">Tri Semester I &amp; IV 2018-19</option>
-												<option value="VL2017189">Summer Semester II 2017-18</option>
-												<option value="VL2017188">Summer Semester I 2017-18</option>
-												<option value="VL2017186">Tri Semester III and VI 2017-18</option>
-												<option value="VL2017185">Winter Semester 2017-18</option>
-												<option value="VL2017184">Inter Session Semester 2017-18</option>
-												<option value="VL2017183">Tri Semester II &amp; V 2017-18</option>
-												<option value="VL2017182">Tri Semester I &amp; IV 2017-18</option>
-												<option value="VL2017181">Fall Semester 2017-18</option>
-											</select>
-										</div>
+
+									<div class="col-md-12" style="align-content: center; text-align: center;">
+										<br>
 									</div>
-								<br>
 
-								<div class="form-group col-sm-12"></div>
-								<div style="text-align: center;">
-								<span class="col-sm-12 col-md-12" style="font-size: 20px; color: green; --darkreader-inline-color: #81f179;" data-darkreader-inline-color=""></span> <span class="col-sm-12 col-md-12" style="font-size: 20px; color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color=""></span>
-								</div>
-								<div id="fixedTableContainer" class="fixedTableContainer">
-									<table class="customTable" style="align: center;">
+									<div id="fixedTableContainer" class="fixedTableContainer" align="center">
+										<br>
 
-										<tbody><tr class="tableHeader">
-											<td>Sl.No.</td>
-											<td>ClassNbr</td>
-											<td>Course Code</td>
-											<td>Course Title</td>
-											<td>Course Type</td>
-											<td>Course System</td>
-											<td>Faculty</td>
-											<td>Slot</td>
-											<td>Course Mode</td>
-										</tr>
+										<table class="customTable" style="width: 90%">
+											<tbody><tr class="tableHeader">												<td style="width: 5%;">Sl.No</td>												<td style="width: 10%;">Class Nbr</td>												<td style="width: 10%;">Course Code</td>												<td style="width: 32%;">Course Title</td><td style="width: 12%;">Upcoming Dues</td><td style="width: 13%;">Upload Status</td>												<td style="width: 5%;">Course Type</td>												<td style="width: 20%;">Faculty Name</td>												<td style="width: 5%;">Dashboard</td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">1</td>												<td style="width: 10%;">VL2025260505287</td>												<td style="width: 10%;">IMAT202P</td>												<td style="width: 45%;">Probability and Statistics Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>09 Apr 2026 07:29 PM</span><br><span style="font-weight:bold;">(Uploaded)</span></span><button class="btn btn-sm btn-link view-pdf-btn-main" style="color: rgb(14, 165, 233); text-decoration: none; font-weight: 600; display: block; margin: 0px auto; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""><i class="bi bi-eye-fill"></i> View</button></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">SIVAKUMAR M - SAS</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260505287');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">2</td>												<td style="width: 10%;">VL2025260502086</td>												<td style="width: 10%;">ISWE103L</td>												<td style="width: 45%;">Database Systems</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>09 Apr 2026 08:21 PM</span><br><span style="font-weight:bold;">(Uploaded)</span></span><button class="btn btn-sm btn-link view-pdf-btn-main" style="color: rgb(14, 165, 233); text-decoration: none; font-weight: 600; display: block; margin: 0px auto; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""><i class="bi bi-eye-fill"></i> View</button></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">MUTHAMIL SELVAN T - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502086');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">3</td>												<td style="width: 10%;">VL2025260502096</td>												<td style="width: 10%;">ISWE103P</td>												<td style="width: 45%;">Database Systems Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">MUTHAMIL SELVAN T - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502096');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">4</td>												<td style="width: 10%;">VL2025260502157</td>												<td style="width: 10%;">ISWE205L</td>												<td style="width: 45%;">Computer Networks</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">ASIS KUMAR TRIPATHY - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502157');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">5</td>												<td style="width: 10%;">VL2025260502176</td>												<td style="width: 10%;">ISWE205P</td>												<td style="width: 45%;">Computer Networks Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">ASIS KUMAR TRIPATHY - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502176');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">6</td>												<td style="width: 10%;">VL2025260502748</td>												<td style="width: 10%;">ISWE207L</td>												<td style="width: 45%;">Object Oriented Analysis and Design</td><td style="width: 12%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>17-Apr-2026<br>(8 days left)
 
-											<tr class="tableContent">
-												<td>1</td>
-												<td>VL2025260500178</td>
-												<td>ISTS102P</td>
-												<td>Quantitative Skills Practice I</td>
-												<td>Soft Skill</td>
-												<td>CBCS</td>
-												<td>FACE (APT)</td>
-												<td>G1+TG1</td>
-												<td>SBC01</td>
-											</tr>
-											<tr class="tableContent">
-												<td colspan="9" align="center">
-													<table class="customTable-level1" style="align: center;width: 80%;">
-														<tbody><tr class="tableHeader-level1">
-															<td>Sl.No.</td>
-															<td>Mark Title</td>
-															<td>Max. Mark</td>
-															<td>Weightage %</td>
-															<td>Status</td>
-															<td>Scored Mark</td>
-															<td>Weightage Mark</td>
-															<!-- <td>Class Average</td>
-                                                            <td>Mark Posted Strength</td> -->
-															<td>Remark</td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>1</output></td>
-															<td><output>Assessment - 1</output></td>
-															<td><output>15</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>12.0</output></td>
-															<td><output>12</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>2</output></td>
-															<td><output>Assessment - 2</output></td>
-															<td><output>15</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>14.0</output></td>
-															<td><output>14</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>3</output></td>
-															<td><output>Continuous Assessment Test - I</output></td>
-															<td><output>30</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>19.0</output></td>
-															<td><output>9.5</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>4</output></td>
-															<td><output>Continuous Assessment Test - II</output></td>
-															<td><output>30</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>20.0</output></td>
-															<td><output>10</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
+												</span></td><td style="width: 13%; background: rgba(238, 75, 43, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>17-Apr-2026</span><br><span style="font-weight:bold;">(Not Uploaded)</span></span></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">KAMALAKANNAN J - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502748');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">7</td>												<td style="width: 10%;">VL2025260502891</td>												<td style="width: 10%;">ISWE207P</td>												<td style="width: 45%;">Object Oriented Analysis and Design Lab</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>-</span></td>												<td style="width: 5%;">LO</td>												<td style="width: 20%;">KAMALAKANNAN J - SCORE</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502891');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+											<tr class="tableContent">												<td style="width: 5%;">8</td>												<td style="width: 10%;">VL2025260502200</td>												<td style="width: 10%;">ISWE306L</td>												<td style="width: 45%;">Software Project Management</td><td style="width: 12%; background: transparent; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: transparent;" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span>Nothing Left.<div></div></span></td><td style="width: 13%; background: rgba(170, 255, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(121, 150, 23, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><span style="display:inline-block; margin-bottom: 5px;"><span>06 Apr 2026 03:15 AM</span><br><span style="font-weight:bold;">(Uploaded)</span></span><button class="btn btn-sm btn-link view-pdf-btn-main" style="color: rgb(14, 165, 233); text-decoration: none; font-weight: 600; display: block; margin: 0px auto; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""><i class="bi bi-eye-fill"></i> View</button></td>												<td style="width: 5%;">TH</td>												<td style="width: 20%;">JOTHISH KUMAR M - VITIST</td>												<td style="width: 5%;">													<button type="button" class="btn btn-link btn-xs" onclick="javascript:myFunction('VL2025260502200');">														<span class="bi bi-folder-symlink-fill"></span>													</button></td>											</tr>
+										</tbody></table>
+									</div>
 
-        <tr class="tableHeader-level1">
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>Total:</b></td>
-            <td style="text-align:left;">90.00</td>
-            <td style="text-align:left;">60.00</td>
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>65.00</b></td>
-            <td style="text-align:left;"><b>45.50</b></td>
-            <td style="text-align:left;"><b>Lost Weightage Marks: 14.50</b></td>
-        </tr>
 
-                <tr class="tableContent-level1" style="background: rgba(255, 0, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(186, 19, 18, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor="">
-                    <td colspan="8" style="text-align:center"><b>Minimum marks required to clear STS is : 4.50 marks<b></b></b></td>
-                </tr>
-                </tbody></table>
-												</td>
-											</tr>
+									<input type="hidden" id="success" value=""> <input type="hidden" id="jsonBom" value="">
+									<script>
+										/*<![CDATA[*/
 
-											<tr class="tableContent">
-												<td>2</td>
-												<td>VL2025260501792</td>
-												<td>IMAT202L</td>
-												<td>Probability and Statistics</td>
-												<td>Theory Only</td>
-												<td>CBCS</td>
-												<td>SIVAKUMAR M</td>
-												<td>F1+TF1</td>
-												<td>CBL09</td>
-											</tr>
-											<tr class="tableContent">
-												<td colspan="9" align="center">
-													<table class="customTable-level1" style="align: center;width: 80%;">
-														<tbody><tr class="tableHeader-level1">
-															<td>Sl.No.</td>
-															<td>Mark Title</td>
-															<td>Max. Mark</td>
-															<td>Weightage %</td>
-															<td>Status</td>
-															<td>Scored Mark</td>
-															<td>Weightage Mark</td>
-															<!-- <td>Class Average</td>
-                                                            <td>Mark Posted Strength</td> -->
-															<td>Remark</td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>1</output></td>
-															<td><output>Continuous Assessment Test - I</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>46.0</output></td>
-															<td><output>13.8</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>2</output></td>
-															<td><output>Continuous Assessment Test - II</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>46.0</output></td>
-															<td><output>13.8</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
+										var message = document.getElementById("jsonBom").value;
+										var success = document.getElementById("success").value;
 
-        <tr class="tableHeader-level1">
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>Total:</b></td>
-            <td style="text-align:left;">100.00</td>
-            <td style="text-align:left;">30.00</td>
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>92.00</b></td>
-            <td style="text-align:left;"><b>27.60</b></td>
-            <td style="text-align:left;"><b>Lost Weightage Marks: 2.40</b></td>
-        </tr>
-        </tbody></table>
-												</td>
-											</tr>
+										if (message != "")
+										{
+											showMessage(1, message);
+										}
 
-											<tr class="tableContent">
-												<td>3</td>
-												<td>VL2025260502086</td>
-												<td>ISWE103L</td>
-												<td>Database Systems</td>
-												<td>Theory Only</td>
-												<td>CBCS</td>
-												<td>MUTHAMIL SELVAN T</td>
-												<td>E1+TE1</td>
-												<td>CBL09</td>
-											</tr>
-											<tr class="tableContent">
-												<td colspan="9" align="center">
-													<table class="customTable-level1" style="align: center;width: 80%;">
-														<tbody><tr class="tableHeader-level1">
-															<td>Sl.No.</td>
-															<td>Mark Title</td>
-															<td>Max. Mark</td>
-															<td>Weightage %</td>
-															<td>Status</td>
-															<td>Scored Mark</td>
-															<td>Weightage Mark</td>
-															<!-- <td>Class Average</td>
-                                                            <td>Mark Posted Strength</td> -->
-															<td>Remark</td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>1</output></td>
-															<td><output>Continuous Assessment Test - I</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>31.0</output></td>
-															<td><output>9.3</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>2</output></td>
-															<td><output>Continuous Assessment Test - II</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>36.0</output></td>
-															<td><output>10.8</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
+										if (success != "")
+										{
+											showMessage(2, success);
+										}
+										//}
 
-        <tr class="tableHeader-level1">
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>Total:</b></td>
-            <td style="text-align:left;">100.00</td>
-            <td style="text-align:left;">30.00</td>
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>67.00</b></td>
-            <td style="text-align:left;"><b>20.10</b></td>
-            <td style="text-align:left;"><b>Lost Weightage Marks: 9.90</b></td>
-        </tr>
-        </tbody></table>
-												</td>
-											</tr>
+										/*]]>*/
+									</script>
 
-											<tr class="tableContent">
-												<td>4</td>
-												<td>VL2025260502148</td>
-												<td>ISWE203L</td>
-												<td>Theory of Computation</td>
-												<td>Theory Only</td>
-												<td>CBCS</td>
-												<td>SIVASHANKARI R</td>
-												<td>C1+TC1+TCC1</td>
-												<td>CBL09</td>
-											</tr>
-											<tr class="tableContent">
-												<td colspan="9" align="center">
-													<table class="customTable-level1" style="align: center;width: 80%;">
-														<tbody><tr class="tableHeader-level1">
-															<td>Sl.No.</td>
-															<td>Mark Title</td>
-															<td>Max. Mark</td>
-															<td>Weightage %</td>
-															<td>Status</td>
-															<td>Scored Mark</td>
-															<td>Weightage Mark</td>
-															<!-- <td>Class Average</td>
-                                                            <td>Mark Posted Strength</td> -->
-															<td>Remark</td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>1</output></td>
-															<td><output>Continuous Assessment Test - I</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>48.0</output></td>
-															<td><output>14.4</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>2</output></td>
-															<td><output>Continuous Assessment Test - II</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>33.0</output></td>
-															<td><output>9.9</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-
-        <tr class="tableHeader-level1">
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>Total:</b></td>
-            <td style="text-align:left;">100.00</td>
-            <td style="text-align:left;">30.00</td>
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>81.00</b></td>
-            <td style="text-align:left;"><b>24.30</b></td>
-            <td style="text-align:left;"><b>Lost Weightage Marks: 5.70</b></td>
-        </tr>
-        </tbody></table>
-												</td>
-											</tr>
-
-											<tr class="tableContent">
-												<td>5</td>
-												<td>VL2025260502157</td>
-												<td>ISWE205L</td>
-												<td>Computer Networks</td>
-												<td>Theory Only</td>
-												<td>CBCS</td>
-												<td>ASIS KUMAR TRIPATHY</td>
-												<td>A1+TA1</td>
-												<td>CBL09</td>
-											</tr>
-											<tr class="tableContent">
-												<td colspan="9" align="center">
-													<table class="customTable-level1" style="align: center;width: 80%;">
-														<tbody><tr class="tableHeader-level1">
-															<td>Sl.No.</td>
-															<td>Mark Title</td>
-															<td>Max. Mark</td>
-															<td>Weightage %</td>
-															<td>Status</td>
-															<td>Scored Mark</td>
-															<td>Weightage Mark</td>
-															<!-- <td>Class Average</td>
-                                                            <td>Mark Posted Strength</td> -->
-															<td>Remark</td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>1</output></td>
-															<td><output>Continuous Assessment Test - I</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>47.0</output></td>
-															<td><output>14.1</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>2</output></td>
-															<td><output>Continuous Assessment Test - II</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>25.0</output></td>
-															<td><output>7.5</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>3</output></td>
-															<td><output>Quiz - I</output></td>
-															<td><output>10</output></td>
-															<td><output>10</output></td>
-															<td><output>Present</output></td>
-															<td><output>10.0</output></td>
-															<td><output>10</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>4</output></td>
-															<td><output>Quiz - II</output></td>
-															<td><output>10</output></td>
-															<td><output>10</output></td>
-															<td><output>Present</output></td>
-															<td><output>9.0</output></td>
-															<td><output>9</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-
-        <tr class="tableHeader-level1">
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>Total:</b></td>
-            <td style="text-align:left;">120.00</td>
-            <td style="text-align:left;">50.00</td>
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>91.00</b></td>
-            <td style="text-align:left;"><b>40.60</b></td>
-            <td style="text-align:left;"><b>Lost Weightage Marks: 9.40</b></td>
-        </tr>
-        </tbody></table>
-												</td>
-											</tr>
-
-											<tr class="tableContent">
-												<td>6</td>
-												<td>VL2025260502200</td>
-												<td>ISWE306L</td>
-												<td>Software Project Management</td>
-												<td>Theory Only</td>
-												<td>CBCS</td>
-												<td>JOTHISH KUMAR M</td>
-												<td>B1+TB1</td>
-												<td>CBL09</td>
-											</tr>
-											<tr class="tableContent">
-												<td colspan="9" align="center">
-													<table class="customTable-level1" style="align: center;width: 80%;">
-														<tbody><tr class="tableHeader-level1">
-															<td>Sl.No.</td>
-															<td>Mark Title</td>
-															<td>Max. Mark</td>
-															<td>Weightage %</td>
-															<td>Status</td>
-															<td>Scored Mark</td>
-															<td>Weightage Mark</td>
-															<!-- <td>Class Average</td>
-                                                            <td>Mark Posted Strength</td> -->
-															<td>Remark</td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>1</output></td>
-															<td><output>Continuous Assessment Test - I</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>40.0</output></td>
-															<td><output>12</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>2</output></td>
-															<td><output>Continuous Assessment Test - II</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>42.0</output></td>
-															<td><output>12.6</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>3</output></td>
-															<td><output>Case Study - I</output></td>
-															<td><output>10</output></td>
-															<td><output>10</output></td>
-															<td><output>Present</output></td>
-															<td><output>10.0</output></td>
-															<td><output>10</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>4</output></td>
-															<td><output>Case Study - II</output></td>
-															<td><output>10</output></td>
-															<td><output>10</output></td>
-															<td><output>Present</output></td>
-															<td><output>10.0</output></td>
-															<td><output>10</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-
-        <tr class="tableHeader-level1">
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>Total:</b></td>
-            <td style="text-align:left;">120.00</td>
-            <td style="text-align:left;">50.00</td>
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>102.00</b></td>
-            <td style="text-align:left;"><b>44.60</b></td>
-            <td style="text-align:left;"><b>Lost Weightage Marks: 5.40</b></td>
-        </tr>
-        </tbody></table>
-												</td>
-											</tr>
-
-											<tr class="tableContent">
-												<td>7</td>
-												<td>VL2025260502748</td>
-												<td>ISWE207L</td>
-												<td>Object Oriented Analysis and Design</td>
-												<td>Theory Only</td>
-												<td>CBCS</td>
-												<td>KAMALAKANNAN J</td>
-												<td>D1+TD1</td>
-												<td>CBL09</td>
-											</tr>
-											<tr class="tableContent">
-												<td colspan="9" align="center">
-													<table class="customTable-level1" style="align: center;width: 80%;">
-														<tbody><tr class="tableHeader-level1">
-															<td>Sl.No.</td>
-															<td>Mark Title</td>
-															<td>Max. Mark</td>
-															<td>Weightage %</td>
-															<td>Status</td>
-															<td>Scored Mark</td>
-															<td>Weightage Mark</td>
-															<!-- <td>Class Average</td>
-                                                            <td>Mark Posted Strength</td> -->
-															<td>Remark</td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>1</output></td>
-															<td><output>Continuous Assessment Test - I</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>38.0</output></td>
-															<td><output>11.4</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-														<tr class="tableContent-level1">
-															<td><output>2</output></td>
-															<td><output>Continuous Assessment Test - II</output></td>
-															<td><output>50</output></td>
-															<td><output>15</output></td>
-															<td><output>Present</output></td>
-															<td><output>36.0</output></td>
-															<td><output>10.8</output></td>
-															<!-- <td><output th:text="${mark.classAverage}"></output></td>
-                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
-															<td><output></output></td>
-														</tr>
-
-        <tr class="tableHeader-level1">
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>Total:</b></td>
-            <td style="text-align:left;">100.00</td>
-            <td style="text-align:left;">30.00</td>
-            <td style="text-align:left;"></td>
-            <td style="text-align:left;"><b>74.00</b></td>
-            <td style="text-align:left;"><b>22.20</b></td>
-            <td style="text-align:left;"><b>Lost Weightage Marks: 7.80</b></td>
-        </tr>
-        </tbody></table>
-												</td>
-											</tr>
-
-									</tbody></table>
 								</div>
 							</div>
+							<script>
+								$(document).ready(function() {
+									$('[data-toggle="tooltip"]').tooltip();
+								});
+							</script>
 						</form>
+
+					</div>
+
+and then this is inside the page when the da upload section opens for a specfic page
+<div class="card-body">
+						<form role="form" id="daUpload" name="daUpload" method="post" autocomplete="off">
+							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
+							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
+							<div class="col-md-16" style="margin-top: 20px; margin-left: 1px;">
+								<div>
+
+									<div align="center">
+										<span style="color: green; font-size: 20px; font-weight: bold; --darkreader-inline-color: #81f179;" data-darkreader-inline-color=""></span> <span style="color: red; font-size: 20px; font-weight: bold; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color=""></span></div>
+
+									<div id="fixedTableContainer" class="fixedTableContainer">
+										<table class="customTable" style="align: center;">
+											<tbody>
+											<tr class="fixedContent tableHeader">
+												<td style="width: 20%;">Semester</td>
+												<td style="width: 12%;">Course Code</td>
+												<td style="width: 30%;">Course Title</td>
+												<td style="width: 12%;">Course Type</td>
+												<td style="width: 10%;">Class Number</td>
+											</tr>
+											<tr class="fixedContent tableContent">
+												<td style="width: 20%;">Winter Semester 2025-26</td>
+												<td style="width: 10%;">IMAT202P</td>
+												<td style="width: 30%;">Probability and Statistics Lab</td>
+												<td style="width: 10%;">LO</td>
+												<td style="width: 10%;">VL2025260505287</td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+									<br>
+									<div class="col-md-10">
+										<p style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">
+											Notes:  <br>
+											1. File size (Max. upto 4MB) <br>
+											2. File type should be pdf,xls,xlsx,doc,docx <br>
+										</p>
+									</div>
+
+									<div id="fixedTableContainer" class="fixedTableContainer">
+										<table class="customTable">
+											<tbody>
+											<tr class="fixedContent tableHeader">
+												<td rowspan="2" style="width: 5%;">Sl.No.</td>
+												<td rowspan="2" style="width: 20%;">Title</td>
+												<td rowspan="2" style="width: 5%;">Max. Mark</td>
+												<td rowspan="2" style="width: 5%;">Weightage %</td>
+												<td rowspan="2" style="width: 10%;">Due Date</td>
+												<td rowspan="2" style="width: 5%;">QP</td>
+												<td colspan="3" style="width: 50%;">Document Details</td>
+											</tr>
+											<tr class="fixedContent tableHeader">
+												<td style="width: 20%;">Last Updated On</td>
+												<td style="width: 20%;">Upload/Edit</td>
+												<td style="width: 20%;">Download</td>
+											</tr>
+											</tbody>
+
+											<tbody><tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">1</td>
+												<td>Assessment - 1</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">08-Jan-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST01" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>08 Jan 2026 11:04 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST01" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">2</td>
+												<td>Assessment - 2</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">05-Feb-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST02" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>05 Feb 2026 09:49 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST02" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">3</td>
+												<td>Assessment - 3</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">25-Feb-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST03" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>25 Feb 2026 10:07 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST03" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">4</td>
+												<td>Assessment - 4</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">13-Mar-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST04" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>13 Mar 2026 02:30 AM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST04" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">5</td>
+												<td>Assessment - 5</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													<span style="color: green; --darkreader-inline-color: #81f179;" data-darkreader-inline-color="">09-Apr-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST05" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>09 Apr 2026 07:29 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+														<span> <input type="hidden" name="code" value="AST05"> <input type="hidden" name="opt" value="Assessment - 5">
+
+														<span>
+															<button type="button" class="icon-button" style="vertical-align: middle; text-align: center;" onclick="doDAssignmentProcess();" id="editAssignment" name="editAssignment" data-editclassid="VL2025260505287" data-editcode="AST05"><span class="bi bi-pencil-fill"></span>
+															</button>
+														</span>
+													</span>
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST05" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+										</tbody></table>
+									</div>
+									<div class="modal" id="myModal" role="dialog">
+										<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-bs-dismiss="modal">×</button>
+													<h4 class="modal-title">File Upload</h4>
+												</div>
+												<div class="modal-body">
+													<embed id="tes" width="100%" height="400px">
+												</div>
+												<div class="modal-footer">
+
+													<button type="button" class="btn btn-default" data-bs-dismiss="modal">confirm</button>
+
+													<button type="button" class="btn btn-default" id="close" data-bs-dismiss="modal">close</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div align="center" class="col-md-12">
+										<br>
+										<button type="button" class="btn btn-primary" onclick="javascript:reload('VL20252605');">
+											Go Back</button>
+									</div>
+									<input type="hidden" id="success" style="color: green; --darkreader-inline-color: #81f179;" value="" data-darkreader-inline-color="">
+									<input type="hidden" id="jsonBom" style="color: red; --darkreader-inline-color: #e72c2a;" value="" data-darkreader-inline-color="">
+									<script>
+										/*<![CDATA[*/
+
+									    var message = document.getElementById("jsonBom").value;
+										var success = document.getElementById("success").value;
+
+										if (message != "")
+										{
+											showMessage(1, message);
+										}
+
+										if (success != "")
+										{
+											showMessage(2, success);
+										}
+										//}
+
+										/*]]>*/
+									</script>
+
+								</div>
+							</div>
+							<script>
+								$(document).ready(function() {
+									$('[data-toggle="tooltip"]').tooltip();
+								});
+							</script>
+						</form>
+
+						<form id="downloadQuestionForm" method="post" action="examinations/doDownloadQuestion/"><input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
+							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
+							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
+							<input type="hidden" name="code" id="code">
+							<input type="hidden" name="classIdNumber" id="classIdNumber">
+						</form>
+
+						<form id="downloadStudentDAForm" method="post" action="examinations/downloadSTudentDA/"><input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
+							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
+							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
+							<input type="hidden" name="code1" id="code1">
+							<input type="hidden" name="classId1" id="classId1">
+						</form>
+
 					</div>

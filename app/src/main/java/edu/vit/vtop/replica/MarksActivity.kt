@@ -54,6 +54,10 @@ class MarksActivity : AppCompatActivity() {
     private var marksNavigationInProgress = false
     private var semesterFetchInProgress = false
     private var marksFetchInProgress = false
+    private var marksFetchRetryAttempts = 0
+    private var pendingSemesterValue: String? = null
+    private var pendingBaselineSignature: String? = null
+    private var lastRenderedMarksSignature: String = ""
     private var suppressSemesterSelection = false
     private var loginRedirectHandled = false
     private var lastAppliedSemesterValue: String? = null
@@ -100,9 +104,6 @@ class MarksActivity : AppCompatActivity() {
                     return
                 }
                 val option = semesterOptions.getOrNull(position) ?: return
-                if (option.value == lastAppliedSemesterValue) {
-                    return
-                }
                 applySemesterSelection(option)
             }
 
@@ -111,6 +112,9 @@ class MarksActivity : AppCompatActivity() {
 
         swipeRefreshLayout.setOnRefreshListener {
             marksNavigationAttempts = 0
+            marksFetchRetryAttempts = 0
+            pendingSemesterValue = null
+            pendingBaselineSignature = null
             showSemesterStatus(R.string.marks_semester_loading)
             webView.reload()
         }
@@ -127,6 +131,7 @@ class MarksActivity : AppCompatActivity() {
             javaScriptCanOpenWindowsAutomatically = true
             loadsImagesAutomatically = true
             mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
+            cacheMode = WebSettings.LOAD_NO_CACHE
             userAgentString = "$userAgentString VITianReplica/1.0"
         }
 
@@ -208,6 +213,9 @@ class MarksActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             showSemesterStatus(R.string.marks_semester_loading)
+            marksFetchRetryAttempts = 0
+            pendingSemesterValue = null
+            pendingBaselineSignature = null
             renderMarks(emptyList(), getString(R.string.marks_summary_default))
             webView.loadUrl(HOME_URL)
         } else {
@@ -363,17 +371,30 @@ class MarksActivity : AppCompatActivity() {
             marksFetchInProgress = false
             val parsed = parseJsResult(rawResult, lowercase = false)
             if (parsed.isBlank()) {
+                if (scheduleMarksFetchRetry()) {
+                    return@evaluateJavascript
+                }
+                pendingSemesterValue = null
+                pendingBaselineSignature = null
+                showSemesterStatus(null)
                 renderMarks(emptyList(), getString(R.string.marks_summary_default))
                 return@evaluateJavascript
             }
             val payload = runCatching { JSONObject(parsed) }.getOrNull()
             if (payload == null) {
+                if (scheduleMarksFetchRetry()) {
+                    return@evaluateJavascript
+                }
+                pendingSemesterValue = null
+                pendingBaselineSignature = null
+                showSemesterStatus(null)
                 renderMarks(emptyList(), getString(R.string.marks_summary_default))
                 return@evaluateJavascript
             }
 
             when (payload.optString("status")) {
                 "ok" -> {
+                    val selectedSemesterValue = payload.optString("selectedSemesterValue").trim().ifEmpty { null }
                     val entriesArray = payload.optJSONArray("entries")
                     val rows = buildList {
                         if (entriesArray != null) {
@@ -400,13 +421,28 @@ class MarksActivity : AppCompatActivity() {
                         }
                     }
                     val marks = groupRowsIntoSubjects(rows)
+                    if (shouldRetryMarksFetch(marks, selectedSemesterValue)) {
+                        return@evaluateJavascript
+                    }
+                    marksFetchRetryAttempts = 0
+                    pendingSemesterValue = null
+                    pendingBaselineSignature = null
                     val summary = payload.optString("summary").takeIf { it.isNotBlank() }
                         ?: getString(R.string.marks_summary_default)
+                    showSemesterStatus(null)
                     renderMarks(marks, summary)
                 }
 
                 "prelogin" -> redirectToLogin()
-                else -> renderMarks(emptyList(), getString(R.string.marks_summary_default))
+                else -> {
+                    if (scheduleMarksFetchRetry()) {
+                        return@evaluateJavascript
+                    }
+                    pendingSemesterValue = null
+                    pendingBaselineSignature = null
+                    showSemesterStatus(null)
+                    renderMarks(emptyList(), getString(R.string.marks_summary_default))
+                }
             }
         }
     }
@@ -427,6 +463,7 @@ class MarksActivity : AppCompatActivity() {
         suppressSemesterSelection = false
 
         lastAppliedSemesterValue = options.getOrNull(preferredIndex)?.value
+        marksFetchRetryAttempts = 0
         showSemesterStatus(null)
     }
 
@@ -438,8 +475,15 @@ class MarksActivity : AppCompatActivity() {
                 APPLY_STATE_SUBMITTED,
                 APPLY_STATE_DONE
                 -> {
-                    lastAppliedSemesterValue = option.value
+                    val previousSemesterValue = lastAppliedSemesterValue
+                    val requestedSemesterValue = option.value
+                    val semesterChanged =
+                        previousSemesterValue != null && previousSemesterValue != requestedSemesterValue
+                    pendingSemesterValue = if (semesterChanged) requestedSemesterValue else null
+                    pendingBaselineSignature = if (semesterChanged) lastRenderedMarksSignature else null
+                    lastAppliedSemesterValue = requestedSemesterValue
                     marksNavigationAttempts = 0
+                    marksFetchRetryAttempts = 0
                     showSemesterStatus(R.string.marks_semester_loading)
                     renderMarks(emptyList(), getString(R.string.marks_summary_default))
                     mainHandler.postDelayed({ fetchSemesterOptions() }, SEMESTER_RETRY_DELAY_MS)
@@ -552,6 +596,61 @@ class MarksActivity : AppCompatActivity() {
             .orEmpty()
     }
 
+    private fun shouldRetryMarksFetch(
+        entries: List<MarkEntry>,
+        selectedSemesterValue: String?,
+    ): Boolean {
+        val expectedSemesterValue = (pendingSemesterValue ?: lastAppliedSemesterValue)?.trim().orEmpty()
+        val actualSemesterValue = selectedSemesterValue?.trim().orEmpty()
+        val waitingForRequestedSemester =
+            expectedSemesterValue.isNotBlank() &&
+                actualSemesterValue.isNotBlank() &&
+                expectedSemesterValue != actualSemesterValue
+        val staleBySignature =
+            pendingSemesterValue != null &&
+                !pendingBaselineSignature.isNullOrBlank() &&
+                entries.isNotEmpty() &&
+                buildMarksSignature(entries) == pendingBaselineSignature
+
+        return when {
+            waitingForRequestedSemester -> scheduleMarksFetchRetry()
+            staleBySignature -> scheduleMarksFetchRetry()
+            entries.isEmpty() -> scheduleMarksFetchRetry()
+            else -> false
+        }
+    }
+
+    private fun buildMarksSignature(entries: List<MarkEntry>): String {
+        return entries.joinToString(separator = "||") { entry ->
+            val assessmentsSignature = entry.assessments.joinToString(separator = "##") { assessment ->
+                listOf(
+                    assessment.title.trim(),
+                    assessment.maxMark.trim(),
+                    assessment.weightagePercent.trim(),
+                    assessment.status.trim(),
+                    assessment.scoredMark.trim(),
+                    assessment.weightageMark.trim(),
+                ).joinToString("|")
+            }
+            listOf(
+                entry.courseCode.trim().uppercase(),
+                entry.courseTitle.trim(),
+                entry.courseType.trim(),
+                assessmentsSignature,
+            ).joinToString("::")
+        }
+    }
+
+    private fun scheduleMarksFetchRetry(): Boolean {
+        if (marksFetchRetryAttempts >= MAX_MARKS_FETCH_RETRIES) {
+            return false
+        }
+        marksFetchRetryAttempts += 1
+        showSemesterStatus(R.string.marks_semester_loading)
+        mainHandler.postDelayed({ fetchMarksRows() }, MARKS_FETCH_RETRY_DELAY_MS)
+        return true
+    }
+
     private fun showSemesterStatus(messageResId: Int?) {
         if (messageResId == null) {
             semesterStatusText.isVisible = false
@@ -565,6 +664,7 @@ class MarksActivity : AppCompatActivity() {
         marksSummaryText.text = summary
         marksSummaryText.isVisible =
             summary.isNotBlank() && summary != getString(R.string.marks_summary_default)
+        lastRenderedMarksSignature = buildMarksSignature(entries)
         marksAdapter.submit(entries)
         marksList.isVisible = entries.isNotEmpty()
         marksEmptyText.isVisible = entries.isEmpty()
@@ -847,6 +947,10 @@ class MarksActivity : AppCompatActivity() {
                   const name = normalize(select.name || '');
                   const options = Array.from(select.options || []);
                   let score = 0;
+                  const isInStudentMarkView = !!select.closest('form#studentMarkView');
+                  if (isInStudentMarkView) score += 1000;
+                  if (id === 'semestersubid' || name === 'semestersubid') score += 40;
+                  if (id.includes('semestersubid') || name.includes('semestersubid')) score += 20;
                   if (id.includes('sem') || name.includes('sem')) score += 8;
                   if (options.length > 1) score += 2;
                   if (options.some(opt => normalize(opt.textContent).includes('sem'))) score += 4;
@@ -1113,6 +1217,8 @@ class MarksActivity : AppCompatActivity() {
         private const val MAX_NAVIGATION_ATTEMPTS = 12
         private const val NAVIGATION_RETRY_DELAY_MS = 700L
         private const val SEMESTER_RETRY_DELAY_MS = 900L
+        private const val MAX_MARKS_FETCH_RETRIES = 12
+        private const val MARKS_FETCH_RETRY_DELAY_MS = 1200L
 
         private const val SESSION_PRELOGIN = "prelogin"
         private const val SESSION_AUTHENTICATED = "authenticated"
@@ -1176,6 +1282,10 @@ class MarksActivity : AppCompatActivity() {
                   const name = normalizeLower(select.name || '');
                   const options = Array.from(select.options || []);
                   let score = 0;
+                  const isInStudentMarkView = !!select.closest('form#studentMarkView');
+                  if (isInStudentMarkView) score += 1000;
+                  if (id === 'semestersubid' || name === 'semestersubid') score += 40;
+                  if (id.includes('semestersubid') || name.includes('semestersubid')) score += 20;
                   if (id.includes('sem') || name.includes('sem')) score += 8;
                   if (options.length > 1) score += 2;
                   if (options.some(opt => normalizeLower(opt.textContent).includes('sem'))) score += 4;
@@ -1273,6 +1383,55 @@ class MarksActivity : AppCompatActivity() {
                   .map(cell => normalize(cell.innerText || cell.textContent));
               };
 
+              const resolveSelectedSemesterValue = () => {
+                const readSelectValue = (select) => {
+                  if (!select) {
+                    return '';
+                  }
+                  const directValue = normalize(select.value || '');
+                  if (directValue) {
+                    return directValue;
+                  }
+                  const options = Array.from(select.options || []);
+                  const selectedOption = options.find(option => option.selected && normalize(option.value).length > 0)
+                    || options[select.selectedIndex]
+                    || null;
+                  return normalize(selectedOption ? selectedOption.value : '');
+                };
+
+                let selectedValue = '';
+                docs.forEach(doc => {
+                  if (selectedValue) {
+                    return;
+                  }
+                  const marksForm = doc.querySelector('form#studentMarkView');
+                  if (!marksForm) {
+                    return;
+                  }
+                  const preferredSelect = marksForm.querySelector('#semesterSubId,select[name="semesterSubId"]');
+                  const preferredValue = readSelectValue(preferredSelect);
+                  if (preferredValue) {
+                    selectedValue = preferredValue;
+                    return;
+                  }
+                  Array.from(marksForm.querySelectorAll('select')).forEach(select => {
+                    if (selectedValue) {
+                      return;
+                    }
+                    const id = normalizeLower(select.id || '');
+                    const name = normalizeLower(select.name || '');
+                    if (!id.includes('sem') && !name.includes('sem')) {
+                      return;
+                    }
+                    const selectedOptionValue = readSelectValue(select);
+                    if (selectedOptionValue) {
+                      selectedValue = selectedOptionValue;
+                    }
+                  });
+                });
+                return selectedValue;
+              };
+
               const parseAssessmentTable = (table) => {
                 if (!table) {
                   return [];
@@ -1329,7 +1488,24 @@ class MarksActivity : AppCompatActivity() {
 
               const extractFromCustomLayout = (doc) => {
                 const extracted = [];
-                const mainTables = Array.from(doc.querySelectorAll('table.customTable'));
+                const marksForm = doc.querySelector('form#studentMarkView');
+                if (!marksForm) {
+                  return extracted;
+                }
+
+                const preferredTables = Array.from(marksForm.querySelectorAll('#fixedTableContainer table.customTable'));
+                const fallbackTables = Array.from(marksForm.querySelectorAll('table.customTable'));
+                const candidateTables = preferredTables.length > 0 ? preferredTables : fallbackTables;
+                const visibleTables = candidateTables.filter(table => {
+                  try {
+                    const styleDisplay = normalizeLower((table.style && table.style.display) || '');
+                    return styleDisplay !== 'none' && (table.offsetParent !== null || table.getClientRects().length > 0);
+                  } catch (_) {
+                    return true;
+                  }
+                });
+                const mainTables = visibleTables.length > 0 ? visibleTables : candidateTables;
+
                 mainTables.forEach(mainTable => {
                   const rows = Array.from(mainTable.querySelectorAll('tr'));
                   for (let i = 0; i < rows.length; i++) {
@@ -1375,21 +1551,6 @@ class MarksActivity : AppCompatActivity() {
 
                     const assessments = parseAssessmentTable(nestedTable);
                     if (assessments.length === 0) {
-                      extracted.push({
-                        courseCode: courseCode,
-                        courseTitle: courseTitle,
-                        courseType: courseType,
-                        assessmentTitle: '',
-                        maxMark: '',
-                        weightagePercent: '',
-                        status: '',
-                        scoredMark: '',
-                        weightageMark: '',
-                        grade: '',
-                        credits: '',
-                        marks: '',
-                        extra: '',
-                      });
                       continue;
                     }
 
@@ -1424,12 +1585,15 @@ class MarksActivity : AppCompatActivity() {
                 return JSON.stringify({
                   status: 'ok',
                   summary: buildSummary(),
+                  selectedSemesterValue: resolveSelectedSemesterValue(),
                   entries: customEntries,
                 });
               }
 
+              const marksDocs = docs.filter(doc => !!doc.querySelector('form#studentMarkView'));
+              const docsToScan = marksDocs.length > 0 ? marksDocs : docs;
               const candidates = [];
-              docs.forEach(doc => {
+              docsToScan.forEach(doc => {
                 Array.from(doc.querySelectorAll('table')).forEach(table => {
                   const rows = Array.from(table.querySelectorAll('tr')).map(row =>
                     Array.from(row.querySelectorAll('th,td')).map(cell => normalize(cell.innerText || cell.textContent))
@@ -1555,6 +1719,7 @@ class MarksActivity : AppCompatActivity() {
               return JSON.stringify({
                 status: 'ok',
                 summary: summary,
+                selectedSemesterValue: resolveSelectedSemesterValue(),
                 entries: entries,
               });
             })();
