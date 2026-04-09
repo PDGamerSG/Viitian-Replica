@@ -540,7 +540,7 @@ class MarksActivity : AppCompatActivity() {
         )
     }
 
-    private inline fun firstNonBlank(
+    private fun firstNonBlank(
         rows: List<RawMarkRow>,
         selector: (RawMarkRow) -> String,
     ): String {
@@ -881,6 +881,19 @@ class MarksActivity : AppCompatActivity() {
               best.dispatchEvent(new Event('input', { bubbles: true }));
               best.dispatchEvent(new Event('change', { bubbles: true }));
 
+              const refreshHosts = [bestDoc.defaultView, window, window.parent];
+              for (let i = 0; i < refreshHosts.length; i++) {
+                try {
+                  const host = refreshHosts[i];
+                  if (host && typeof host.doViewExamMark === 'function') {
+                    host.doViewExamMark();
+                    return 'submitted';
+                  }
+                } catch (_) {
+                  // Ignore cross-origin access issues.
+                }
+              }
+
               const submitNode = Array.from(bestDoc.querySelectorAll('button,input[type="submit"],a[onclick],a[href]')).find(node => {
                 const text = normalize(node.innerText || node.textContent || node.value || '');
                 return text.includes('search') || text.includes('show') || text.includes('view') || text.includes('submit') || text.includes('go');
@@ -916,11 +929,26 @@ class MarksActivity : AppCompatActivity() {
         ).joinToString("|")
     }
 
+    private fun abbreviateCourseType(rawType: String): String {
+        val normalized = rawType.trim().lowercase()
+        if (normalized.isBlank()) {
+            return ""
+        }
+        return when {
+            normalized.contains("soft skill") -> "SS"
+            normalized.contains("theory") -> "TH"
+            normalized.contains("lab") -> "LO"
+            normalized.contains("project") -> "PJ"
+            rawType.trim().length <= 4 -> rawType.trim().uppercase()
+            else -> rawType.trim()
+        }
+    }
+
     private fun buildSubjectTitle(item: MarkEntry): String {
         val parts = buildList {
             item.courseCode.trim().takeIf { it.isNotBlank() }?.let { add(it.uppercase()) }
             item.courseTitle.trim().takeIf { it.isNotBlank() }?.let { add(it) }
-            item.courseType.trim().takeIf { it.isNotBlank() }?.let { add(it.uppercase()) }
+            abbreviateCourseType(item.courseType).takeIf { it.isNotBlank() }?.let { add(it) }
         }
         return if (parts.isEmpty()) getString(R.string.marks_value_na) else parts.joinToString(" - ")
     }
@@ -1168,9 +1196,16 @@ class MarksActivity : AppCompatActivity() {
                   label: normalize(option.textContent),
                   selected: !!option.selected,
                 }))
-                .filter(option => option.label.length > 0);
+                .filter(option => (
+                  option.label.length > 0 &&
+                  option.value.length > 0 &&
+                  !normalizeLower(option.label).includes('choose semester')
+                ));
 
-              const selected = options.find(option => option.selected) || options[bestSelect.selectedIndex] || null;
+              const selected = options.find(option => option.selected && option.value.length > 0)
+                || options.find(option => option.value === normalize(bestSelect.value))
+                || options[0]
+                || null;
               return JSON.stringify({
                 status: 'ok',
                 selectedValue: selected ? selected.value : '',
@@ -1210,6 +1245,187 @@ class MarksActivity : AppCompatActivity() {
               const docs = getDocuments();
               if (docs.some(doc => hasPreloginState(doc))) {
                 return JSON.stringify({ status: 'prelogin' });
+              }
+
+              const buildSummary = () => {
+                const pageText = docs
+                  .map(doc => normalize(doc.body ? (doc.body.innerText || doc.body.textContent) : ''))
+                  .join(' ')
+                  .toLowerCase();
+                const sgpaMatch = pageText.match(/sgpa[^0-9]*([0-9]+(?:\.[0-9]+)?)/i);
+                const cgpaMatch = pageText.match(/cgpa[^0-9]*([0-9]+(?:\.[0-9]+)?)/i);
+                const summaryParts = [];
+                if (sgpaMatch && sgpaMatch[1]) {
+                  summaryParts.push('SGPA: ' + sgpaMatch[1]);
+                }
+                if (cgpaMatch && cgpaMatch[1]) {
+                  summaryParts.push('CGPA: ' + cgpaMatch[1]);
+                }
+                return summaryParts.length > 0 ? summaryParts.join(' | ') : '';
+              };
+
+              const getCells = (row) => {
+                return Array.from((row && row.children) || [])
+                  .filter(cell => {
+                    const tag = normalizeLower(cell.tagName || '');
+                    return tag === 'td' || tag === 'th';
+                  })
+                  .map(cell => normalize(cell.innerText || cell.textContent));
+              };
+
+              const parseAssessmentTable = (table) => {
+                if (!table) {
+                  return [];
+                }
+                const rows = Array.from(table.querySelectorAll('tr'));
+                if (rows.length < 2) {
+                  return [];
+                }
+                const header = getCells(rows[0]).map(cell => normalizeLower(cell));
+                const findHeaderIndex = (keywords) => {
+                  return header.findIndex(column => keywords.some(keyword => column.includes(keyword)));
+                };
+
+                const titleIndex = findHeaderIndex(['mark title', 'assessment', 'title']);
+                const maxMarkIndex = findHeaderIndex(['max. mark', 'max mark', 'maximum mark']);
+                const weightagePercentIndex = findHeaderIndex(['weightage %', 'weightage%', 'weightage percentage']);
+                const statusIndex = findHeaderIndex(['status']);
+                const scoredMarkIndex = findHeaderIndex(['scored mark', 'score', 'obtained']);
+                const weightageMarkIndex = findHeaderIndex(['weightage mark', 'weighted mark', 'weightage marks', 'weighted marks']);
+                const remarkIndex = findHeaderIndex(['remark']);
+
+                return rows
+                  .slice(1)
+                  .map(row => getCells(row))
+                  .filter(cells => cells.some(cell => cell.length > 0))
+                  .map(cells => {
+                    const read = (idx, fallbackIdx) => {
+                      if (idx >= 0 && idx < cells.length) {
+                        return cells[idx];
+                      }
+                      if (fallbackIdx >= 0 && fallbackIdx < cells.length) {
+                        return cells[fallbackIdx];
+                      }
+                      return '';
+                    };
+                    return {
+                      assessmentTitle: read(titleIndex, 1),
+                      maxMark: read(maxMarkIndex, 2),
+                      weightagePercent: read(weightagePercentIndex, 3),
+                      status: read(statusIndex, 4),
+                      scoredMark: read(scoredMarkIndex, 5),
+                      weightageMark: read(weightageMarkIndex, 6),
+                      remark: read(remarkIndex, 7),
+                    };
+                  })
+                  .filter(row => {
+                    const title = normalizeLower(row.assessmentTitle);
+                    if (title.includes('total') || title.includes('minimum marks required')) {
+                      return false;
+                    }
+                    return row.assessmentTitle || row.maxMark || row.scoredMark || row.weightageMark;
+                  });
+              };
+
+              const extractFromCustomLayout = (doc) => {
+                const extracted = [];
+                const mainTables = Array.from(doc.querySelectorAll('table.customTable'));
+                mainTables.forEach(mainTable => {
+                  const rows = Array.from(mainTable.querySelectorAll('tr'));
+                  for (let i = 0; i < rows.length; i++) {
+                    const row = rows[i];
+                    const className = normalizeLower(row.className || '');
+                    if (!className.includes('tablecontent') || className.includes('level1')) {
+                      continue;
+                    }
+                    if (row.querySelector('table.customTable-level1')) {
+                      continue;
+                    }
+                    const cells = getCells(row);
+                    if (cells.length < 5) {
+                      continue;
+                    }
+                    const headerLike = cells.some(cell => {
+                      const text = normalizeLower(cell);
+                      return text.includes('course code') || text.includes('course title');
+                    });
+                    if (headerLike) {
+                      continue;
+                    }
+
+                    const courseCode = cells[2] || '';
+                    const courseTitle = cells[3] || '';
+                    const courseType = cells[4] || '';
+                    if (!courseCode && !courseTitle) {
+                      continue;
+                    }
+
+                    let nestedTable = null;
+                    for (let j = i + 1; j < rows.length; j++) {
+                      const nextRow = rows[j];
+                      const nextClass = normalizeLower(nextRow.className || '');
+                      if (nextClass.includes('tablecontent') && !nextClass.includes('level1')) {
+                        nestedTable = nextRow.querySelector('table.customTable-level1');
+                        if (nestedTable) {
+                          i = j;
+                        }
+                        break;
+                      }
+                    }
+
+                    const assessments = parseAssessmentTable(nestedTable);
+                    if (assessments.length === 0) {
+                      extracted.push({
+                        courseCode: courseCode,
+                        courseTitle: courseTitle,
+                        courseType: courseType,
+                        assessmentTitle: '',
+                        maxMark: '',
+                        weightagePercent: '',
+                        status: '',
+                        scoredMark: '',
+                        weightageMark: '',
+                        grade: '',
+                        credits: '',
+                        marks: '',
+                        extra: '',
+                      });
+                      continue;
+                    }
+
+                    assessments.forEach(assessment => {
+                      extracted.push({
+                        courseCode: courseCode,
+                        courseTitle: courseTitle,
+                        courseType: courseType,
+                        assessmentTitle: assessment.assessmentTitle,
+                        maxMark: assessment.maxMark,
+                        weightagePercent: assessment.weightagePercent,
+                        status: assessment.status,
+                        scoredMark: assessment.scoredMark,
+                        weightageMark: assessment.weightageMark,
+                        grade: '',
+                        credits: '',
+                        marks: assessment.scoredMark,
+                        extra: assessment.remark,
+                      });
+                    });
+                  }
+                });
+                return extracted;
+              };
+
+              const customEntries = [];
+              docs.forEach(doc => {
+                Array.prototype.push.apply(customEntries, extractFromCustomLayout(doc));
+              });
+
+              if (customEntries.length > 0) {
+                return JSON.stringify({
+                  status: 'ok',
+                  summary: buildSummary(),
+                  entries: customEntries,
+                });
               }
 
               const candidates = [];
@@ -1334,20 +1550,7 @@ class MarksActivity : AppCompatActivity() {
                 entries.push(normalizedRow);
               });
 
-              const pageText = docs
-                .map(doc => normalize(doc.body ? (doc.body.innerText || doc.body.textContent) : ''))
-                .join(' ')
-                .toLowerCase();
-              const sgpaMatch = pageText.match(/sgpa[^0-9]*([0-9]+(?:\.[0-9]+)?)/i);
-              const cgpaMatch = pageText.match(/cgpa[^0-9]*([0-9]+(?:\.[0-9]+)?)/i);
-              const summaryParts = [];
-              if (sgpaMatch && sgpaMatch[1]) {
-                summaryParts.push('SGPA: ' + sgpaMatch[1]);
-              }
-              if (cgpaMatch && cgpaMatch[1]) {
-                summaryParts.push('CGPA: ' + cgpaMatch[1]);
-              }
-              const summary = summaryParts.length > 0 ? summaryParts.join(' | ') : '';
+              const summary = buildSummary();
 
               return JSON.stringify({
                 status: 'ok',

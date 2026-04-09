@@ -1,0 +1,629 @@
+<div class="card-body">
+						<form role="form" id="studentMarkView" name="studentMarkView" method="post" autocomplete="off">
+							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
+							<input type="hidden" name="_csrf" value="febe4f45-2c91-4edf-bf06-b34fb479a2fc">
+							<!-- th:object="${examSchedule}"> -->
+							<div class="col-md-12" style="margin-top: 20px; margin-left: 2px;">
+								<div class="row p-2">
+									<div class="col-md-4" style="padding-right: 10px;">
+										<label for="acadYear" class="form-label fw-bold" style="float: right;  margin-right: 15px;">Select Semester</label>
+									</div>
+										<div class="col-md-7">
+											<select class="form-select" name="semesterSubId" id="semesterSubId" onchange="doViewExamMark();" style="margin-left: 100px; width: 500px;">
+												<option value="" selected="selected">-- Choose Semester --</option>
+												<option value="VL20252605" selected="selected">Winter Semester 2025-26</option>
+												<option value="VL20252601">Fall Semester 2025-26</option>
+												<option value="VL20242507">Summer Semester 2024-25</option>
+												<option value="VL20242505">Winter Semester 2024-25</option>
+												<option value="VL20242501">Fall Semester 2024-25</option>
+												<option value="VL20232407">Summer Semester 2023-24</option>
+												<option value="VL20232406">Tri Semester III &amp; VI 2023-24</option>
+												<option value="VL20232405">Winter Semester 2023-24</option>
+												<option value="VL20232403">Tri Semester II &amp; V 2023-24</option>
+												<option value="VL20232402">Tri Semester I &amp; IV 2023-24</option>
+												<option value="VL20222307">Summer Semester 2022-23</option>
+												<option value="VL20232401">Fall Semester 2023-24</option>
+												<option value="VL20222306">Tri Semester III &amp; VI 2022-23</option>
+												<option value="VL20222305">Winter Semester 2022-23</option>
+												<option value="VL20222303">Tri Semester II &amp; V 2022-23</option>
+												<option value="VL20222302">Tri Semester I &amp; IV 2022-23</option>
+												<option value="VL20222301">Fall Semester 2022-23</option>
+												<option value="VL20212207">Summer Semester Special 2021-22</option>
+												<option value="VL20212206">Tri Semester III &amp; VI 2021-22</option>
+												<option value="VL20212205">Winter Semester 2021-22</option>
+												<option value="VL20212203">Tri Semester II &amp; V 2021-22</option>
+												<option value="VL20212202">Tri Semester I &amp; IV 2021-22</option>
+												<option value="VL20212201">Fall Semester 2021-22</option>
+												<option value="VL20202107">Summer Semester Special 2020-21</option>
+												<option value="VL20202106">Tri Semester III and VI 2020-21</option>
+												<option value="VL20202105">Winter Semester 2020-21</option>
+												<option value="VL20202104">Inter Session Semester 2020-21</option>
+												<option value="VL20202110">Winter Inter Semester 2020-21</option>
+												<option value="VL20202103">Tri Semester II &amp; V 2020-21</option>
+												<option value="VL20202101">Fall Semester 2020-21</option>
+												<option value="VL20202102">Tri Semester I &amp; IV 2020-21</option>
+												<option value="VL2019207">Summer Semester Special 2019-20</option>
+												<option value="VL2019208">Summer Semester I 2019-20</option>
+												<option value="VL2019206">Tri Semester III &amp; VI 2019-20</option>
+												<option value="VL2019205">Winter Semester 2019-20</option>
+												<option value="VL2019204">Inter Session Semester 2019-20</option>
+												<option value="VL2019203">Tri Semester II &amp; V 2019-20</option>
+												<option value="VL2019202">Tri Semester I &amp; IV 2019-20</option>
+												<option value="VL2019201">Fall Semester 2019-20</option>
+												<option value="VL2018199">Summer Semester II 2018-19</option>
+												<option value="VL2018197">Summer Semester Special 2018-19</option>
+												<option value="VL2018198">Summer Semester I 2018-19</option>
+												<option value="VL2018196">Tri Semester III &amp; VI 2018-19</option>
+												<option value="VL2018195">Winter Semester 2018-19</option>
+												<option value="VL2018194">Inter Session Semester 2018-19</option>
+												<option value="VL2018193">Tri Semester II &amp; V 2018-19</option>
+												<option value="VL2018191">Fall Semester 2018-19</option>
+												<option value="VL2018192">Tri Semester I &amp; IV 2018-19</option>
+												<option value="VL2017189">Summer Semester II 2017-18</option>
+												<option value="VL2017188">Summer Semester I 2017-18</option>
+												<option value="VL2017186">Tri Semester III and VI 2017-18</option>
+												<option value="VL2017185">Winter Semester 2017-18</option>
+												<option value="VL2017184">Inter Session Semester 2017-18</option>
+												<option value="VL2017183">Tri Semester II &amp; V 2017-18</option>
+												<option value="VL2017182">Tri Semester I &amp; IV 2017-18</option>
+												<option value="VL2017181">Fall Semester 2017-18</option>
+											</select>
+										</div>
+									</div>
+								<br>
+
+								<div class="form-group col-sm-12"></div>
+								<div style="text-align: center;">
+								<span class="col-sm-12 col-md-12" style="font-size: 20px; color: green; --darkreader-inline-color: #81f179;" data-darkreader-inline-color=""></span> <span class="col-sm-12 col-md-12" style="font-size: 20px; color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color=""></span>
+								</div>
+								<div id="fixedTableContainer" class="fixedTableContainer">
+									<table class="customTable" style="align: center;">
+
+										<tbody><tr class="tableHeader">
+											<td>Sl.No.</td>
+											<td>ClassNbr</td>
+											<td>Course Code</td>
+											<td>Course Title</td>
+											<td>Course Type</td>
+											<td>Course System</td>
+											<td>Faculty</td>
+											<td>Slot</td>
+											<td>Course Mode</td>
+										</tr>
+
+											<tr class="tableContent">
+												<td>1</td>
+												<td>VL2025260500178</td>
+												<td>ISTS102P</td>
+												<td>Quantitative Skills Practice I</td>
+												<td>Soft Skill</td>
+												<td>CBCS</td>
+												<td>FACE (APT)</td>
+												<td>G1+TG1</td>
+												<td>SBC01</td>
+											</tr>
+											<tr class="tableContent">
+												<td colspan="9" align="center">
+													<table class="customTable-level1" style="align: center;width: 80%;">
+														<tbody><tr class="tableHeader-level1">
+															<td>Sl.No.</td>
+															<td>Mark Title</td>
+															<td>Max. Mark</td>
+															<td>Weightage %</td>
+															<td>Status</td>
+															<td>Scored Mark</td>
+															<td>Weightage Mark</td>
+															<!-- <td>Class Average</td>
+                                                            <td>Mark Posted Strength</td> -->
+															<td>Remark</td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>1</output></td>
+															<td><output>Assessment - 1</output></td>
+															<td><output>15</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>12.0</output></td>
+															<td><output>12</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>2</output></td>
+															<td><output>Assessment - 2</output></td>
+															<td><output>15</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>14.0</output></td>
+															<td><output>14</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>3</output></td>
+															<td><output>Continuous Assessment Test - I</output></td>
+															<td><output>30</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>19.0</output></td>
+															<td><output>9.5</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>4</output></td>
+															<td><output>Continuous Assessment Test - II</output></td>
+															<td><output>30</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>20.0</output></td>
+															<td><output>10</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+
+        <tr class="tableHeader-level1">
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>Total:</b></td>
+            <td style="text-align:left;">90.00</td>
+            <td style="text-align:left;">60.00</td>
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>65.00</b></td>
+            <td style="text-align:left;"><b>45.50</b></td>
+            <td style="text-align:left;"><b>Lost Weightage Marks: 14.50</b></td>
+        </tr>
+
+                <tr class="tableContent-level1" style="background: rgba(255, 0, 0, 0.6); --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(186, 19, 18, 0.6);" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor="">
+                    <td colspan="8" style="text-align:center"><b>Minimum marks required to clear STS is : 4.50 marks<b></b></b></td>
+                </tr>
+                </tbody></table>
+												</td>
+											</tr>
+
+											<tr class="tableContent">
+												<td>2</td>
+												<td>VL2025260501792</td>
+												<td>IMAT202L</td>
+												<td>Probability and Statistics</td>
+												<td>Theory Only</td>
+												<td>CBCS</td>
+												<td>SIVAKUMAR M</td>
+												<td>F1+TF1</td>
+												<td>CBL09</td>
+											</tr>
+											<tr class="tableContent">
+												<td colspan="9" align="center">
+													<table class="customTable-level1" style="align: center;width: 80%;">
+														<tbody><tr class="tableHeader-level1">
+															<td>Sl.No.</td>
+															<td>Mark Title</td>
+															<td>Max. Mark</td>
+															<td>Weightage %</td>
+															<td>Status</td>
+															<td>Scored Mark</td>
+															<td>Weightage Mark</td>
+															<!-- <td>Class Average</td>
+                                                            <td>Mark Posted Strength</td> -->
+															<td>Remark</td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>1</output></td>
+															<td><output>Continuous Assessment Test - I</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>46.0</output></td>
+															<td><output>13.8</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>2</output></td>
+															<td><output>Continuous Assessment Test - II</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>46.0</output></td>
+															<td><output>13.8</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+
+        <tr class="tableHeader-level1">
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>Total:</b></td>
+            <td style="text-align:left;">100.00</td>
+            <td style="text-align:left;">30.00</td>
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>92.00</b></td>
+            <td style="text-align:left;"><b>27.60</b></td>
+            <td style="text-align:left;"><b>Lost Weightage Marks: 2.40</b></td>
+        </tr>
+        </tbody></table>
+												</td>
+											</tr>
+
+											<tr class="tableContent">
+												<td>3</td>
+												<td>VL2025260502086</td>
+												<td>ISWE103L</td>
+												<td>Database Systems</td>
+												<td>Theory Only</td>
+												<td>CBCS</td>
+												<td>MUTHAMIL SELVAN T</td>
+												<td>E1+TE1</td>
+												<td>CBL09</td>
+											</tr>
+											<tr class="tableContent">
+												<td colspan="9" align="center">
+													<table class="customTable-level1" style="align: center;width: 80%;">
+														<tbody><tr class="tableHeader-level1">
+															<td>Sl.No.</td>
+															<td>Mark Title</td>
+															<td>Max. Mark</td>
+															<td>Weightage %</td>
+															<td>Status</td>
+															<td>Scored Mark</td>
+															<td>Weightage Mark</td>
+															<!-- <td>Class Average</td>
+                                                            <td>Mark Posted Strength</td> -->
+															<td>Remark</td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>1</output></td>
+															<td><output>Continuous Assessment Test - I</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>31.0</output></td>
+															<td><output>9.3</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>2</output></td>
+															<td><output>Continuous Assessment Test - II</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>36.0</output></td>
+															<td><output>10.8</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+
+        <tr class="tableHeader-level1">
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>Total:</b></td>
+            <td style="text-align:left;">100.00</td>
+            <td style="text-align:left;">30.00</td>
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>67.00</b></td>
+            <td style="text-align:left;"><b>20.10</b></td>
+            <td style="text-align:left;"><b>Lost Weightage Marks: 9.90</b></td>
+        </tr>
+        </tbody></table>
+												</td>
+											</tr>
+
+											<tr class="tableContent">
+												<td>4</td>
+												<td>VL2025260502148</td>
+												<td>ISWE203L</td>
+												<td>Theory of Computation</td>
+												<td>Theory Only</td>
+												<td>CBCS</td>
+												<td>SIVASHANKARI R</td>
+												<td>C1+TC1+TCC1</td>
+												<td>CBL09</td>
+											</tr>
+											<tr class="tableContent">
+												<td colspan="9" align="center">
+													<table class="customTable-level1" style="align: center;width: 80%;">
+														<tbody><tr class="tableHeader-level1">
+															<td>Sl.No.</td>
+															<td>Mark Title</td>
+															<td>Max. Mark</td>
+															<td>Weightage %</td>
+															<td>Status</td>
+															<td>Scored Mark</td>
+															<td>Weightage Mark</td>
+															<!-- <td>Class Average</td>
+                                                            <td>Mark Posted Strength</td> -->
+															<td>Remark</td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>1</output></td>
+															<td><output>Continuous Assessment Test - I</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>48.0</output></td>
+															<td><output>14.4</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>2</output></td>
+															<td><output>Continuous Assessment Test - II</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>33.0</output></td>
+															<td><output>9.9</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+
+        <tr class="tableHeader-level1">
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>Total:</b></td>
+            <td style="text-align:left;">100.00</td>
+            <td style="text-align:left;">30.00</td>
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>81.00</b></td>
+            <td style="text-align:left;"><b>24.30</b></td>
+            <td style="text-align:left;"><b>Lost Weightage Marks: 5.70</b></td>
+        </tr>
+        </tbody></table>
+												</td>
+											</tr>
+
+											<tr class="tableContent">
+												<td>5</td>
+												<td>VL2025260502157</td>
+												<td>ISWE205L</td>
+												<td>Computer Networks</td>
+												<td>Theory Only</td>
+												<td>CBCS</td>
+												<td>ASIS KUMAR TRIPATHY</td>
+												<td>A1+TA1</td>
+												<td>CBL09</td>
+											</tr>
+											<tr class="tableContent">
+												<td colspan="9" align="center">
+													<table class="customTable-level1" style="align: center;width: 80%;">
+														<tbody><tr class="tableHeader-level1">
+															<td>Sl.No.</td>
+															<td>Mark Title</td>
+															<td>Max. Mark</td>
+															<td>Weightage %</td>
+															<td>Status</td>
+															<td>Scored Mark</td>
+															<td>Weightage Mark</td>
+															<!-- <td>Class Average</td>
+                                                            <td>Mark Posted Strength</td> -->
+															<td>Remark</td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>1</output></td>
+															<td><output>Continuous Assessment Test - I</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>47.0</output></td>
+															<td><output>14.1</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>2</output></td>
+															<td><output>Continuous Assessment Test - II</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>25.0</output></td>
+															<td><output>7.5</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>3</output></td>
+															<td><output>Quiz - I</output></td>
+															<td><output>10</output></td>
+															<td><output>10</output></td>
+															<td><output>Present</output></td>
+															<td><output>10.0</output></td>
+															<td><output>10</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>4</output></td>
+															<td><output>Quiz - II</output></td>
+															<td><output>10</output></td>
+															<td><output>10</output></td>
+															<td><output>Present</output></td>
+															<td><output>9.0</output></td>
+															<td><output>9</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+
+        <tr class="tableHeader-level1">
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>Total:</b></td>
+            <td style="text-align:left;">120.00</td>
+            <td style="text-align:left;">50.00</td>
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>91.00</b></td>
+            <td style="text-align:left;"><b>40.60</b></td>
+            <td style="text-align:left;"><b>Lost Weightage Marks: 9.40</b></td>
+        </tr>
+        </tbody></table>
+												</td>
+											</tr>
+
+											<tr class="tableContent">
+												<td>6</td>
+												<td>VL2025260502200</td>
+												<td>ISWE306L</td>
+												<td>Software Project Management</td>
+												<td>Theory Only</td>
+												<td>CBCS</td>
+												<td>JOTHISH KUMAR M</td>
+												<td>B1+TB1</td>
+												<td>CBL09</td>
+											</tr>
+											<tr class="tableContent">
+												<td colspan="9" align="center">
+													<table class="customTable-level1" style="align: center;width: 80%;">
+														<tbody><tr class="tableHeader-level1">
+															<td>Sl.No.</td>
+															<td>Mark Title</td>
+															<td>Max. Mark</td>
+															<td>Weightage %</td>
+															<td>Status</td>
+															<td>Scored Mark</td>
+															<td>Weightage Mark</td>
+															<!-- <td>Class Average</td>
+                                                            <td>Mark Posted Strength</td> -->
+															<td>Remark</td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>1</output></td>
+															<td><output>Continuous Assessment Test - I</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>40.0</output></td>
+															<td><output>12</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>2</output></td>
+															<td><output>Continuous Assessment Test - II</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>42.0</output></td>
+															<td><output>12.6</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>3</output></td>
+															<td><output>Case Study - I</output></td>
+															<td><output>10</output></td>
+															<td><output>10</output></td>
+															<td><output>Present</output></td>
+															<td><output>10.0</output></td>
+															<td><output>10</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>4</output></td>
+															<td><output>Case Study - II</output></td>
+															<td><output>10</output></td>
+															<td><output>10</output></td>
+															<td><output>Present</output></td>
+															<td><output>10.0</output></td>
+															<td><output>10</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+
+        <tr class="tableHeader-level1">
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>Total:</b></td>
+            <td style="text-align:left;">120.00</td>
+            <td style="text-align:left;">50.00</td>
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>102.00</b></td>
+            <td style="text-align:left;"><b>44.60</b></td>
+            <td style="text-align:left;"><b>Lost Weightage Marks: 5.40</b></td>
+        </tr>
+        </tbody></table>
+												</td>
+											</tr>
+
+											<tr class="tableContent">
+												<td>7</td>
+												<td>VL2025260502748</td>
+												<td>ISWE207L</td>
+												<td>Object Oriented Analysis and Design</td>
+												<td>Theory Only</td>
+												<td>CBCS</td>
+												<td>KAMALAKANNAN J</td>
+												<td>D1+TD1</td>
+												<td>CBL09</td>
+											</tr>
+											<tr class="tableContent">
+												<td colspan="9" align="center">
+													<table class="customTable-level1" style="align: center;width: 80%;">
+														<tbody><tr class="tableHeader-level1">
+															<td>Sl.No.</td>
+															<td>Mark Title</td>
+															<td>Max. Mark</td>
+															<td>Weightage %</td>
+															<td>Status</td>
+															<td>Scored Mark</td>
+															<td>Weightage Mark</td>
+															<!-- <td>Class Average</td>
+                                                            <td>Mark Posted Strength</td> -->
+															<td>Remark</td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>1</output></td>
+															<td><output>Continuous Assessment Test - I</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>38.0</output></td>
+															<td><output>11.4</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+														<tr class="tableContent-level1">
+															<td><output>2</output></td>
+															<td><output>Continuous Assessment Test - II</output></td>
+															<td><output>50</output></td>
+															<td><output>15</output></td>
+															<td><output>Present</output></td>
+															<td><output>36.0</output></td>
+															<td><output>10.8</output></td>
+															<!-- <td><output th:text="${mark.classAverage}"></output></td>
+                                                            <td><output th:text="${mark.classAverageStrength}"></output></td> -->
+															<td><output></output></td>
+														</tr>
+
+        <tr class="tableHeader-level1">
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>Total:</b></td>
+            <td style="text-align:left;">100.00</td>
+            <td style="text-align:left;">30.00</td>
+            <td style="text-align:left;"></td>
+            <td style="text-align:left;"><b>74.00</b></td>
+            <td style="text-align:left;"><b>22.20</b></td>
+            <td style="text-align:left;"><b>Lost Weightage Marks: 7.80</b></td>
+        </tr>
+        </tbody></table>
+												</td>
+											</tr>
+
+									</tbody></table>
+								</div>
+							</div>
+						</form>
+					</div>
