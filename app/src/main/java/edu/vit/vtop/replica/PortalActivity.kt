@@ -67,6 +67,8 @@ class PortalActivity : AppCompatActivity() {
         swipeRefreshLayout = findViewById(R.id.swipeRefresh)
         webView = findViewById(R.id.webView)
 
+        swipeRefreshLayout.setColorSchemeResources(R.color.marks_indicator)
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.marks_surface)
         swipeRefreshLayout.setOnRefreshListener { webView.reload() }
 
         CookieManager.getInstance().setAcceptCookie(true)

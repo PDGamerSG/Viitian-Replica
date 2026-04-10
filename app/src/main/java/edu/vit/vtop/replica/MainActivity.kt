@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.webkit.CookieManager
+import android.webkit.JavascriptInterface
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var webView: WebView
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
     private lateinit var progressBar: ProgressBar
+    private val loginCredentialBridge = LoginCredentialBridge()
+    private val credentialPreferences by lazy { getSharedPreferences(CREDENTIAL_PREFS, MODE_PRIVATE) }
     private var dashboardOpened = false
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -36,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         swipeRefreshLayout = findViewById(R.id.swipeRefresh)
         webView = findViewById(R.id.webView)
 
+        swipeRefreshLayout.setColorSchemeResources(R.color.marks_indicator)
+        swipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.marks_surface)
         swipeRefreshLayout.setOnRefreshListener { webView.reload() }
 
         CookieManager.getInstance().setAcceptCookie(true)
@@ -52,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             mixedContentMode = WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE
             userAgentString = "$userAgentString VITianReplica/1.0"
         }
+        webView.addJavascriptInterface(loginCredentialBridge, LOGIN_CREDENTIAL_BRIDGE_NAME)
 
         webView.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(
@@ -86,6 +92,7 @@ class MainActivity : AppCompatActivity() {
             override fun onPageFinished(view: WebView, url: String) {
                 super.onPageFinished(view, url)
                 swipeRefreshLayout.isRefreshing = false
+                maybeAssistLoginForm(url)
                 if (!dashboardOpened) {
                     maybeOpenDashboard(url)
                 }
@@ -138,9 +145,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         webView.stopLoading()
+        webView.removeJavascriptInterface(LOGIN_CREDENTIAL_BRIDGE_NAME)
         webView.webChromeClient = null
         webView.destroy()
         super.onDestroy()
+    }
+
+    private fun maybeAssistLoginForm(url: String) {
+        if (!url.lowercase().contains("vtop.vit.ac.in/vtop/")) {
+            return
+        }
+        val savedUsername = credentialPreferences.getString(CREDENTIAL_USERNAME_KEY, "").orEmpty()
+        val savedPassword = credentialPreferences.getString(CREDENTIAL_PASSWORD_KEY, "").orEmpty()
+        val script = buildLoginAssistScript(savedUsername, savedPassword)
+        webView.evaluateJavascript(script, null)
     }
 
     private fun openDashboard() {
@@ -176,8 +194,130 @@ class MainActivity : AppCompatActivity() {
             .orEmpty()
     }
 
+    private fun escapeForJs(value: String): String {
+        return value
+            .replace("\\", "\\\\")
+            .replace("'", "\\'")
+    }
+
+    private fun buildLoginAssistScript(savedUsername: String, savedPassword: String): String {
+        val usernameLiteral = escapeForJs(savedUsername)
+        val passwordLiteral = escapeForJs(savedPassword)
+        return """
+            (function () {
+              const savedUsername = '$usernameLiteral';
+              const savedPassword = '$passwordLiteral';
+              const trimValue = (value) => (value || '').toString().trim();
+              const lower = (value) => trimValue(value).toLowerCase();
+
+              const forms = Array.from(document.querySelectorAll('form'));
+              const form =
+                forms.find(candidate => !!candidate.querySelector('input[type="password"]')) ||
+                document.querySelector('#vtopLoginForm');
+              if (!form) {
+                return 'no_form';
+              }
+
+              const inputs = Array.from(form.querySelectorAll('input'));
+              const passwordField =
+                inputs.find(input => lower(input.type) === 'password') || null;
+              const usernameField =
+                inputs.find(input => {
+                  if (!input || input === passwordField) {
+                    return false;
+                  }
+                  const type = lower(input.type || 'text');
+                  const name = lower(input.name || '');
+                  const id = lower(input.id || '');
+                  if (type === 'hidden' || type === 'password') {
+                    return false;
+                  }
+                  if (name.includes('captcha') || id.includes('captcha')) {
+                    return false;
+                  }
+                  if (
+                    name.includes('user') ||
+                    id.includes('user') ||
+                    name.includes('reg') ||
+                    id.includes('reg')
+                  ) {
+                    return true;
+                  }
+                  return type === 'text' || type === 'email' || type === 'number' || type === 'tel';
+                }) || null;
+
+              const dispatchFieldEvents = (field) => {
+                if (!field) {
+                  return;
+                }
+                field.dispatchEvent(new Event('input', { bubbles: true }));
+                field.dispatchEvent(new Event('change', { bubbles: true }));
+              };
+
+              if (usernameField && savedUsername && !trimValue(usernameField.value)) {
+                usernameField.value = savedUsername;
+                dispatchFieldEvents(usernameField);
+              }
+              if (passwordField && savedPassword && !trimValue(passwordField.value)) {
+                passwordField.value = savedPassword;
+                dispatchFieldEvents(passwordField);
+              }
+
+              const bridge = window.$LOGIN_CREDENTIAL_BRIDGE_NAME;
+              if (!bridge || typeof bridge.onCredentialsCaptured !== 'function') {
+                return 'filled';
+              }
+
+              const captureCredentials = () => {
+                const usernameValue = trimValue((usernameField && usernameField.value) || '');
+                const passwordValue = trimValue((passwordField && passwordField.value) || '');
+                if (!usernameValue || !passwordValue) {
+                  return;
+                }
+                bridge.onCredentialsCaptured(usernameValue, passwordValue);
+              };
+
+              if (!form.dataset.vitianCredentialHooked) {
+                form.addEventListener('submit', captureCredentials, true);
+                Array.from(form.querySelectorAll('button,input[type="submit"],input[type="button"]'))
+                  .forEach(node => {
+                    node.addEventListener('click', captureCredentials, true);
+                  });
+                form.dataset.vitianCredentialHooked = '1';
+              }
+              return 'done';
+            })();
+        """.trimIndent()
+    }
+
+    private inner class LoginCredentialBridge {
+        @JavascriptInterface
+        fun onCredentialsCaptured(username: String?, password: String?) {
+            val cleanedUsername = username?.trim().orEmpty()
+            val cleanedPassword = password?.trim().orEmpty()
+            if (cleanedUsername.isBlank() || cleanedPassword.isBlank()) {
+                return
+            }
+
+            val currentUsername = credentialPreferences.getString(CREDENTIAL_USERNAME_KEY, "")
+            val currentPassword = credentialPreferences.getString(CREDENTIAL_PASSWORD_KEY, "")
+            if (currentUsername == cleanedUsername && currentPassword == cleanedPassword) {
+                return
+            }
+
+            credentialPreferences.edit()
+                .putString(CREDENTIAL_USERNAME_KEY, cleanedUsername)
+                .putString(CREDENTIAL_PASSWORD_KEY, cleanedPassword)
+                .apply()
+        }
+    }
+
     private companion object {
         private const val LOGIN_URL = "https://vtop.vit.ac.in/vtop/login"
+        private const val CREDENTIAL_PREFS = "vitian_saved_login"
+        private const val CREDENTIAL_USERNAME_KEY = "username"
+        private const val CREDENTIAL_PASSWORD_KEY = "password"
+        private const val LOGIN_CREDENTIAL_BRIDGE_NAME = "AndroidLoginCredentialBridge"
         private const val AUTH_STATE_AUTHENTICATED = "authenticated"
         private const val LOGIN_STATE_SCRIPT =
             """

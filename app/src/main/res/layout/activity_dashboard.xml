@@ -3,43 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/marks_background"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/topAppBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
+        android:background="@color/marks_background"
+        android:elevation="0dp"
         android:theme="@style/ThemeOverlay.Material3.ActionBar"
         app:title="@string/dashboard_title"
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@color/marks_text_primary" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:paddingStart="16dp"
+            android:paddingTop="12dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="20dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dashboard_subtitle"
-                android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textColor="@color/marks_text_primary"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:text="@string/dashboard_subtitle_hint"
-                android:textColor="#666666"
+                android:textColor="@color/marks_text_secondary"
                 android:textSize="14sp" />
 
             <com.google.android.material.card.MaterialCardView
@@ -49,23 +56,29 @@
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardElevation="2dp"
-                app:strokeColor="#DDDDDD"
+                app:cardBackgroundColor="@color/marks_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/marks_surface_outline"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:minHeight="80dp"
                     android:orientation="horizontal"
-                    android:padding="14dp">
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
                         android:src="@android:drawable/ic_menu_agenda"
-                        android:tint="@color/vit_primary" />
+                        android:tint="@color/marks_indicator" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -77,21 +90,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_marks_title"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/marks_text_primary"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_marks_desc"
-                            android:textColor="#666666"
+                            android:textColor="@color/marks_text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@android:drawable/ic_media_next" />
+                        android:src="@drawable/ic_da_chevron_right"
+                        android:tint="@color/marks_text_secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -102,23 +117,29 @@
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardElevation="2dp"
-                app:strokeColor="#DDDDDD"
+                app:cardBackgroundColor="@color/marks_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/marks_surface_outline"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:minHeight="80dp"
                     android:orientation="horizontal"
-                    android:padding="14dp">
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
                         android:src="@android:drawable/ic_menu_my_calendar"
-                        android:tint="@color/vit_primary" />
+                        android:tint="@color/marks_indicator" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -130,21 +151,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_attendance_title"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/marks_text_primary"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_attendance_desc"
-                            android:textColor="#666666"
+                            android:textColor="@color/marks_text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@android:drawable/ic_media_next" />
+                        android:src="@drawable/ic_da_chevron_right"
+                        android:tint="@color/marks_text_secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -155,23 +178,29 @@
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardElevation="2dp"
-                app:strokeColor="#DDDDDD"
+                app:cardBackgroundColor="@color/marks_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/marks_surface_outline"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:minHeight="80dp"
                     android:orientation="horizontal"
-                    android:padding="14dp">
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
                         android:src="@android:drawable/ic_menu_edit"
-                        android:tint="@color/vit_primary" />
+                        android:tint="@color/marks_indicator" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -183,21 +212,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_da_upload_title"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/marks_text_primary"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_da_upload_desc"
-                            android:textColor="#666666"
+                            android:textColor="@color/marks_text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@android:drawable/ic_media_next" />
+                        android:src="@drawable/ic_da_chevron_right"
+                        android:tint="@color/marks_text_secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -208,23 +239,29 @@
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardElevation="2dp"
-                app:strokeColor="#DDDDDD"
+                app:cardBackgroundColor="@color/marks_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/marks_surface_outline"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:minHeight="80dp"
                     android:orientation="horizontal"
-                    android:padding="14dp">
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
                         android:src="@android:drawable/ic_menu_agenda"
-                        android:tint="@color/vit_primary" />
+                        android:tint="@color/marks_indicator" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -236,21 +273,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_course_page_title"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/marks_text_primary"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_course_page_desc"
-                            android:textColor="#666666"
+                            android:textColor="@color/marks_text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@android:drawable/ic_media_next" />
+                        android:src="@drawable/ic_da_chevron_right"
+                        android:tint="@color/marks_text_secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -260,23 +299,29 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
-                app:cardElevation="2dp"
-                app:strokeColor="#DDDDDD"
+                app:cardBackgroundColor="@color/marks_surface"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/marks_surface_outline"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
+                    android:minHeight="80dp"
                     android:orientation="horizontal"
-                    android:padding="14dp">
+                    android:paddingStart="16dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="12dp">
 
                     <ImageView
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_marginEnd="12dp"
                         android:src="@android:drawable/ic_menu_view"
-                        android:tint="@color/vit_primary" />
+                        android:tint="@color/marks_indicator" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -288,21 +333,23 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_portal_home_title"
-                            android:textColor="@android:color/black"
+                            android:textColor="@color/marks_text_primary"
+                            android:textSize="16sp"
                             android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/dashboard_portal_home_desc"
-                            android:textColor="#666666"
+                            android:textColor="@color/marks_text_secondary"
                             android:textSize="13sp" />
                     </LinearLayout>
 
                     <ImageView
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        android:src="@android:drawable/ic_media_next" />
+                        android:src="@drawable/ic_da_chevron_right"
+                        android:tint="@color/marks_text_secondary" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>

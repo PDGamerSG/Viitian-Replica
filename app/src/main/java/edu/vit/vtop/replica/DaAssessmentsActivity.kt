@@ -538,20 +538,29 @@ class DaAssessmentsActivity : AppCompatActivity() {
             .replace("'", "\\'")
     }
 
-    private fun performAssessmentAction(item: DaAssessmentEntry, action: String) {
-        val script = buildAssessmentActionScript(item, action)
+    private fun performAssessmentAction(
+        item: DaAssessmentEntry,
+        action: String,
+        allowNativeDownload: Boolean = true,
+    ) {
+        val script = buildAssessmentActionScript(item, action, allowNativeDownload)
         webView.evaluateJavascript(script) { rawResult ->
             val parsedResult = parseJsResult(rawResult, lowercase = false)
             val payload = runCatching { JSONObject(parsedResult) }.getOrNull()
             if (
                 payload != null &&
-                payload.optString("status").equals("native_download", ignoreCase = true)
+                payload.optString("status").equals("native_download", ignoreCase = true) &&
+                allowNativeDownload
             ) {
                 val request = parseNativeDownloadRequest(payload)
                 if (request == null) {
-                    showAssessmentActionFailure(action)
+                    performAssessmentAction(item, action, allowNativeDownload = false)
                 } else {
-                    executeNativeDownload(request, action)
+                    executeNativeDownload(request, action) { success ->
+                        if (!success) {
+                            performAssessmentAction(item, action, allowNativeDownload = false)
+                        }
+                    }
                 }
                 return@evaluateJavascript
             }
@@ -615,7 +624,11 @@ class DaAssessmentsActivity : AppCompatActivity() {
         )
     }
 
-    private fun executeNativeDownload(request: NativeDownloadRequest, action: String) {
+    private fun executeNativeDownload(
+        request: NativeDownloadRequest,
+        action: String,
+        onResult: (Boolean) -> Unit,
+    ) {
         val userAgent = webView.settings.userAgentString
         val fallbackReferer = webView.url.orEmpty()
         Thread {
@@ -628,9 +641,8 @@ class DaAssessmentsActivity : AppCompatActivity() {
             runOnUiThread {
                 if (success) {
                     Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
-                } else {
-                    showAssessmentActionFailure(action)
                 }
+                onResult(success)
             }
         }.start()
     }
@@ -782,15 +794,21 @@ class DaAssessmentsActivity : AppCompatActivity() {
         return false
     }
 
-    private fun buildAssessmentActionScript(item: DaAssessmentEntry, action: String): String {
+    private fun buildAssessmentActionScript(
+        item: DaAssessmentEntry,
+        action: String,
+        allowNativeDownload: Boolean,
+    ): String {
         val actionLiteral = escapeForJs(action)
         val codeLiteral = escapeForJs(item.code.trim())
         val classIdLiteral = escapeForJs(item.classId.trim().ifBlank { targetClassId.trim() })
+        val allowNativeDownloadLiteral = if (allowNativeDownload) "true" else "false"
         return """
             (function () {
               const action = '$actionLiteral';
               const targetCodeRaw = '$codeLiteral'.trim();
               const targetClassIdRaw = '$classIdLiteral'.trim();
+              const allowNativeDownload = $allowNativeDownloadLiteral;
               const trimValue = (value) => (value || '').toString().trim();
               const normalize = (value) => trimValue(value).toLowerCase();
               const targetCode = normalize(targetCodeRaw);
@@ -1014,10 +1032,14 @@ class DaAssessmentsActivity : AppCompatActivity() {
                 const qpCodeFields = ['code', 'code1'];
                 const qpClassIdFields = ['classidnumber', 'classid', 'classid1', 'classidnumber1'];
                 const qpForm = findDownloadForm(
-                  '#downloadQuestionForm',
-                  ['dodownloadquestion', 'downloadquestion', 'downloadquestionform']
+                  '#downloadQuestionForm,form[action*="downloadQuestion"],form[action*="downloadquestion"]',
+                  ['dodownloadquestion', 'downloadquestion', 'downloadquestionform', 'downloadquestionpaper']
                 );
                 if (qpForm) {
+                  setFieldValue(qpForm, qpCodeFields, code);
+                  setFieldValue(qpForm, qpClassIdFields, classId);
+                }
+                if (allowNativeDownload && qpForm) {
                   const payload = buildNativeDownloadPayload(
                     qpForm,
                     button,
@@ -1034,6 +1056,21 @@ class DaAssessmentsActivity : AppCompatActivity() {
                 if (clickNode(button)) {
                   return 'clicked';
                 }
+                if (qpForm) {
+                  const host = qpForm.ownerDocument.defaultView || window;
+                  if (host && typeof host.doDownloadQuestion === 'function') {
+                    host.doDownloadQuestion(code, classId);
+                    return 'submitted';
+                  }
+                  if (typeof qpForm.requestSubmit === 'function') {
+                    qpForm.requestSubmit();
+                    return 'submitted';
+                  }
+                  if (typeof qpForm.submit === 'function') {
+                    qpForm.submit();
+                    return 'submitted';
+                  }
+                }
                 return 'not_found';
               }
 
@@ -1045,12 +1082,16 @@ class DaAssessmentsActivity : AppCompatActivity() {
                 const code = trimValue(button.getAttribute('data-code') || targetCodeRaw);
                 const classId = trimValue(button.getAttribute('data-classid') || targetClassIdRaw);
                 const daCodeFields = ['code1', 'code'];
-                const daClassIdFields = ['classid1', 'classid', 'classidnumber'];
+                const daClassIdFields = ['classid1', 'classid', 'classidnumber', 'classidnumber1'];
                 const daForm = findDownloadForm(
-                  '#downloadStudentDAForm',
-                  ['downloadstudentda', 'downloadstudentdaform', 'dodownloadstudentda']
+                  '#downloadStudentDAForm,form[action*="downloadStudentDA"],form[action*="downloadstudentda"]',
+                  ['downloadstudentda', 'downloadstudentdaform', 'dodownloadstudentda', 'downloadsubmission', 'dodownloadsubmission']
                 );
                 if (daForm) {
+                  setFieldValue(daForm, daCodeFields, code);
+                  setFieldValue(daForm, daClassIdFields, classId);
+                }
+                if (allowNativeDownload && daForm) {
                   const payload = buildNativeDownloadPayload(
                     daForm,
                     button,
@@ -1066,6 +1107,21 @@ class DaAssessmentsActivity : AppCompatActivity() {
                 }
                 if (clickNode(button)) {
                   return 'clicked';
+                }
+                if (daForm) {
+                  const host = daForm.ownerDocument.defaultView || window;
+                  if (host && typeof host.doDownloadStudentDA === 'function') {
+                    host.doDownloadStudentDA(code, classId);
+                    return 'submitted';
+                  }
+                  if (typeof daForm.requestSubmit === 'function') {
+                    daForm.requestSubmit();
+                    return 'submitted';
+                  }
+                  if (typeof daForm.submit === 'function') {
+                    daForm.submit();
+                    return 'submitted';
+                  }
                 }
                 return 'not_found';
               }

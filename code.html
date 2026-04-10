@@ -1,1151 +1,277 @@
-<div class="card-body">
-
-						<form class="row col-12 mx-auto" method="post" id="viewStudentAttendance" name="viewStudentAttendance" autocomplete="off">
-
-							<input type="hidden" name="_csrf" value="b4f8e283-35ea-4249-be37-cb095b70f6b3">
-							<input type="hidden" name="authorizedID" id="authorizedID" value="24MIS0212">
-
-							<div class="form-group col-sm-12 row">
-								<div class="form-group col-md-1">
-									<label class="control-label" style="text-align: left; float: right;
-										font-weight: bold;">Semester</label>
-								</div>
-								<div class="form-group col-md-4">
-									<select class="form-select" name="semesterSubId" id="semesterSubId" onchange="processStudentAttendance()">
-										<option value="" selected="selected">-- Choose Semester --</option>
-										<option value="VL20252605">Winter Semester 2025-26 - VLR</option>
-										<option value="VL20252601">Fall Semester 2025-26 - VLR</option>
-										<option value="VL20242505">Winter Semester 2024-25 - VLR</option>
-										<option value="VL20242501">Fall Semester 2024-25 - VLR</option>
-									</select>
-								</div>
-							</div>
-						</form><br>
-
-						<div class="form-group" id="loadMyFragment"><div class="form-group" id="getStudentDetails">
-
-								<div class="form-group col-sm-12 row">
-
-									<h4 style="text-decoration: underline;"><b>Attendance Information:</b></h4>
-									<h5>
-										<span><span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">* Note:</span> As per norms, <b>Virtual Slots</b> &amp; <b>Medical Leave</b> are not included in attendance percentage calculation.</span>
-									</h5>
-
-									<div id="AttendanceDetailDataTable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div><p id="attendance" style="color: rgb(50, 117, 14); background: rgb(247, 247, 16); width: 950px; font-size: 1.25rem; --darkreader-inline-color: #ade585; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: #92901b;" data-darkreader-inline-color="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><b>*Note: This calculator doesn't calculate the attendance till the exam date, It only calculates the attendance to 74.01%</b></p></div><div class="row dt-row"><div class="col-sm-12"><table id="AttendanceDetailDataTable" class="table table-bordered table-hover responsive dataTable no-footer dtr-inline">
-
-										<thead>
-											<tr style="background-color: rgb(60, 141, 188); border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); --darkreader-inline-bgcolor: #40738f; --darkreader-inline-border-top: #3a3d3d; --darkreader-inline-border-right: #3a3d3d; --darkreader-inline-border-bottom: #3a3d3d; --darkreader-inline-border-left: #3a3d3d; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-color=""><td style="width: 3%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Sl.No.</b></td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Group</b></td><td style="width: 15%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Course Detail</b></td><td style="width: 15%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Detail</b></td><td style="width: 15%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Faculty Detail</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attended Classes/Days</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Total Classes</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Percentage</b></td><td style="width: 3%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1">75% Attendance Alert</td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Debar Status</b></td><td style="width: 8%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Detail</b></td></tr>
-										</thead>
-
-										<tbody>
-
-
-
-
-
-
-
-
-
-
-
-										<tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>1</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>IMAT202L - Probability and Statistics - Theory Only</span>												</td>																								<td>													<span>VL2025260501792 - F1+TF1 - SJT109</span>												</td>																								<td>													<span>SIVAKUMAR M - SAS</span>												</td>																								<td style="text-align: center;">													<span>10</span>																									</td>																								<td style="text-align: center;">													<span>40</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">25%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">76 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_0" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_IMAT202L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>2</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>IMAT202P - Probability and Statistics Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260505287 - L51+L52 - PRP449</span>												</td>																								<td>													<span>SIVAKUMAR M - SAS</span>												</td>																								<td style="text-align: center;">													<span>12</span>																									</td>																								<td style="text-align: center;">													<span>28</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">43%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">17 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_1" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_IMAT202P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>3</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISTS102P - Quantitative Skills Practice I - Soft Skill</span>												</td>																								<td>													<span>VL2025260500178 - G1+TG1 - SJT802</span>												</td>																								<td>													<span>FACE (APT) - SSL</span>												</td>																								<td style="text-align: center;">													<span>7</span>																									</td>																								<td style="text-align: center;">													<span>40</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">18%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">87 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_2" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISTS102P_00100','SS');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>4</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE103L - Database Systems - Theory Only</span>												</td>																								<td>													<span>VL2025260502086 - E1+TE1 - SJT113</span>												</td>																								<td>													<span>MUTHAMIL SELVAN T - SCORE</span>												</td>																								<td style="text-align: center;">													<span>9</span>																									</td>																								<td style="text-align: center;">													<span>41</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">22%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">83 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_3" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE103L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>5</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE103P - Database Systems Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260502096 - L45+L46 - SJT219</span>												</td>																								<td>													<span>MUTHAMIL SELVAN T - SCORE</span>												</td>																								<td style="text-align: center;">													<span>16</span>																									</td>																								<td style="text-align: center;">													<span>28</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">58%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">10 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_4" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE103P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>6</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE203L - Theory of Computation - Theory Only</span>												</td>																								<td>													<span>VL2025260502148 - C1+TC1+TCC1 - SJT113</span>												</td>																								<td>													<span>SIVASHANKARI R - SCORE</span>												</td>																								<td style="text-align: center;">													<span>12</span>																									</td>																								<td style="text-align: center;">													<span>55</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">22%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">111 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_5" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE203L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>7</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE205L - Computer Networks - Theory Only</span>												</td>																								<td>													<span>VL2025260502157 - A1+TA1 - SJT109</span>												</td>																								<td>													<span>ASIS KUMAR TRIPATHY - SCORE</span>												</td>																								<td style="text-align: center;">													<span>8</span>																									</td>																								<td style="text-align: center;">													<span>40</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">20%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">84 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_6" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE205L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>8</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE205P - Computer Networks Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260502176 - L37+L38 - SJTG18</span>												</td>																								<td>													<span>ASIS KUMAR TRIPATHY - SCORE</span>												</td>																								<td style="text-align: center;">													<span>8</span>																									</td>																								<td style="text-align: center;">													<span>28</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">29%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">25 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_7" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE205P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>9</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE207L - Object Oriented Analysis and Design - Theory Only</span>												</td>																								<td>													<span>VL2025260502748 - D1+TD1 - SJTG04</span>												</td>																								<td>													<span>KAMALAKANNAN J - SCORE</span>												</td>																								<td style="text-align: center;">													<span>8</span>																									</td>																								<td style="text-align: center;">													<span>39</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">21%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">81 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_8" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE207L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="even">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>10</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE207P - Object Oriented Analysis and Design Lab - Lab Only</span>												</td>																								<td>													<span>VL2025260502891 - L55+L56 - SJTG17</span>												</td>																								<td>													<span>KAMALAKANNAN J - SCORE</span>												</td>																								<td style="text-align: center;">													<span>6</span>																									</td>																								<td style="text-align: center;">													<span>26</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">24%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">26 lab(s) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_9" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE207P_00100','LO');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr><tr class="odd">												<td style="text-align: center;" class="dtr-control" tabindex="0">													<span>11</span>												</td>																								<td style="text-align: center;">													<span>General (Semester)</span>												</td>																								<td>													<span>ISWE306L - Software Project Management - Theory Only</span>												</td>																								<td>													<span>VL2025260502200 - B1+TB1 - SJT113</span>												</td>																								<td>													<span>JOTHISH KUMAR M - VITIST</span>												</td>																								<td style="text-align: center;">													<span>9</span>																									</td>																								<td style="text-align: center;">													<span>41</span>																									</td>																								<td style="text-align: center;">													<span>														<span style="color: red; font-size: 20px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">22%</span>																											</span>													</td><td style="vertical-align: middle; border: 1px solid rgb(178, 178, 178); padding: 5px; background: rgba(238, 75, 43, 0.7); --darkreader-inline-border-top: #4f5352; --darkreader-inline-border-right: #4f5352; --darkreader-inline-border-bottom: #4f5352; --darkreader-inline-border-left: #4f5352; --darkreader-inline-bgimage: initial; --darkreader-inline-bgcolor: rgba(163, 54, 30, 0.7);" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-bgimage="" data-darkreader-inline-bgcolor=""><p style="margin: 0px;">83 class(es) should be attended</p></td>																																				<td>																										<span style="align: center; text-align: center;">-</span>												</td>																								<td style="text-align: center;">													<a id="studentAttendanceDetilShow_10" onclick="javascript: callStudentAttendanceDetailDisplay('VL20252605','24MIS0212','VL_ISWE306L_00100','TH');" href="javascript:void(0);">														<span title="Show" class="bi bi-eye-fill"></span>													</a>												</td>											</tr></tbody>
-									</table></div><div>
-		    <p style="color: rgb(34, 144, 62); --darkreader-inline-color: #7ed38e;" data-darkreader-inline-color="">*Attendance Greater than 75%</p>
-		    <p style="color: rgb(255, 171, 16); margin-top: -10px; --darkreader-inline-color: #f2b13a;" data-darkreader-inline-color="">*Be Cautious your Attendance is in between 74.01% to 74.99%</p>
-		    <p style="color: rgb(238, 75, 43); margin-top: -10px; --darkreader-inline-color: #de6347;" data-darkreader-inline-color="">*Attendance Less than 75%</p>
-		    </div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"></div></div></div>
-
-								</div>
-							</div></div>
-
-						<div class="form-group col-sm-12 row">
-						<div id="StudentAttendanceDetailFragment"><div id="StudentAttendanceDetailFragment">
-							<div class="modal" id="StudentAttendanceDetailModal" style="display: none;" aria-hidden="true">
-								<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="width: 75%; max-width: 75%;">
-									<div class="modal-content">
-
-										<div class="modal-header">
-									    	<h4 class="modal-title" style="font-weight: bold; text-decoration:underline;">Attendance Detail</h4>
-										</div>
-
-									    <div class="modal-body">
-
-									       	<div id="StudentCourseDetailDataTable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row dt-row"><div class="col-sm-12"><table id="StudentCourseDetailDataTable" class="table table-bordered responsive dataTable no-footer dtr-inline">
-
-									       		<thead>
-													<tr style="background-color: rgb(60, 141, 188); border-color: rgb(255, 255, 255); color: rgb(255, 255, 255); --darkreader-inline-bgcolor: #40738f; --darkreader-inline-border-top: #3a3d3d; --darkreader-inline-border-right: #3a3d3d; --darkreader-inline-border-bottom: #3a3d3d; --darkreader-inline-border-left: #3a3d3d; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-border-top="" data-darkreader-inline-border-right="" data-darkreader-inline-border-bottom="" data-darkreader-inline-border-left="" data-darkreader-inline-color=""><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Group</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Course Detail</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Class Detail</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Faculty Detail</b></td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Registered Date &amp; Time</b></td><td style="width: 10%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Date / Type</b></td><td style="width: 13%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Attendance Status</b></td><td style="width: 12%; text-align: center;" class="sorting_disabled" rowspan="1" colspan="1"><b>Debar Status</b></td></tr>
-												</thead>
-
-												<tbody>
-
-												<tr class="odd">
-														<td style="text-align: center;" class="dtr-control" tabindex="0">
-															<span>General (Semester)</span>
-														</td>
-														<td>
-															<span>IMAT202L - Probability and Statistics - Theory Only</span>
-														</td>
-														<td>
-															<span>VL2025260501792 - F1+TF1 - SJT109</span>
-														</td>
-														<td>
-															<span>SIVAKUMAR M - SAS</span>
-														</td>
-														<td style="text-align: center;">
-															<span>01-11-2025 18:00:41</span>
-														</td>
-														<td style="text-align: center;">
-															<span>02-11-2025</span>
-															<span>
-
-																<span> / Biometric</span>
-															</span>
-														</td>
-														<td>
-															<span>
-																  <span><b>Present :</b> 9</span><br>
-																  <span><b>Absent :</b> 30</span><br>
-																  <span><b>On Duty :</b> 1<br></span>
-
-
-
-																  <span><b>Attended :</b> 10</span><br>
-																  <span><b>Total Class :</b> 40</span><br>
-																  <span><b>Percentage : </b>
-																	  <span style="color: red; font-size: 25px; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">25%</span>
-
-																  </span>
-															</span>
-
-														</td>
-														<td>
-
-															<span style="align: center; text-align: center;">-</span>
-														</td>
-													</tr></tbody>
-
-											</table></div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"></div></div></div>
-
-											<div id="StudentAttendanceDetailDataTable_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer"><div class="row"><div class="col-sm-12 col-md-6"></div><div class="col-sm-12 col-md-6"></div></div><div class="row dt-row"><div class="col-sm-12"><table id="StudentAttendanceDetailDataTable" class="table table-bordered table-hover responsive dataTable no-footer dtr-inline">
-												<thead>
-													<tr style="background-color: rgb(36, 113, 163); color: white; text-align: center; --darkreader-inline-bgcolor: #2e5e7d; --darkreader-inline-color: #e5e0d8;" data-darkreader-inline-bgcolor="" data-darkreader-inline-color=""><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 5%;">Sl.No.</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 8%;">Date</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Slot</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 20%;">Day / Time</td><td class="sorting_disabled" rowspan="1" colspan="1" style="width: 10%;">Status</td></tr>
-												</thead>
-												<tbody>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-												<tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>1</span>
-														</td>
-														<td align="center">
-															<span>08-04-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>2</span>
-														</td>
-														<td align="center">
-															<span>06-04-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>3</span>
-														</td>
-														<td align="center">
-															<span>01-04-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>4</span>
-														</td>
-														<td align="center">
-															<span>30-03-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>5</span>
-														</td>
-														<td align="center">
-															<span>28-03-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>6</span>
-														</td>
-														<td align="center">
-															<span>27-03-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>7</span>
-														</td>
-														<td align="center">
-															<span>25-03-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>8</span>
-														</td>
-														<td align="center">
-															<span>13-03-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>9</span>
-														</td>
-														<td align="center">
-															<span>11-03-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>10</span>
-														</td>
-														<td align="center">
-															<span>09-03-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>11</span>
-														</td>
-														<td align="center">
-															<span>06-03-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>12</span>
-														</td>
-														<td align="center">
-															<span>25-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>13</span>
-														</td>
-														<td align="center">
-															<span>23-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>14</span>
-														</td>
-														<td align="center">
-															<span>20-02-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>15</span>
-														</td>
-														<td align="center">
-															<span>18-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>16</span>
-														</td>
-														<td align="center">
-															<span>16-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>17</span>
-														</td>
-														<td align="center">
-															<span>14-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>18</span>
-														</td>
-														<td align="center">
-															<span>13-02-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-
-
-																<span>On Duty</span>
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>19</span>
-														</td>
-														<td align="center">
-															<span>11-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>20</span>
-														</td>
-														<td align="center">
-															<span>09-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>21</span>
-														</td>
-														<td align="center">
-															<span>06-02-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>22</span>
-														</td>
-														<td align="center">
-															<span>04-02-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>23</span>
-														</td>
-														<td align="center">
-															<span>24-01-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>24</span>
-														</td>
-														<td align="center">
-															<span>23-01-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>25</span>
-														</td>
-														<td align="center">
-															<span>21-01-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>26</span>
-														</td>
-														<td align="center">
-															<span>19-01-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>27</span>
-														</td>
-														<td align="center">
-															<span>14-01-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>28</span>
-														</td>
-														<td align="center">
-															<span>12-01-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>29</span>
-														</td>
-														<td align="center">
-															<span>09-01-2026</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>30</span>
-														</td>
-														<td align="center">
-															<span>07-01-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>31</span>
-														</td>
-														<td align="center">
-															<span>05-01-2026</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>32</span>
-														</td>
-														<td align="center">
-															<span>20-12-2025</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>33</span>
-														</td>
-														<td align="center">
-															<span>19-12-2025</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>34</span>
-														</td>
-														<td align="center">
-															<span>17-12-2025</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>35</span>
-														</td>
-														<td align="center">
-															<span>15-12-2025</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>36</span>
-														</td>
-														<td align="center">
-															<span>12-12-2025</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>37</span>
-														</td>
-														<td align="center">
-															<span>10-12-2025</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>WED / 10:00-10:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>38</span>
-														</td>
-														<td align="center">
-															<span>08-12-2025</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="odd">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>39</span>
-														</td>
-														<td align="center">
-															<span>06-12-2025</span>
-														</td>
-														<td align="center">
-															<span>F1</span>
-														</td>
-														<td align="center">
-
-															<span>MON / 09:00-09:50</span>
-														</td>
-														<td align="center">
-															<span>
-
-																<span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">Absent</span>
-
-
-
-
-															</span>
-														</td>
-													</tr><tr class="even">
-														<td align="center" class="dtr-control" tabindex="0">
-															<span>40</span>
-														</td>
-														<td align="center">
-															<span>05-12-2025</span>
-														</td>
-														<td align="center">
-															<span>TF1</span>
-														</td>
-														<td align="center">
-
-															<span>FRI / 11:00-11:50</span>
-														</td>
-														<td align="center">
-															<span>
-																<span>Present</span>
-
-
-
-
-
-															</span>
-														</td>
-													</tr></tbody>
-											</table></div></div><div class="row"><div class="col-sm-12 col-md-5"></div><div class="col-sm-12 col-md-7"></div></div></div>
-
-
-										</div>
-
-										<div class="modal-footer">
-										    <button style="padding:3px 17px;font-size:13px;" class="btn btn-primary" type="button" name="studentAttendanceDetailCloseButton" id="studentAttendanceDetailCloseButton" data-bs-dismiss="modal">Close</button>
-										</div>
-
+<div>
+
+									<div align="center">
+										<span style="color: green; font-size: 20px; font-weight: bold; --darkreader-inline-color: #81f179;" data-darkreader-inline-color=""></span> <span style="color: red; font-size: 20px; font-weight: bold; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color=""></span></div>
+
+									<div id="fixedTableContainer" class="fixedTableContainer">
+										<table class="customTable" style="align: center;">
+											<tbody>
+											<tr class="fixedContent tableHeader">
+												<td style="width: 20%;">Semester</td>
+												<td style="width: 12%;">Course Code</td>
+												<td style="width: 30%;">Course Title</td>
+												<td style="width: 12%;">Course Type</td>
+												<td style="width: 10%;">Class Number</td>
+											</tr>
+											<tr class="fixedContent tableContent">
+												<td style="width: 20%;">Winter Semester 2025-26</td>
+												<td style="width: 10%;">IMAT202P</td>
+												<td style="width: 30%;">Probability and Statistics Lab</td>
+												<td style="width: 10%;">LO</td>
+												<td style="width: 10%;">VL2025260505287</td>
+											</tr>
+											</tbody>
+										</table>
 									</div>
-								</div>
-							</div>
-						</div></div>
-						</div>
+									<br>
+									<div class="col-md-10">
+										<p style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">
+											Notes:  <br>
+											1. File size (Max. upto 4MB) <br>
+											2. File type should be pdf,xls,xlsx,doc,docx <br>
+										</p>
+									</div>
 
-					</div>
+									<div id="fixedTableContainer" class="fixedTableContainer">
+										<table class="customTable">
+											<tbody>
+											<tr class="fixedContent tableHeader">
+												<td rowspan="2" style="width: 5%;">Sl.No.</td>
+												<td rowspan="2" style="width: 20%;">Title</td>
+												<td rowspan="2" style="width: 5%;">Max. Mark</td>
+												<td rowspan="2" style="width: 5%;">Weightage %</td>
+												<td rowspan="2" style="width: 10%;">Due Date</td>
+												<td rowspan="2" style="width: 5%;">QP</td>
+												<td colspan="3" style="width: 50%;">Document Details</td>
+											</tr>
+											<tr class="fixedContent tableHeader">
+												<td style="width: 20%;">Last Updated On</td>
+												<td style="width: 20%;">Upload/Edit</td>
+												<td style="width: 20%;">Download</td>
+											</tr>
+											</tbody>
+
+											<tbody><tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">1</td>
+												<td>Assessment - 1</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">08-Jan-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST01" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>08 Jan 2026 11:04 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST01" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">2</td>
+												<td>Assessment - 2</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">05-Feb-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST02" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>05 Feb 2026 09:49 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST02" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">3</td>
+												<td>Assessment - 3</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">25-Feb-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST03" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>25 Feb 2026 10:07 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST03" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">4</td>
+												<td>Assessment - 4</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">13-Mar-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST04" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>13 Mar 2026 02:30 AM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST04" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+
+											<tr class="fixedContent tableContent">
+												<td style=" vertical-align: middle; text-align: center;">5</td>
+												<td>Assessment - 5</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">12</td>
+												<td style=" vertical-align: middle; text-align: center;">
+													 <span style="color: red; --darkreader-inline-color: #e72c2a;" data-darkreader-inline-color="">09-Apr-2026</span>
+												</td>
+												<td>
+													    <span>
+														<button type="button" class="btn btn-link bi bi-download" id="downloadQuestion" name="downloadQuestion" data-code="AST05" data-classid="VL2025260505287"></button></span>
+												</td>
+												<td style=" text-align: center;">
+
+													<span>09 Apr 2026 07:29 PM</span>
+													</td>
+												<td style=" text-align: center;">
+
+													<br>
+													<!-- Submit / Cancel -->
+													<span>
+
+												</span>
+												</td>
+
+												<td style=" text-align: center;">
+													<div style="display: flex; justify-content: center; align-items: center; gap: 15px;">
+
+														<button type="button" class="btn btn-link bi bi-eye-fill view-pdf-btn" title="View Document Without Downloading" style="color: rgb(14, 165, 233); font-size: 1.2rem; padding: 0px; transition: transform 0.2s, color 0.2s; --darkreader-inline-color: #43b0dd;" data-darkreader-inline-color=""></button><button type="button" class="btn btn-link bi bi-download" id="downloadStudentDA" name="downloadStudentDA" data-code="AST05" data-classid="VL2025260505287">
+															<span></span>
+														</button>
+													</div>
+												</td>
+											</tr>
+										</tbody></table>
+									</div>
+									<div class="modal" id="myModal" role="dialog">
+										<div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+											<!-- Modal content-->
+											<div class="modal-content">
+												<div class="modal-header">
+													<button type="button" class="close" data-bs-dismiss="modal">×</button>
+													<h4 class="modal-title">File Upload</h4>
+												</div>
+												<div class="modal-body">
+													<embed id="tes" width="100%" height="400px">
+												</div>
+												<div class="modal-footer">
+
+													<button type="button" class="btn btn-default" data-bs-dismiss="modal">confirm</button>
+
+													<button type="button" class="btn btn-default" id="close" data-bs-dismiss="modal">close</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div align="center" class="col-md-12">
+										<br>
+										<button type="button" class="btn btn-primary" onclick="javascript:reload('VL20252605');">
+											Go Back</button>
+									</div>
+									<input type="hidden" id="success" style="color: green; --darkreader-inline-color: #81f179;" value="" data-darkreader-inline-color="">
+									<input type="hidden" id="jsonBom" style="color: red; --darkreader-inline-color: #e72c2a;" value="" data-darkreader-inline-color="">
+									<script>
+										/*<![CDATA[*/
+
+									    var message = document.getElementById("jsonBom").value;
+										var success = document.getElementById("success").value;
+
+										if (message != "")
+										{
+											showMessage(1, message);
+										}
+
+										if (success != "")
+										{
+											showMessage(2, success);
+										}
+										//}
+
+										/*]]>*/
+									</script>
+
+								</div>
