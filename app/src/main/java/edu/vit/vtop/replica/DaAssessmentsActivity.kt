@@ -89,6 +89,7 @@ class DaAssessmentsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_da_assessments)
         setSupportActionBar(findViewById(R.id.topAppBar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        DownloadNotificationHelper.requestPermissionIfNeeded(this)
 
         targetClassId = intent.getStringExtra(EXTRA_CLASS_ID).orEmpty()
         targetCourseCode = intent.getStringExtra(EXTRA_COURSE_CODE).orEmpty()
@@ -214,6 +215,7 @@ class DaAssessmentsActivity : AppCompatActivity() {
             DownloadListener { url, userAgent, contentDisposition, mimeType, _ ->
                 val fileName = URLUtil.guessFileName(url, contentDisposition, mimeType)
                 if (url.startsWith("blob:", ignoreCase = true)) {
+                    DownloadNotificationHelper.showDownloadStarted(this, fileName)
                     val script = buildBlobDownloadScript(url, fileName, mimeType.orEmpty())
                     webView.evaluateJavascript(script, null)
                     return@DownloadListener
@@ -232,6 +234,7 @@ class DaAssessmentsActivity : AppCompatActivity() {
                     )
                 }
                 (getSystemService(DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+                DownloadNotificationHelper.showDownloadStarted(this, fileName)
                 Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
             },
         )
@@ -631,18 +634,20 @@ class DaAssessmentsActivity : AppCompatActivity() {
     ) {
         val userAgent = webView.settings.userAgentString
         val fallbackReferer = webView.url.orEmpty()
+        DownloadNotificationHelper.showDownloadStarted(this, request.fileName)
+        Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
         Thread {
-            val success = performNativeDownload(
+            val result = performNativeDownload(
                 request = request,
                 userAgent = userAgent,
                 fallbackReferer = fallbackReferer,
                 action = action,
             )
             runOnUiThread {
-                if (success) {
-                    Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
+                if (result.success) {
+                    DownloadNotificationHelper.showDownloadCompleted(this, result.fileName)
                 }
-                onResult(success)
+                onResult(result.success)
             }
         }.start()
     }
@@ -652,7 +657,7 @@ class DaAssessmentsActivity : AppCompatActivity() {
         userAgent: String,
         fallbackReferer: String,
         action: String,
-    ): Boolean {
+    ): NativeDownloadResult {
         val method = request.method.uppercase().ifBlank { "POST" }
         val encodedBody = encodeFormBody(request.fields)
         val requestUrl = if (method == "GET" && encodedBody.isNotBlank()) {
@@ -662,7 +667,9 @@ class DaAssessmentsActivity : AppCompatActivity() {
         }
 
         val connection = (runCatching { URL(requestUrl).openConnection() }.getOrNull() as? HttpURLConnection)
-            ?: return false
+            ?: return NativeDownloadResult(success = false, fileName = "")
+
+        var resolvedFileName = ""
 
         val result = runCatching {
             connection.instanceFollowRedirects = true
@@ -721,13 +728,20 @@ class DaAssessmentsActivity : AppCompatActivity() {
                         mimeType = mimeType,
                         action = action,
                     )
-                    persistDownloadedBytes(responseBytes, fileName, mimeType)
+                    val persisted = persistDownloadedBytes(responseBytes, fileName, mimeType)
+                    if (persisted) {
+                        resolvedFileName = fileName
+                    }
+                    persisted
                 }
             }
         }.getOrDefault(false)
 
         connection.disconnect()
-        return result
+        return NativeDownloadResult(
+            success = result,
+            fileName = resolvedFileName,
+        )
     }
 
     private fun encodeFormBody(fields: List<NativeDownloadField>): String {
@@ -1237,6 +1251,12 @@ class DaAssessmentsActivity : AppCompatActivity() {
                 val success = persistDownloadedBytes(decoded, fileName.orEmpty(), mimeType.orEmpty())
                 runOnUiThread {
                     val messageRes = if (success) R.string.download_started else R.string.da_download_da_failed
+                    if (success) {
+                        DownloadNotificationHelper.showDownloadCompleted(
+                            this@DaAssessmentsActivity,
+                            fileName.orEmpty(),
+                        )
+                    }
                     Toast.makeText(this@DaAssessmentsActivity, messageRes, Toast.LENGTH_SHORT).show()
                 }
             }.start()
@@ -1616,6 +1636,11 @@ class DaAssessmentsActivity : AppCompatActivity() {
         val referer: String,
         val fileName: String,
         val fields: List<NativeDownloadField>,
+    )
+
+    private data class NativeDownloadResult(
+        val success: Boolean,
+        val fileName: String,
     )
 
     companion object {

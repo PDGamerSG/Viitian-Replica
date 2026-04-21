@@ -93,6 +93,13 @@
     <string name="menu_open_external">Open in browser</string>
     <string name="menu_logout">Logout</string>
     <string name="download_started">Download started</string>
+    <string name="download_notification_channel_name">Downloads</string>
+    <string name="download_notification_channel_description">Shows file download updates.</string>
+    <string name="download_notification_started_title">Download started</string>
+    <string name="download_notification_started_body">%1$s is being downloaded.</string>
+    <string name="download_notification_completed_title">Download complete</string>
+    <string name="download_notification_completed_body">%1$s was downloaded successfully.</string>
+    <string name="download_notification_file_fallback">File</string>
     <string name="network_error_message">Unable to load page. Check your internet connection.</string>
     <string name="login_required_message">Session expired. Please log in again.</string>
     <string name="file_chooser_not_found">No app available to pick a file.</string>

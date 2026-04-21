@@ -85,6 +85,7 @@ class CoursePageMaterialsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_course_page_materials)
         setSupportActionBar(findViewById(R.id.topAppBar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        DownloadNotificationHelper.requestPermissionIfNeeded(this)
 
         targetCourseId = intent.getStringExtra(EXTRA_COURSE_ID).orEmpty()
         targetCourseCode = intent.getStringExtra(EXTRA_COURSE_CODE).orEmpty()
@@ -230,6 +231,7 @@ class CoursePageMaterialsActivity : AppCompatActivity() {
                     )
                 }
                 (getSystemService(DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+                DownloadNotificationHelper.showDownloadStarted(this, fileName)
                 Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
             },
         )
@@ -696,15 +698,17 @@ class CoursePageMaterialsActivity : AppCompatActivity() {
     private fun executeNativeDownload(request: NativeDownloadRequest) {
         val userAgent = webView.settings.userAgentString
         val fallbackReferer = webView.url.orEmpty()
+        DownloadNotificationHelper.showDownloadStarted(this, request.fileName)
+        Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
         Thread {
-            val success = performNativeDownload(
+            val result = performNativeDownload(
                 request = request,
                 userAgent = userAgent,
                 fallbackReferer = fallbackReferer,
             )
             runOnUiThread {
-                if (success) {
-                    Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
+                if (result.success) {
+                    DownloadNotificationHelper.showDownloadCompleted(this, result.fileName)
                 } else {
                     Toast.makeText(this, R.string.course_page_download_failed, Toast.LENGTH_SHORT).show()
                 }
@@ -716,7 +720,7 @@ class CoursePageMaterialsActivity : AppCompatActivity() {
         request: NativeDownloadRequest,
         userAgent: String,
         fallbackReferer: String,
-    ): Boolean {
+    ): NativeDownloadResult {
         val method = request.method.uppercase().ifBlank { "POST" }
         val encodedBody = encodeFormBody(request.fields)
         val requestUrl = if (method == "GET" && encodedBody.isNotBlank()) {
@@ -726,7 +730,9 @@ class CoursePageMaterialsActivity : AppCompatActivity() {
         }
 
         val connection = (runCatching { URL(requestUrl).openConnection() }.getOrNull() as? HttpURLConnection)
-            ?: return false
+            ?: return NativeDownloadResult(success = false, fileName = "")
+
+        var resolvedFileName = ""
 
         val result = runCatching {
             connection.instanceFollowRedirects = true
@@ -784,13 +790,20 @@ class CoursePageMaterialsActivity : AppCompatActivity() {
                         contentDisposition = contentDisposition,
                         mimeType = mimeType,
                     )
-                    persistDownloadedBytes(responseBytes, fileName, mimeType)
+                    val persisted = persistDownloadedBytes(responseBytes, fileName, mimeType)
+                    if (persisted) {
+                        resolvedFileName = fileName
+                    }
+                    persisted
                 }
             }
         }.getOrDefault(false)
 
         connection.disconnect()
-        return result
+        return NativeDownloadResult(
+            success = result,
+            fileName = resolvedFileName,
+        )
     }
 
     private fun encodeFormBody(fields: List<NativeDownloadField>): String {
@@ -1448,6 +1461,11 @@ class CoursePageMaterialsActivity : AppCompatActivity() {
         val referer: String,
         val fileName: String,
         val fields: List<NativeDownloadField>,
+    )
+
+    private data class NativeDownloadResult(
+        val success: Boolean,
+        val fileName: String,
     )
 
     companion object {

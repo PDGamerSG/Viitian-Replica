@@ -58,6 +58,7 @@ class PortalActivity : AppCompatActivity() {
         setContentView(R.layout.activity_portal)
         setSupportActionBar(findViewById(R.id.topAppBar))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        DownloadNotificationHelper.requestPermissionIfNeeded(this)
 
         action = intent.getStringExtra(EXTRA_ACTION) ?: ACTION_PORTAL_HOME
         supportActionBar?.title = titleForAction(action)
@@ -207,6 +208,7 @@ class PortalActivity : AppCompatActivity() {
                     )
                 }
                 (getSystemService(DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+                DownloadNotificationHelper.showDownloadStarted(this, fileName)
                 Toast.makeText(this, R.string.download_started, Toast.LENGTH_SHORT).show()
             },
         )

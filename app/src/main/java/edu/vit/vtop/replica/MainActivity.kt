@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(findViewById(R.id.topAppBar))
+        DownloadNotificationHelper.requestPermissionIfNeeded(this)
 
         progressBar = findViewById(R.id.pageLoadProgress)
         swipeRefreshLayout = findViewById(R.id.swipeRefresh)

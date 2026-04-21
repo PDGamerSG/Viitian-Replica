@@ -56,40 +56,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:gravity="start|center_vertical"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/downloadQuestionButton"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:minHeight="0dp"
+                    android:minHeight="40dp"
                     android:text="@string/da_action_download_qp"
                     android:textAllCaps="false"
-                    app:iconTint="@color/marks_indicator" />
+                    android:textColor="@color/marks_indicator"
+                    app:backgroundTint="@color/marks_surface_alt"
+                    app:iconTint="@color/marks_indicator"
+                    app:strokeColor="@color/marks_surface_outline" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/downloadDaButton"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:minHeight="0dp"
+                    android:layout_marginTop="6dp"
+                    android:minHeight="40dp"
                     android:text="@string/da_action_download_da"
                     android:textAllCaps="false"
-                    app:iconTint="@color/marks_indicator" />
+                    android:textColor="@color/marks_indicator"
+                    app:backgroundTint="@color/marks_surface_alt"
+                    app:iconTint="@color/marks_indicator"
+                    app:strokeColor="@color/marks_surface_outline" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/uploadDaButton"
-                    style="@style/Widget.Material3.Button.TextButton"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:minHeight="0dp"
+                    android:layout_marginTop="6dp"
+                    android:minHeight="40dp"
                     android:text="@string/da_action_upload_da"
                     android:textAllCaps="false"
-                    app:iconTint="@color/marks_indicator" />
+                    android:textColor="@color/marks_indicator"
+                    app:backgroundTint="@color/marks_surface_alt"
+                    app:iconTint="@color/marks_indicator"
+                    app:strokeColor="@color/marks_surface_outline" />
             </LinearLayout>
         </LinearLayout>
 
